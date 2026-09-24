@@ -535,7 +535,7 @@ function Index() {
           </div>
 
           {/* Hero Desktop Right: Steam Parody 1★ Rating Card & Stamp */}
-          <div className="hidden lg:flex absolute right-5 top-16 xl:top-24 flex-col items-end pointer-events-auto z-10">
+          <div className="hidden lg:flex absolute right-5 top-[116px] xl:top-[124px] flex-col items-end pointer-events-auto z-10">
             <div
               onClick={() => {
                 playStampSound();
@@ -601,12 +601,10 @@ function Index() {
           </h1>
 
           <p
-            className="rise mt-6 max-w-[58ch] text-base sm:text-lg text-pretty text-paper/85 leading-relaxed"
+            className="rise mt-6 max-w-[62ch] text-base sm:text-lg text-pretty text-paper/85 leading-relaxed"
             style={{ animationDelay: "160ms" }}
           >
-            Hearts of Iron IV'ün resmi Discord sunucusunda Atatürk'e ve Türk milletine hakaret
-            içerikli paylaşımlar yapıldı, tepki gösteren Türk oyuncular haksızca susturulup banlandı.
-            Tepkimizi tek bir platformla sınırlamıyoruz: <strong>Oyunlara, mağazalara, Trustpilot'a ve Google'a tek tıkla 1 yıldız veriyoruz!</strong>
+            Paradox Interactive'in resmi Discord sunucusunda bir Türk oyuncu <strong>Atatürk profil fotoğrafı</strong> sebebiyle banlandı ve moderatörler Atatürk'e asılsız iftiralar attı. Sunucuda Stalin ve Churchill serbestken uygulanan bu çifte standarda itiraz eden yüzlerce Türk oyuncu <strong>kitlesel olarak susturulup sunucudan atıldı.</strong> Şirketin resmi bir özür dilememesi üzerine tepkimizi gösteriyoruz: <strong>Oyunlara, mağazalara, Trustpilot'a ve Google'a tek tıkla 1 yıldız veriyoruz!</strong>
           </p>
 
           {/* Primary Action Buttons */}
