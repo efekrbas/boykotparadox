@@ -77,24 +77,42 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Boykot Paradox — 1 Yıldız Kampanyası" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5" },
+      { title: "Boykot Paradox — Tüm Platformlarda 1 Yıldız Kampanyası" },
       {
         name: "description",
-        content: "Paradox Interactive oyunlarına ve kurumsal sayfalarına 1 yıldız vererek tepkini göster.",
+        content: "Hearts of Iron IV Discord skandalına karşı Paradox Interactive oyunlarına ve kurumsal sayfalarına (Steam, Metacritic, Trustpilot, Epic, GOG, Google) 1 yıldız vererek sesini duyur.",
       },
-      { property: "og:title", content: "Boykot Paradox — 1 Yıldız Kampanyası" },
+      {
+        name: "keywords",
+        content: "paradox boykot, boykot paradox, hearts of iron 4 ataturk, hoi4 boykot, paradox interactive, ataturk skandali, steam 1 yildiz, paradox inceleme boykotu, hoi4 discord, eu4, ck3, victoria 3, stellaris, cities skylines",
+      },
+      { name: "author", content: "Türk Oyuncu Topluluğu" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
+      // GEO Meta Tags (Turkey & Global Geo-targeting)
+      { name: "geo.region", content: "TR" },
+      { name: "geo.placename", content: "Türkiye" },
+      { name: "geo.position", content: "38.9637;35.2433" },
+      { name: "ICBM", content: "38.9637, 35.2433" },
+      // OpenGraph
+      { property: "og:site_name", content: "Boykot Paradox" },
+      { property: "og:locale", content: "tr_TR" },
+      { property: "og:title", content: "Boykot Paradox — Tüm Platformlarda 1 Yıldız Kampanyası" },
       {
         property: "og:description",
-        content: "Tüm platformlarda Paradox'u tek dokunuşla 1 yıldızla mühürle.",
+        content: "Sadece Steam değil: Metacritic, Trustpilot, Epic, GOG ve Google üzerinden Paradox'u tek dokunuşla 1 yıldızla mühürle.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://boykotparadox.vercel.app" },
       { property: "og:image", content: "https://boykotparadox.vercel.app/ataturk-human.jpg" },
+      // Twitter Card
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Boykot Paradox — Tüm Platformlarda 1 Yıldız Kampanyası" },
+      { name: "twitter:description", content: "Hearts of Iron IV Discord skandalına karşı Paradox Interactive oyunlarına ve kurumsal sayfalarına 1 yıldız vererek sesini duyur." },
       { name: "twitter:image", content: "https://boykotparadox.vercel.app/ataturk-human.jpg" },
     ],
     links: [
+      { rel: "canonical", href: "https://boykotparadox.vercel.app/" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

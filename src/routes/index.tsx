@@ -53,6 +53,70 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: "https://boykotparadox.vercel.app/ataturk-human.jpg" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://boykotparadox.vercel.app/#website",
+              "url": "https://boykotparadox.vercel.app/",
+              "name": "Boykot Paradox — Tüm Platformlarda 1 Yıldız Kampanyası",
+              "description":
+                "Paradox Interactive'in resmi Discord sunucusunda Gazi Mustafa Kemal Atatürk'e ve Türk oyunculara yönelik saygısızlığına karşı başlatılan bağımsız oyuncu boykotu.",
+              "inLanguage": "tr-TR",
+            },
+            {
+              "@type": "Organization",
+              "@id": "https://boykotparadox.vercel.app/#organization",
+              "name": "Türk Oyuncu Topluluğu İnisiyatifi",
+              "url": "https://boykotparadox.vercel.app/",
+              "logo": "https://boykotparadox.vercel.app/ataturk-vector-logo.png",
+            },
+            {
+              "@type": "FAQPage",
+              "@id": "https://boykotparadox.vercel.app/#faq",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Paradox Interactive neden boykot ediliyor?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Paradox Interactive'in resmi Hearts of Iron IV Discord sunucusunda Türkiye Cumhuriyeti'nin kurucusu Gazi Mustafa Kemal Atatürk'e ve Türk milletine hakaret edilmiş, barışçıl tepki gösteren Türk oyuncular haksız moderasyon kararlarıyla susturulup banlanmıştır. Paradox yönetiminin resmi bir özür dilememesi nedeniyle boykot başlatılmıştır.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  "name": "Boykot kapsamında hangi Paradox Interactive oyunları yer alıyor?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Boykot kapsamında başta olayın merkez üssü olan Hearts of Iron IV olmak üzere Europa Universalis IV, Crusader Kings III, Stellaris, Victoria 3, Cities: Skylines ve Paradox'un Steam yayıncı merkezindeki tüm 100+ oyun ve DLC'si yer almaktadır.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  "name": "Nasıl 1 yıldız verilir ve boykota nasıl katılınır?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Sitedeki platform butonlarına veya 'Tek Tıkla Tüm Platformları Aç' butonuna basarak Steam, Metacritic, Trustpilot, Google ve Epic Games inceleme sayfalarına ulaşabilir, 'Hazır 1★ Metinleri' bölümündeki Türkçe ve İngilizce şablonları kopyalayarak 1 yıldız puanlama yapabilirsiniz.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  "name": "Boykot kampanyasının temel talepleri nelerdir?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "1. Paradox Interactive'in tüm resmi kanallarında Atatürk ve Türk milletinden resmi ve şeffaf bir özür yayınlaması. 2. Haksız yere yasaklanan ve susturulan tüm Türk oyuncuların hesap ve erişim haklarının iade edilmesi. 3. Taraflı ve saygısız moderasyon ekibinin görevden alınarak hesap sorulması.",
+                  },
+                },
+              ],
+            },
+          ],
+        }),
+      },
+    ],
   }),
   component: Index,
 });
@@ -228,16 +292,16 @@ function Index() {
   return (
     <div className="min-h-screen bg-paper font-body text-ink antialiased selection:bg-seal selection:text-paper">
       {/* Top Banner Notice */}
-      <div className="border-b border-ink/20 bg-ink px-4 py-2 font-mono text-[11px] text-paper">
-        <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="inline-block size-2 animate-ping rounded-full bg-emerald-400" />
-            <strong className="text-emerald-400 uppercase tracking-wider">Canlı Akış:</strong>
-            <span className="text-paper/90 transition-opacity duration-300">
+      <div className="border-b border-ink/20 bg-ink px-3 sm:px-4 py-2 font-mono text-[11px] text-paper">
+        <div className="mx-auto flex max-w-[1240px] flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2">
+          <div className="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap max-w-full">
+            <span className="inline-block size-2 shrink-0 animate-ping rounded-full bg-emerald-400" />
+            <strong className="text-emerald-400 shrink-0 uppercase tracking-wider">Canlı Akış:</strong>
+            <span className="text-paper/90 truncate">
               {RECENT_LIVE_ACTIONS[activeNoticeIdx]}
             </span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 self-end sm:self-auto text-[10px] sm:text-[11px]">
             <button
               type="button"
               onClick={() => setIsBulkModalOpen(true)}
@@ -254,15 +318,15 @@ function Index() {
 
       {/* Sticky Main Header */}
       <header className="sticky top-0 z-40 border-b-2 border-ink bg-paper/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-5 py-3">
-          <div className="flex items-center gap-3">
+        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 sm:py-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <img
               src="/ataturk-vector-logo.png"
               alt="Atatürk Silhouette Logo"
-              className="size-8 object-contain"
+              className="size-7 sm:size-8 object-contain"
             />
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
-              <span className="font-display text-2xl leading-none tracking-tight">
+              <span className="font-display text-xl sm:text-2xl leading-none tracking-tight">
                 BOYKOT PARADOX
               </span>
               <span className="hidden font-mono text-[11px] uppercase tracking-[0.18em] text-seal font-bold sm:block">
@@ -271,7 +335,7 @@ function Index() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* User progress counter */}
             <div className="hidden text-right leading-none md:block">
               <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-mute">
@@ -286,22 +350,22 @@ function Index() {
 
             {/* Total 1 star counter */}
             <div className="text-right leading-none">
-              <div className="flex items-center justify-end gap-1.5 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-mute">
+              <div className="flex items-center justify-end gap-1 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-mute">
                 <span className="relative flex size-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500"></span>
                 </span>
                 <span className="font-bold text-emerald-600">Canlı</span>
-                <span>Toplam 1★</span>
+                <span className="hidden xs:inline">Toplam 1★</span>
               </div>
-              <div className="flex items-center justify-end gap-1.5 mt-0.5">
+              <div className="flex items-center justify-end gap-1 mt-0.5">
                 {justTicked && (
-                  <span className="font-mono text-xs font-bold text-emerald-600 animate-pulse">
+                  <span className="font-mono text-[11px] sm:text-xs font-bold text-emerald-600 animate-pulse">
                     +{lastIncrement}
                   </span>
                 )}
                 <div
-                  className={`font-mono text-xl sm:text-2xl font-bold tabular-nums transition-colors duration-300 ${
+                  className={`font-mono text-lg sm:text-2xl font-bold tabular-nums transition-colors duration-300 ${
                     justTicked ? "text-emerald-600" : "text-seal"
                   }`}
                 >
@@ -313,9 +377,9 @@ function Index() {
             <button
               type="button"
               onClick={() => setIsBulkModalOpen(true)}
-              className="inline-flex items-center gap-2 bg-seal px-3.5 py-2.5 font-mono text-xs uppercase tracking-[0.12em] text-paper transition-transform active:translate-y-px hover:brightness-110 sm:px-4"
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-seal px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 font-mono text-[11px] sm:text-xs uppercase tracking-[0.12em] text-paper transition-transform active:translate-y-px hover:brightness-110"
             >
-              <Flame className="size-4 animate-bounce" />
+              <Flame className="size-3.5 sm:size-4 animate-bounce" />
               <span className="hidden sm:inline">Tüm Platformları Aç</span>
               <span className="sm:hidden">1★ Baskın</span>
             </button>
@@ -347,7 +411,7 @@ function Index() {
           </div>
 
           <h1
-            className="rise mt-5 font-display text-[clamp(2.8rem,11vw,9.5rem)] leading-[0.88] tracking-tight uppercase"
+            className="rise mt-5 font-display text-[clamp(2.3rem,10vw,9.5rem)] leading-[0.88] tracking-tight uppercase"
             style={{ animationDelay: "80ms" }}
           >
             PARADOX

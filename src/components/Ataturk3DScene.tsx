@@ -12,7 +12,7 @@ export function Ataturk3DScene() {
               Ebedi Değerimiz · Saygı ve Minnetle
             </div>
 
-            <h2 className="mt-3 font-display text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight leading-[0.92]">
+            <h2 className="mt-3 font-display text-3xl sm:text-5xl lg:text-6xl uppercase tracking-tight leading-[0.92]">
               Atatürk
               <br />
               <span className="text-seal">Tartışılamaz.</span>
@@ -27,12 +27,12 @@ export function Ataturk3DScene() {
               yalnızca Türk oyunculara değil, bağımsızlık mücadelesine ve bir ulusun ortak onuruna yapılmış kabul edilemez bir saygısızlıktır.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <div className="border border-paper/20 bg-paper/5 px-3 py-2 font-mono text-xs">
+            <div className="mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3">
+              <div className="border border-paper/20 bg-paper/5 px-3 py-1.5 sm:py-2 font-mono text-xs">
                 <span className="text-seal font-bold">1881 — ∞</span>
                 <span className="ml-2 text-paper/70">Gazi Mustafa Kemal Atatürk</span>
               </div>
-              <div className="border border-paper/20 bg-paper/5 px-3 py-2 font-mono text-xs text-paper/70">
+              <div className="border border-paper/20 bg-paper/5 px-3 py-1.5 sm:py-2 font-mono text-xs text-paper/70">
                 <span>Kurucu & Ebedi Başkomutan</span>
               </div>
             </div>
@@ -51,14 +51,14 @@ export function Ataturk3DScene() {
                 <img
                   src="/ataturk-transparent.png"
                   alt="Gazi Mustafa Kemal Atatürk"
-                  className="w-full max-h-[580px] object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)]"
+                  className="w-full max-h-[440px] sm:max-h-[580px] object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)]"
                   loading="eager"
                 />
               </div>
 
               {/* Dignified Memorial Monument Pedestal (Kaide) */}
-              <div className="relative z-20 -mt-3 w-full max-w-[400px] border-t-2 border-seal/60 bg-ink px-6 py-4 text-center shadow-2xl">
-                <div className="font-display text-xl uppercase tracking-widest text-paper sm:text-2xl">
+              <div className="relative z-20 -mt-3 w-full max-w-[340px] sm:max-w-[400px] border-t-2 border-seal/60 bg-ink px-4 sm:px-6 py-3 sm:py-4 text-center shadow-2xl">
+                <div className="font-display text-lg uppercase tracking-widest text-paper sm:text-2xl">
                   Gazi Mustafa Kemal Atatürk
                 </div>
                 <div className="mt-1 flex items-center justify-center gap-2 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-seal">
