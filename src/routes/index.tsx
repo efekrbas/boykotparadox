@@ -17,6 +17,7 @@ import {
   TrendingUp,
   PenLine,
   Send,
+  Newspaper,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -548,6 +549,7 @@ function Index() {
             Tepkimizi tek bir platformla sınırlamıyoruz: <strong>Oyunlara, mağazalara, Trustpilot'a ve Google'a tek tıkla 1 yıldız veriyoruz!</strong>
           </p>
 
+          {/* Primary Action Buttons */}
           <div
             className="rise mt-8 flex flex-wrap items-center gap-3 sm:gap-4"
             style={{ animationDelay: "240ms" }}
@@ -555,9 +557,9 @@ function Index() {
             <button
               type="button"
               onClick={() => setIsBulkModalOpen(true)}
-              className="group inline-flex items-center gap-3 bg-seal px-6 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.14em] text-paper transition-transform active:translate-y-px hover:brightness-110"
+              className="group inline-flex items-center gap-2.5 bg-seal px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:brightness-110 shadow-lg shadow-seal/25 active:translate-y-px"
             >
-              <Flame className="size-4" />
+              <Flame className="size-4 animate-bounce" />
               <span>Tek Tıkla Tüm Platformları Aç</span>
             </button>
 
@@ -565,7 +567,7 @@ function Index() {
               href={PETITION_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 border-2 border-seal bg-seal/20 px-5 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:bg-seal hover:text-paper"
+              className="group inline-flex items-center gap-2 border-2 border-seal bg-seal/20 px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:bg-seal hover:text-paper shadow-md shadow-seal/10"
             >
               <PenLine className="size-4 text-seal group-hover:text-paper transition-colors" />
               <span>İmza Kampanyasına Katıl</span>
@@ -575,7 +577,7 @@ function Index() {
             <button
               type="button"
               onClick={() => scrollTo("sablonlar")}
-              className="inline-flex items-center gap-2 border-2 border-paper/40 bg-paper/10 px-5 py-3.5 font-mono text-xs sm:text-sm uppercase tracking-[0.12em] text-paper transition-colors hover:border-paper hover:bg-paper/20"
+              className="inline-flex items-center gap-2 border-2 border-paper/40 bg-paper/10 px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:border-paper hover:bg-paper/20"
             >
               <FileText className="size-4" />
               <span>Hazır 1★ Metinleri</span>
@@ -584,54 +586,65 @@ function Index() {
             <button
               type="button"
               onClick={() => scrollTo("tweet-baskini")}
-              className="inline-flex items-center gap-2 border border-[#1d9bf0]/50 bg-[#1d9bf0]/10 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-[#1d9bf0] transition-colors hover:bg-[#1d9bf0] hover:text-white"
+              className="inline-flex items-center gap-2 border-2 border-[#1d9bf0]/70 bg-[#1d9bf0]/15 px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-[#38bdf8] transition-all hover:bg-[#1d9bf0] hover:text-white shadow-md shadow-[#1d9bf0]/15"
             >
               <Send className="size-4" />
               <span>X / CEO Baskını</span>
             </button>
+          </div>
 
-            <button
-              type="button"
-              onClick={() => scrollTo("eylem-rehberleri")}
-              className="inline-flex items-center gap-2 border border-paper/20 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-paper/80 transition-colors hover:text-seal"
-            >
-              <ShieldAlert className="size-4" />
-              <span>İade & Şikayet</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => scrollTo("imza")}
-              className="inline-flex items-center gap-2 border border-seal/50 bg-seal/10 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-seal transition-colors hover:bg-seal hover:text-paper"
-            >
-              <PenLine className="size-4" />
-              <span>Resmi Dilekçe</span>
-            </button>
+          {/* Quick Section Navigation Bar */}
+          <div
+            className="rise mt-4 flex flex-wrap items-center gap-2 border-t border-paper/10 pt-4"
+            style={{ animationDelay: "320ms" }}
+          >
+            <span className="font-mono text-[10px] uppercase tracking-wider text-paper/50 mr-1 hidden sm:inline-flex items-center gap-1">
+              Bölümlere Git:
+            </span>
 
             <button
               type="button"
               onClick={() => scrollTo("kurumsal")}
-              className="inline-flex items-center gap-2 border border-paper/20 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-paper/80 transition-colors hover:text-seal"
+              className="inline-flex items-center gap-1.5 border border-paper/25 bg-paper/5 px-3 py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] text-paper/90 transition-all hover:border-seal/60 hover:bg-seal/10 hover:text-paper"
             >
-              <Building2 className="size-4" />
+              <Building2 className="size-3.5 text-seal" />
               <span>Trustpilot & Google</span>
             </button>
 
             <button
               type="button"
-              onClick={() => scrollTo("anit")}
-              className="inline-flex items-center gap-2 border border-paper/20 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-paper/80 transition-colors hover:text-seal"
+              onClick={() => scrollTo("eylem-rehberleri")}
+              className="inline-flex items-center gap-1.5 border border-paper/25 bg-paper/5 px-3 py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] text-paper/90 transition-all hover:border-seal/60 hover:bg-seal/10 hover:text-paper"
             >
-              <Sparkles className="size-4" />
+              <ShieldAlert className="size-3.5 text-seal" />
+              <span>İade & Şikayet</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollTo("anit")}
+              className="inline-flex items-center gap-1.5 border border-paper/25 bg-paper/5 px-3 py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] text-paper/90 transition-all hover:border-amber-400/60 hover:bg-amber-400/10 hover:text-paper"
+            >
+              <Sparkles className="size-3.5 text-amber-400" />
               <span>3D Atatürk Anıtı</span>
             </button>
 
             <button
               type="button"
               onClick={() => scrollTo("kaynaklar")}
-              className="inline-flex items-center gap-2 border border-paper/20 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-paper/80 transition-colors hover:text-seal"
+              className="inline-flex items-center gap-1.5 border border-paper/25 bg-paper/5 px-3 py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] text-paper/90 transition-all hover:border-seal/60 hover:bg-seal/10 hover:text-paper"
             >
+              <Newspaper className="size-3.5 text-seal" />
               <span>Haber Kaynakları</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollTo("oyunlar")}
+              className="inline-flex items-center gap-1.5 border border-paper/25 bg-paper/5 px-3 py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] text-paper/90 transition-all hover:border-seal/60 hover:bg-seal/10 hover:text-paper"
+            >
+              <Layers className="size-3.5 text-seal" />
+              <span>Oyun Kataloğu</span>
             </button>
           </div>
 
