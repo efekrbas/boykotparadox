@@ -445,10 +445,11 @@ function Index() {
               alt="Atatürk Rozet Logo"
               className="size-7 sm:size-8 object-contain drop-shadow-sm rounded-full"
             />
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2.5">
               <span className="font-display text-xl sm:text-2xl leading-none tracking-tight">
                 BOYKOT PARADOX
               </span>
+              <span className="hidden h-3.5 w-px bg-ink/20 sm:block" />
               <span className="hidden font-mono text-[11px] uppercase tracking-[0.18em] text-seal font-bold sm:block">
                 Tüm Platformlarda 1★ Kampanyası
               </span>
