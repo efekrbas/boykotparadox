@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
+import { XIcon } from "@/components/icons/XIcon";
+
 import { GAMES, CORPORATE_TARGETS, DEMANDS, type Game } from "@/data/boycottData";
 import { playStampSound } from "@/lib/audio";
 import { AudioStampToggle } from "@/components/AudioStampToggle";
@@ -586,9 +588,9 @@ function Index() {
             <button
               type="button"
               onClick={() => scrollTo("tweet-baskini")}
-              className="inline-flex items-center gap-2 border-2 border-[#1d9bf0]/70 bg-[#1d9bf0]/15 px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-[#38bdf8] transition-all hover:bg-[#1d9bf0] hover:text-white shadow-md shadow-[#1d9bf0]/15"
+              className="inline-flex items-center gap-2.5 border-2 border-paper/40 bg-black px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:border-paper hover:bg-neutral-900 shadow-lg shadow-black/50 active:translate-y-px"
             >
-              <Send className="size-4" />
+              <XIcon className="size-4 text-paper" />
               <span>X / CEO Baskını</span>
             </button>
           </div>

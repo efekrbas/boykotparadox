@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Send, Copy, Check, Twitter, AlertTriangle, Sparkles, ExternalLink } from "lucide-react";
+import { Send, Copy, Check, AlertTriangle, Sparkles, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
+import { XIcon } from "@/components/icons/XIcon";
 
 interface TweetPreset {
   id: string;
@@ -42,8 +43,8 @@ export function CeoRaidSection() {
     try {
       await navigator.clipboard.writeText(currentPreset.text);
       setCopied(true);
-      toast.success("Tweet metni kopyalandı!", {
-        description: "X (Twitter), LinkedIn veya forumlarda doğrudan paylaşabilirsiniz.",
+      toast.success("Gönderi metni kopyalandı!", {
+        description: "X veya diğer platformlarda doğrudan paylaşabilirsiniz.",
       });
       setTimeout(() => setCopied(false), 2500);
     } catch {
@@ -55,8 +56,8 @@ export function CeoRaidSection() {
     playStampSound();
     const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(currentPreset.text)}`;
     window.open(tweetUrl, "_blank", "noopener,noreferrer");
-    toast.success("X (Twitter) Açılıyor...", {
-      description: "Hazır tweet penceresi açıldı. Tek tıkla sesimizi CEO'ya duyurun!",
+    toast.success("X Açılıyor...", {
+      description: "Hazır gönderi taslağı açıldı. Tek tıkla sesimizi CEO'ya duyurun!",
     });
   };
 
@@ -74,7 +75,7 @@ export function CeoRaidSection() {
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-paper/15 pb-4">
             <div className="inline-flex items-center gap-2 border border-seal/50 bg-seal/20 px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-seal">
               <span className="size-2 animate-ping rounded-full bg-seal" />
-              Doğrudan Baskı Merkezi · X (Twitter)
+              Doğrudan Baskı Merkezi · X
             </div>
             <div className="font-mono text-xs text-paper/60">
               Hedefler: <strong className="text-paper">@TheRikard</strong> (CEO) · <strong className="text-paper">@PdxInteractive</strong>
@@ -85,11 +86,11 @@ export function CeoRaidSection() {
             {/* Left Column: Context */}
             <div className="lg:col-span-6">
               <h2 className="font-display text-2xl sm:text-4xl uppercase tracking-tight leading-tight">
-                Paradox CEO'suna <span className="text-seal">Tek Tıkla</span> Tweet At
+                Paradox CEO'suna <span className="text-seal">Tek Tıkla</span> X'te Tepki Gönder
               </h2>
               <p className="mt-3 text-sm sm:text-base text-paper/85 leading-relaxed">
                 Şirket yönetimi Discord'daki olayı sessizce geçiştirmeye çalışıyor. Paradox CEO'su{" "}
-                <strong>Rikard Lindgren</strong> ve kurumsal Twitter hesaplarını doğrudan etiketleyerek
+                <strong>Rikard Lindgren</strong> ve kurumsal X hesaplarını doğrudan etiketleyerek
                 uluslararası boyutta organize bir tepki gösterelim.
               </p>
 
@@ -132,10 +133,10 @@ export function CeoRaidSection() {
                   <button
                     type="button"
                     onClick={handleTweet}
-                    className="inline-flex items-center gap-2 bg-[#1d9bf0] hover:bg-[#1a8cd8] px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] font-bold text-white transition-all shadow-md active:translate-y-px"
+                    className="inline-flex items-center gap-2.5 bg-black hover:bg-neutral-900 border border-paper/40 px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] font-bold text-paper transition-all shadow-lg shadow-black/50 active:translate-y-px"
                   >
-                    <Twitter className="size-4 fill-white" />
-                    <span>X'te Hemen Tweetle</span>
+                    <XIcon className="size-4 text-paper" />
+                    <span>X'te Hemen Paylaş</span>
                     <ExternalLink className="size-3.5 opacity-80" />
                   </button>
 

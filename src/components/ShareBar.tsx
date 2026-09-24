@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Share2, Copy, Check, MessageCircle, Send, MessageSquare, Linkedin } from "lucide-react";
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
+import { XIcon } from "@/components/icons/XIcon";
 
 export function ShareBar() {
   const [copiedLink, setCopiedLink] = useState(false);
@@ -99,9 +100,10 @@ export function ShareBar() {
         <button
           type="button"
           onClick={handleTwitterShare}
-          className="inline-flex items-center gap-2 border border-ink/30 bg-paper px-3.5 py-2 font-mono text-xs uppercase tracking-wider transition-colors hover:bg-ink hover:text-paper"
+          className="inline-flex items-center gap-2 border border-ink/30 bg-paper px-3.5 py-2 font-mono text-xs uppercase tracking-wider transition-colors hover:bg-black hover:text-paper hover:border-black"
         >
-          <span>X / Twitter</span>
+          <XIcon className="size-3.5" />
+          <span>X'te Paylaş</span>
         </button>
 
         <button
