@@ -12,10 +12,9 @@ export function Ataturk3DScene() {
               Ebedi Değerimiz · Saygı ve Minnetle
             </div>
 
-            <h2 className="mt-3 font-display text-3xl sm:text-5xl lg:text-6xl uppercase tracking-tight leading-[0.92]">
-              Atatürk
-              <br />
-              <span className="text-seal">Tartışılamaz.</span>
+            <h2 className="mt-3 font-display text-3xl sm:text-5xl lg:text-6xl uppercase tracking-tight leading-[1.02]">
+              <span className="block">Atatürk</span>
+              <span className="block mt-1 sm:mt-1.5 text-seal">Tartışılamaz.</span>
             </h2>
 
             <div className="mt-5 border-l-2 border-seal pl-4 font-mono text-xs uppercase tracking-wider text-paper/70">
