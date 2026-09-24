@@ -28,7 +28,7 @@ export function ReviewTemplatesSection() {
   };
 
   return (
-    <section id="sablonlar" className="mx-auto max-w-[1240px] px-5 py-12 scroll-mt-16 sm:scroll-mt-20">
+    <section id="sablonlar" className="mx-auto max-w-[1240px] px-5 pt-6 sm:pt-7 pb-12 scroll-mt-16 sm:scroll-mt-20">
       <div className="flex flex-wrap items-baseline justify-between gap-4 border-b-2 border-ink pb-4">
         <div>
           <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-seal">
