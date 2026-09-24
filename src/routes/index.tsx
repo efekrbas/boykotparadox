@@ -73,7 +73,7 @@ export const Route = createFileRoute("/")({
               "@id": "https://boykotparadox.vercel.app/#organization",
               "name": "Türk Oyuncu Topluluğu İnisiyatifi",
               "url": "https://boykotparadox.vercel.app/",
-              "logo": "https://boykotparadox.vercel.app/ataturk-vector-logo.png",
+              "logo": "https://boykotparadox.vercel.app/favicon.png",
             },
             {
               "@type": "FAQPage",
@@ -321,9 +321,9 @@ function Index() {
         <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 sm:py-3">
           <div className="flex items-center gap-2 sm:gap-3">
             <img
-              src="/ataturk-vector-logo.png"
-              alt="Atatürk Silhouette Logo"
-              className="size-7 sm:size-8 object-contain"
+              src="/favicon.png"
+              alt="Atatürk Rozet Logo"
+              className="size-7 sm:size-8 object-contain drop-shadow-sm rounded-full"
             />
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
               <span className="font-display text-xl sm:text-2xl leading-none tracking-tight">
@@ -893,9 +893,9 @@ function Index() {
           <div>
             <div className="flex items-center gap-3">
               <img
-                src="/ataturk-vector-logo.png"
-                alt="Atatürk Silhouette Logo"
-                className="size-9 object-contain brightness-200"
+                src="/favicon.png"
+                alt="Atatürk Rozet Logo"
+                className="size-9 sm:size-10 object-contain drop-shadow rounded-full"
               />
               <span className="font-display text-2xl tracking-tight uppercase">
                 BOYKOT PARADOX
