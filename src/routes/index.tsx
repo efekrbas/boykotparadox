@@ -604,7 +604,7 @@ function Index() {
             className="rise mt-6 max-w-[62ch] text-base sm:text-lg text-pretty text-paper/85 leading-relaxed"
             style={{ animationDelay: "160ms" }}
           >
-            Paradox Interactive'in resmi Discord sunucusunda bir Türk oyuncu <strong>Atatürk profil fotoğrafı</strong> sebebiyle banlandı ve moderatörler Atatürk'e asılsız iftiralar attı. Sunucuda Stalin ve Churchill serbestken uygulanan bu çifte standarda itiraz eden yüzlerce Türk oyuncu <strong>kitlesel olarak susturulup sunucudan atıldı.</strong> Şirketin resmi bir özür dilememesi üzerine tepkimizi gösteriyoruz: <strong>Oyunlara, mağazalara, Trustpilot'a ve Google'a tek tıkla 1 yıldız veriyoruz!</strong>
+            Paradox'un resmi Discord'unda bir Türk oyuncunun <strong>Atatürk profil fotoğrafı</strong> sebebiyle banlanmasına ve itiraz eden yüzlerce oyuncunun <strong>topluca susturulmasına</strong> sessiz kalmıyoruz: <strong>Tüm oyunlara, mağazalara ve Google'a tek tıkla 1 yıldız veriyoruz!</strong>
           </p>
 
           {/* Primary Action Buttons */}
