@@ -396,8 +396,9 @@ function Index() {
     const el = document.getElementById(id);
     if (!el) return;
     const header = document.querySelector("header");
-    const headerHeight = header ? header.getBoundingClientRect().height : 70;
-    const targetY = el.getBoundingClientRect().top + window.pageYOffset - (headerHeight + 20);
+    const headerHeight = header ? header.getBoundingClientRect().height : 60;
+    const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+    const targetY = elementPosition - headerHeight;
     window.scrollTo({
       top: Math.max(0, targetY),
       behavior: "smooth",
@@ -665,7 +666,7 @@ function Index() {
       </section>
 
       {/* Games Catalog Section — primary action, right after hero */}
-      <section id="oyunlar" className="mx-auto max-w-[1240px] px-5 py-14 scroll-mt-24 sm:scroll-mt-28">
+      <section id="oyunlar" className="mx-auto max-w-[1240px] px-5 py-14 scroll-mt-16 sm:scroll-mt-20">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-ink pb-4">
           <div>
             <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-seal">
@@ -930,9 +931,7 @@ function Index() {
       </section>
 
       {/* 3D Atatürk Monument Scene */}
-      <div id="anit" className="scroll-mt-24 sm:scroll-mt-28">
-        <Ataturk3DScene />
-      </div>
+      <Ataturk3DScene />
 
       {/* Incident Summary & Demands */}
       <section className="mx-auto max-w-[1240px] px-5 py-14">

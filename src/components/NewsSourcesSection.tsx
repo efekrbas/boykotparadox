@@ -69,7 +69,7 @@ export function NewsSourcesSection() {
       : NEWS_SOURCES.filter((s) => s.category === activeCategory);
 
   return (
-    <section id="kaynaklar" className="mx-auto max-w-[1240px] px-5 py-14 scroll-mt-24 sm:scroll-mt-28">
+    <section id="kaynaklar" className="mx-auto max-w-[1240px] px-5 py-12 scroll-mt-16 sm:scroll-mt-20">
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-ink pb-4">
         <div>

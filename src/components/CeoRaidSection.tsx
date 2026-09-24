@@ -61,7 +61,7 @@ export function CeoRaidSection() {
   };
 
   return (
-    <section id="tweet-baskini" className="mx-auto max-w-[1240px] px-5 py-14 scroll-mt-24 sm:scroll-mt-28">
+    <section id="tweet-baskini" className="mx-auto max-w-[1240px] px-5 py-12 scroll-mt-16 sm:scroll-mt-20">
       <div className="border-2 border-ink bg-ink text-paper p-6 sm:p-10 shadow-2xl relative overflow-hidden">
         {/* Ambient glow */}
         <div
