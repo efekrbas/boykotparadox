@@ -112,7 +112,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Boykot Paradox — Resmi Atatürk Skandalına Karşı 1★ Kampanyası" },
       {
         property: "og:description",
-        content: "Sadece Steam değil: Metacritic, Trustpilot, Epic, GOG ve Google üzerinden Paradox'u tek dokunuşla 1 yıldızla mühürle.",
+        content: "Sadece Steam değil: Metacritic, Trustpilot, Epic, GOG ve Google üzerinden Paradox'a tek dokunuşla 1 yıldız ver.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://boykotparadox.vercel.app/" },

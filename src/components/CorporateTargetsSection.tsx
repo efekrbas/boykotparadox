@@ -83,7 +83,7 @@ export function CorporateTargetsSection({
               >
                 {isStamped && (
                   <div className="seal-stamp absolute top-3 right-3 border border-seal bg-seal/20 px-2 py-0.5 font-mono text-[10px] font-bold text-seal">
-                    1★ MÜHÜRLENDİ
+                    1★ VERİLDİ
                   </div>
                 )}
                 <div className="flex-1 flex flex-col">

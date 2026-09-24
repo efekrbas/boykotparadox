@@ -68,7 +68,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Sadece Steam değil: Metacritic, Trustpilot, Epic, GOG ve Google üzerinden Paradox'u tek dokunuşla 1 yıldızla mühürle. Topluluğuna ve kurucu değerlerine saygı göstermeyen firmaya sıfır tolerans!",
+          "Sadece Steam değil: Metacritic, Trustpilot, Epic, GOG ve Google üzerinden Paradox'a tek dokunuşla 1 yıldız ver. Topluluğuna ve kurucu değerlerine saygı göstermeyen firmaya sıfır tolerans!",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://boykotparadox.vercel.app/" },
@@ -234,10 +234,10 @@ const CAMPAIGN_REF_MS = new Date("2026-09-22T12:00:00+03:00").getTime();
 const BASE_TOTAL_VOTES = 6934;
 
 const RECENT_LIVE_ACTIONS = [
-  "Hearts of Iron IV için Steam'de yeni 1★ mühürlendi",
+  "Hearts of Iron IV için Steam'de yeni 1★ verildi",
   "Paradox Interactive için Trustpilot'ta 1★ inceleme paylaşıldı",
   "Europa Universalis IV için Epic Games'te 1★ verildi",
-  "Crusader Kings III için Steam mağazasında 1★ mühürlendi",
+  "Crusader Kings III için Steam mağazasında 1★ verildi",
   "Victoria 3 için Metacritic'te 1★ puanlama yapıldı",
   "Paradox Interactive için Google Haritalar'da 1★ bırakıldı",
   "Cities: Skylines II için Steam'de yeni 1★ kaydedildi",
@@ -305,7 +305,7 @@ function Index() {
         /* ignore */
       }
       if (!exists) {
-        toast.success("Oyun 1 Yıldızla Mühürlendi!", {
+        toast.success("1 Yıldız Verildi!", {
           description: "Aşağıdaki platform linklerine tıklayarak incelemenizi yayınlayın.",
         });
       }
@@ -529,7 +529,7 @@ function Index() {
           >
             Hearts of Iron IV'ün resmi Discord sunucusunda Atatürk'e ve Türk milletine hakaret
             içerikli paylaşımlar yapıldı, tepki gösteren Türk oyuncular haksızca susturulup banlandı.
-            Tepkimizi tek bir platformla sınırlamıyoruz: <strong>Oyunlara, mağazalara, Trustpilot'a ve Google'a tek tıkla 1 yıldız mühürlüyoruz!</strong>
+            Tepkimizi tek bir platformla sınırlamıyoruz: <strong>Oyunlara, mağazalara, Trustpilot'a ve Google'a tek tıkla 1 yıldız veriyoruz!</strong>
           </p>
 
           <div
@@ -620,7 +620,7 @@ function Index() {
               Tüm Platformlarda Puanlama
             </div>
             <h2 className="mt-1 font-display text-3xl sm:text-4xl tracking-tight uppercase">
-              Oyunları Mühürle & 1 Yıldız Ver
+              Tüm Oyunlara 1 Yıldız Ver
             </h2>
           </div>
 
@@ -715,7 +715,7 @@ function Index() {
               >
                 {isVoted && (
                   <div className="seal-stamp absolute top-3 right-3 z-20 border-2 border-seal bg-paper/85 px-3 py-1 font-mono text-xs font-bold text-seal backdrop-blur-md">
-                    1 ★ MÜHÜRLENDİ
+                    1 ★ VERİLDİ
                   </div>
                 )}
 
@@ -752,7 +752,7 @@ function Index() {
                           1.0 ★
                         </div>
                         <div className="font-mono text-[10px] uppercase text-mute mt-0.5">
-                          {tr(count)} mühür
+                          {tr(count)} tepki
                         </div>
                       </div>
                     </div>
@@ -830,7 +830,7 @@ function Index() {
                     }`}
                   >
                     <Star className={`size-3.5 ${isVoted ? "fill-paper" : ""}`} />
-                    <span>{isVoted ? "1 Yıldız Mühürlendi (Kaldır)" : "1 Yıldız Ver"}</span>
+                    <span>{isVoted ? "1 Yıldız Verildi (Kaldır)" : "1 Yıldız Ver"}</span>
                   </button>
                 </div>
               </article>
@@ -931,7 +931,7 @@ function Index() {
               Tüm Cephelerde Boykot
             </h3>
             <p className="mt-3 text-sm text-mute leading-relaxed">
-              Tarihçi Prof. Dr. Emrah Safa Gürkan 6000+ saatlik oyun kütüphanesini silerek tepki gösterdi. Yalnızca HOI4 değil; Paradox'un tüm oyunları, Trustpilot kurumsal sayfası ve Google Maps profili 1 yıldızla mühürleniyor.
+              Tarihçi Prof. Dr. Emrah Safa Gürkan 6000+ saatlik oyun kütüphanesini silerek tepki gösterdi. Yalnızca HOI4 değil; Paradox'un tüm oyunları, Trustpilot kurumsal sayfası ve Google Maps profili 1 yıldız veriliyor.
             </p>
           </div>
         </div>

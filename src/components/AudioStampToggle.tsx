@@ -19,8 +19,8 @@ export function AudioStampToggle() {
     <button
       type="button"
       onClick={toggle}
-      title={enabled ? "Mühür sesini kapat" : "Mühür sesini aç"}
-      aria-label={enabled ? "Mühür sesini kapat" : "Mühür sesini aç"}
+      title={enabled ? "Ses efektini kapat" : "Ses efektini aç"}
+      aria-label={enabled ? "Ses efektini kapat" : "Ses efektini aç"}
       className="inline-flex items-center gap-1.5 border border-ink/20 bg-paper/80 px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-ink transition-colors hover:border-ink hover:bg-paper"
     >
       {enabled ? (
