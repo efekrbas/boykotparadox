@@ -395,15 +395,17 @@ function Index() {
     <div className="min-h-screen bg-paper font-body text-ink antialiased selection:bg-seal selection:text-paper">
       {/* Top Banner Notice */}
       <div className="border-b border-ink/20 bg-ink px-3 sm:px-4 py-2 font-mono text-[11px] text-paper">
-        <div className="mx-auto flex max-w-[1240px] flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2">
-          <div className="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap max-w-full">
-            <span className="inline-block size-2 shrink-0 animate-ping rounded-full bg-emerald-400" />
-            <strong className="text-emerald-400 shrink-0 uppercase tracking-wider">Canlı Akış:</strong>
-            <span className="text-paper/90 truncate">
-              {RECENT_LIVE_ACTIONS[activeNoticeIdx]}
-            </span>
+        <div className="mx-auto flex max-w-[1240px] flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-start sm:items-center gap-2 min-w-0">
+            <span className="mt-1 sm:mt-0 inline-block size-2 shrink-0 animate-ping rounded-full bg-emerald-400" />
+            <div className="leading-snug">
+              <strong className="text-emerald-400 uppercase tracking-wider mr-1.5 shrink-0">Canlı Akış:</strong>
+              <span className="text-paper/90">
+                {RECENT_LIVE_ACTIONS[activeNoticeIdx]}
+              </span>
+            </div>
           </div>
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 self-end sm:self-auto text-[10px] sm:text-[11px]">
+          <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 shrink-0 pt-1.5 sm:pt-0 border-t border-paper/10 sm:border-t-0 text-[10px] sm:text-[11px]">
             <button
               type="button"
               onClick={() => setIsBulkModalOpen(true)}
