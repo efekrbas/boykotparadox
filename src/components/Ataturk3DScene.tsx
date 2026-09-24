@@ -1,25 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { Sparkles, Compass, Shield, Maximize2, RotateCcw } from "lucide-react";
-import { playStampSound } from "@/lib/audio";
+import { Shield } from "lucide-react";
 
 export function Ataturk3DScene() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
 
-  // 3D Tilt states
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-  const [glarePos, setGlarePos] = useState({ x: 50, y: 50, opacity: 0 });
-  const [isAutoRotating, setIsAutoRotating] = useState(true);
-
-  // Three.js Particle & Light Canvas
+  // Three.js Ambient Particle & Light Atmosphere
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    const width = container.clientWidth || 400;
-    const height = container.clientHeight || 450;
+    const width = container.clientWidth || 480;
+    const height = container.clientHeight || 560;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
@@ -30,24 +22,23 @@ export function Ataturk3DScene() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // 1. Ambient & Dynamic Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    // 1. Ambient & Gentle Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
 
-    const goldLight = new THREE.PointLight(0xffb703, 3, 50);
-    goldLight.position.set(5, 5, 10);
+    const goldLight = new THREE.PointLight(0xffb703, 2.5, 45);
+    goldLight.position.set(4, 5, 8);
     scene.add(goldLight);
 
-    const crimsonLight = new THREE.PointLight(0xe63946, 2.5, 50);
-    crimsonLight.position.set(-6, -4, 8);
+    const crimsonLight = new THREE.PointLight(0xe63946, 2, 45);
+    crimsonLight.position.set(-5, -3, 6);
     scene.add(crimsonLight);
 
-    // 2. 3D Floating Gold Particles / Embers System
-    const particleCount = 280;
+    // 2. Majestic Floating Gold & Crimson Embers
+    const particleCount = 220;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
-    const scales = new Float32Array(particleCount);
 
     const goldColor = new THREE.Color(0xfb8500);
     const crimsonColor = new THREE.Color(0xe63946);
@@ -55,8 +46,7 @@ export function Ataturk3DScene() {
 
     for (let i = 0; i < particleCount; i++) {
       const idx = i * 3;
-      // Spherical distribution around center
-      const radius = 6 + Math.random() * 9;
+      const radius = 6 + Math.random() * 8.5;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(Math.random() * 2 - 1);
 
@@ -65,7 +55,7 @@ export function Ataturk3DScene() {
       positions[idx + 2] = radius * Math.cos(phi);
 
       const mixedColor =
-        Math.random() > 0.4
+        Math.random() > 0.45
           ? goldColor
           : Math.random() > 0.5
           ? crimsonColor
@@ -74,31 +64,28 @@ export function Ataturk3DScene() {
       colors[idx] = mixedColor.r;
       colors[idx + 1] = mixedColor.g;
       colors[idx + 2] = mixedColor.b;
-
-      scales[i] = Math.random() * 2.5 + 1;
     }
 
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
-    // Particle Material with additive glow
     const material = new THREE.PointsMaterial({
-      size: 0.35,
+      size: 0.32,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.8,
       blending: THREE.AdditiveBlending,
     });
 
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
 
-    // Subtle 3D Ring Orbit
-    const ringGeo = new THREE.TorusGeometry(8.5, 0.04, 16, 100);
+    // Subtle Halo Orbit Ring
+    const ringGeo = new THREE.TorusGeometry(8, 0.035, 16, 100);
     const ringMat = new THREE.MeshBasicMaterial({
       color: 0xe63946,
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.2,
       wireframe: true,
     });
     const ring = new THREE.Mesh(ringGeo, ringMat);
@@ -106,22 +93,21 @@ export function Ataturk3DScene() {
     scene.add(ring);
 
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
+      const elapsedTime = (performance.now() - startTime) / 1000;
 
-      // Slow majestic rotation
-      particles.rotation.y = elapsedTime * 0.08;
-      particles.rotation.x = Math.sin(elapsedTime * 0.05) * 0.12;
+      // Slow, majestic ambient drift
+      particles.rotation.y = elapsedTime * 0.05;
+      particles.rotation.x = Math.sin(elapsedTime * 0.03) * 0.08;
 
-      ring.rotation.z = elapsedTime * 0.05;
-      ring.rotation.y = Math.cos(elapsedTime * 0.04) * 0.2;
+      ring.rotation.z = elapsedTime * 0.03;
+      ring.rotation.y = Math.cos(elapsedTime * 0.02) * 0.15;
 
-      // Pulse lights gently
-      goldLight.intensity = 2.5 + Math.sin(elapsedTime * 2) * 0.6;
-      crimsonLight.intensity = 2.0 + Math.cos(elapsedTime * 1.8) * 0.5;
+      goldLight.intensity = 2.2 + Math.sin(elapsedTime * 1.5) * 0.4;
+      crimsonLight.intensity = 1.8 + Math.cos(elapsedTime * 1.2) * 0.3;
 
       renderer.render(scene, camera);
     };
@@ -130,8 +116,8 @@ export function Ataturk3DScene() {
 
     const handleResize = () => {
       if (!container) return;
-      const newW = container.clientWidth || 400;
-      const newH = container.clientHeight || 450;
+      const newW = container.clientWidth || 480;
+      const newH = container.clientHeight || 560;
       camera.aspect = newW / newH;
       camera.updateProjectionMatrix();
       renderer.setSize(newW, newH);
@@ -153,48 +139,11 @@ export function Ataturk3DScene() {
     };
   }, []);
 
-  // Handle interactive 3D Mouse Movement
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsAutoRotating(false);
-    const card = cardRef.current;
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotX = ((y - centerY) / centerY) * -16;
-    const rotY = ((x - centerX) / centerX) * 16;
-
-    setRotateX(rotX);
-    setRotateY(rotY);
-
-    setGlarePos({
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100,
-      opacity: 0.65,
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-    setGlarePos((prev) => ({ ...prev, opacity: 0 }));
-    setIsAutoRotating(true);
-  };
-
-  const handlePlaqueClick = () => {
-    playStampSound();
-  };
-
   return (
-    <section className="relative overflow-hidden border-b-2 border-ink bg-ink text-paper py-16">
+    <section className="relative overflow-hidden border-b-2 border-ink bg-ink text-paper py-16 sm:py-20">
       {/* Background ambient radial aura */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-20"
+        className="pointer-events-none absolute inset-0 opacity-25"
         style={{
           background:
             "radial-gradient(ellipse at 50% 40%, oklch(0.556 0.216 27.5) 0%, transparent 65%)",
@@ -227,94 +176,55 @@ export function Ataturk3DScene() {
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <div className="border border-paper/20 bg-paper/5 px-3 py-2 font-mono text-xs">
-                <span className="text-seal font-bold">1881 — 1938</span>
-                <span className="ml-2 text-paper/60">Gazi Mustafa Kemal Atatürk</span>
+                <span className="text-seal font-bold">1881 — ∞</span>
+                <span className="ml-2 text-paper/70">Gazi Mustafa Kemal Atatürk</span>
               </div>
               <div className="border border-paper/20 bg-paper/5 px-3 py-2 font-mono text-xs text-paper/70">
-                <span>Başkomutan & Devlet Adamı</span>
+                <span>Kurucu & Ebedi Başkomutan</span>
               </div>
             </div>
 
-            <div className="mt-8 flex items-center gap-2 text-xs font-mono text-paper/50">
-              <Sparkles className="size-3.5 text-seal animate-pulse" />
-              <span>İnteraktif 3D Anıt: Farenizi görselin üzerine getirerek 3D perspektifi değiştirin.</span>
+            <div className="mt-8 flex items-center gap-2 border-t border-paper/10 pt-4 font-mono text-xs text-paper/50">
+              <span className="text-seal">🇹🇷</span>
+              <span>Cumhuriyetimizin ve bağımsızlığımızın mimarına sonsuz saygı ve bağlılıkla.</span>
             </div>
           </div>
 
-          {/* Right 3D Interactive Monument Card */}
-          <div className="lg:col-span-6 flex items-center justify-center">
-            <div
-              className="relative w-full max-w-[440px] aspect-[3/4] [perspective:1200px]"
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-            >
+          {/* Right Monument Display (Freed from the card frame, stable, majestic) */}
+          <div className="lg:col-span-6 flex flex-col items-center justify-center">
+            <div className="relative w-full max-w-[460px] flex flex-col items-center">
               {/* Three.js Background Particle Canvas */}
               <div
                 ref={containerRef}
-                className="pointer-events-none absolute -inset-10 z-0 opacity-80"
+                className="pointer-events-none absolute -inset-8 z-0 opacity-75"
               />
 
-              {/* 3D Holographic Monument Card */}
-              <div
-                ref={cardRef}
-                style={{
-                  transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
-                  transition: isAutoRotating
-                    ? "transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)"
-                    : "transform 0.1s ease-out",
-                  transformStyle: "preserve-3d",
-                }}
-                className="relative z-10 size-full overflow-hidden border-2 border-seal/50 bg-gradient-to-b from-ink to-black shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(230,57,70,0.25)] select-none"
-              >
-                {/* Dynamic Specular Glare Layer */}
-                <div
-                  className="pointer-events-none absolute inset-0 z-30 transition-opacity duration-300"
-                  style={{
-                    background: `radial-gradient(circle at ${glarePos.x}% ${glarePos.y}%, rgba(255, 215, 0, 0.35) 0%, rgba(230, 57, 70, 0.15) 35%, transparent 70%)`,
-                    opacity: glarePos.opacity,
-                  }}
+              {/* Ambient Spotlight Glow behind statue */}
+              <div className="pointer-events-none absolute top-1/4 size-[320px] rounded-full bg-seal/15 blur-3xl" />
+
+              {/* Statue Visual - Standing Proud & Frameless */}
+              <div className="relative z-10 w-full overflow-hidden flex justify-center">
+                <img
+                  src="/ataturk-3d-bust.jpg"
+                  alt="Gazi Mustafa Kemal Atatürk Heykeli"
+                  className="w-full max-h-[520px] object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.9)]"
+                  loading="eager"
                 />
+                {/* Soft gradient blend at the bottom */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink via-ink/60 to-transparent" />
+              </div>
 
-                {/* 3D Bust Visual */}
-                <div className="relative size-full overflow-hidden">
-                  <img
-                    src="/ataturk-3d-bust.jpg"
-                    alt="3D Mustafa Kemal Atatürk - Tam Boy Dijital Heykel"
-                    className="size-full object-cover object-top scale-[1.02] transition-transform duration-500"
-                    loading="eager"
-                  />
-                  {/* Subtle vignette gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
+              {/* Dignified Memorial Monument Pedestal (Kaide) */}
+              <div className="relative z-20 -mt-6 w-full max-w-[400px] border-t-2 border-seal/60 bg-ink/95 px-6 py-4 text-center shadow-2xl backdrop-blur-md">
+                <div className="font-display text-xl uppercase tracking-widest text-paper sm:text-2xl">
+                  Gazi Mustafa Kemal Atatürk
                 </div>
-
-                {/* Top Badge Overlay */}
-                <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between">
-                  <div className="border border-seal bg-ink/80 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-seal backdrop-blur-md">
-                    3D DİJİTAL ANIT
-                  </div>
-                  <div className="border border-paper/20 bg-ink/70 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-paper/70 backdrop-blur-md">
-                    1881 - 1938
-                  </div>
-                </div>
-
-                {/* Bottom Plaque Overlay */}
-                <div
-                  onClick={handlePlaqueClick}
-                  className="absolute bottom-4 left-4 right-4 z-20 border border-seal/60 bg-ink/90 p-3.5 backdrop-blur-md cursor-pointer transition-colors hover:border-seal hover:bg-ink"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-display text-lg uppercase tracking-tight text-paper">
-                        Gazi Mustafa Kemal Atatürk
-                      </div>
-                      <div className="font-mono text-[10px] uppercase tracking-wider text-seal">
-                        Türkiye Cumhuriyeti Kurucusu & Ebedi Lider
-                      </div>
-                    </div>
-                    <div className="size-7 flex items-center justify-center border border-seal/50 text-seal">
-                      ★
-                    </div>
-                  </div>
+                <div className="mt-1 flex items-center justify-center gap-2 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-seal">
+                  <span>1881</span>
+                  <span>—</span>
+                  <span className="text-sm font-bold leading-none">∞</span>
+                  <span className="text-paper/30">|</span>
+                  <span>Türkiye Cumhuriyeti Kurucusu</span>
                 </div>
               </div>
             </div>
