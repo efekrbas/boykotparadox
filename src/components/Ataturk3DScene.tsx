@@ -205,13 +205,13 @@ export function Ataturk3DScene() {
               {/* Statue Visual - Standing Proud & Frameless */}
               <div className="relative z-10 w-full overflow-hidden flex justify-center">
                 <img
-                  src="/ataturk-3d-bust.jpg"
-                  alt="Gazi Mustafa Kemal Atatürk Heykeli"
-                  className="w-full max-h-[520px] object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.9)]"
+                  src="/ataturk-human.jpg"
+                  alt="Gazi Mustafa Kemal Atatürk"
+                  className="w-full max-h-[560px] object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.95)]"
                   loading="eager"
                 />
                 {/* Soft gradient blend at the bottom */}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink via-ink/60 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-ink via-ink/70 to-transparent" />
               </div>
 
               {/* Dignified Memorial Monument Pedestal (Kaide) */}
