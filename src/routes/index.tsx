@@ -26,6 +26,8 @@ import { CorporateTargetsSection } from "@/components/CorporateTargetsSection";
 import { AntiSpamGuideSection } from "@/components/AntiSpamGuideSection";
 import { BulkLauncherModal } from "@/components/BulkLauncherModal";
 import { ShareBar } from "@/components/ShareBar";
+import { Ataturk3DScene } from "@/components/Ataturk3DScene";
+import { NewsSourcesSection } from "@/components/NewsSourcesSection";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -318,6 +320,23 @@ function Index() {
               <Building2 className="size-4" />
               <span>Trustpilot & Google</span>
             </button>
+
+            <button
+              type="button"
+              onClick={() => scrollTo("anit")}
+              className="inline-flex items-center gap-2 border border-seal/50 bg-seal/10 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-seal transition-colors hover:bg-seal hover:text-paper"
+            >
+              <Sparkles className="size-4" />
+              <span>3D Atatürk Anıtı</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollTo("kaynaklar")}
+              className="inline-flex items-center gap-2 border border-paper/20 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-paper/80 transition-colors hover:text-seal"
+            >
+              <span>Haber Kaynakları (10)</span>
+            </button>
           </div>
 
           {/* Quick Metrics Bar */}
@@ -349,6 +368,11 @@ function Index() {
           </div>
         </div>
       </section>
+
+      {/* 3D Atatürk Monument Scene */}
+      <div id="anit">
+        <Ataturk3DScene />
+      </div>
 
       {/* Incident Summary & Demands */}
       <section className="mx-auto max-w-[1240px] px-5 py-14">
@@ -429,6 +453,9 @@ function Index() {
           </div>
         </div>
       </section>
+
+      {/* News & Media Sources Section */}
+      <NewsSourcesSection />
 
       {/* Games Catalog Section */}
       <section id="oyunlar" className="mx-auto max-w-[1240px] px-5 py-14">
