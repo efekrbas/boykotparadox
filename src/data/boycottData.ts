@@ -309,7 +309,7 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
     url: "https://store.steampowered.com/publisher/paradoxinteractive",
     description: "Paradox'un Steam üzerindeki TÜM oyunlarını (Age of Wonders, Prison Architect, Magicka vb.) ve yüzlerce DLC'sini tek sayfada görün. Yayıncıyı takipten çıkın ve tüm oyunlara erişin.",
     importance: "Kritik",
-    actionText: "Tüm Kataloğu Aç (Steam) →",
+    actionText: "Tüm Kataloğu Aç (Steam)",
   },
   {
     id: "corp-trustpilot",
@@ -318,7 +318,7 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
     url: "https://www.trustpilot.com/review/paradoxinteractive.com",
     description: "Şirketin küresel güvenilirlik ve tüketici memnuniyet puanını doğrudan etkiler. Google arama sonuçlarında doğrudan görünür.",
     importance: "Kritik",
-    actionText: "Trustpilot'ta 1 Yıldız Ver →",
+    actionText: "Trustpilot'ta 1★ Ver",
   },
   {
     id: "corp-google",
@@ -327,7 +327,7 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
     url: "https://www.google.com/search?q=Paradox+Interactive+AB+Stockholm+reviews",
     description: "Google Haritalar ve Arama sonuçlarında Paradox'un ana merkezine doğrudan 1 yıldız ve kamuoyu yorumu bırakın.",
     importance: "Kritik",
-    actionText: "Google'da Değerlendir →",
+    actionText: "Google'da Değerlendir",
   },
   {
     id: "corp-metacritic-publisher",
@@ -336,7 +336,7 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
     url: "https://www.metacritic.com/company/paradox-interactive/",
     description: "Paradox'un yayınladığı tüm oyunların listesi ve genel yayıncı karnesi.",
     importance: "Yüksek",
-    actionText: "Yayıncı Profilini İncele →",
+    actionText: "Yayıncı Profilini İncele",
   },
   {
     id: "corp-glassdoor",
@@ -345,7 +345,7 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
     url: "https://www.glassdoor.com/Reviews/Paradox-Interactive-Reviews-E791244.htm",
     description: "Yönetimin topluluk krizlerini yönetme biçimi ve kurumsal etik sicilini kamuoyuna gösterir.",
     importance: "Önemli",
-    actionText: "Glassdoor Puanını Gör →",
+    actionText: "Glassdoor Puanını Gör",
   },
 ];
 

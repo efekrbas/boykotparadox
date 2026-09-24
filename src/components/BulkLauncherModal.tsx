@@ -87,6 +87,8 @@ export function BulkLauncherModal({
     }
 
     const target = filteredTargets[currentIndex];
+    if (!target) return;
+
     playStampSound();
     window.open(target.url, "_blank", "noopener,noreferrer");
     if (onMarkStamped) {
@@ -96,12 +98,9 @@ export function BulkLauncherModal({
     }
     setCurrentIndex((prev) => prev + 1);
 
+    const nextTarget = filteredTargets[currentIndex + 1];
     toast.success(`Açıldı: ${target.title}`, {
-      description: `Sıradaki: ${
-        currentIndex + 1 < filteredTargets.length
-          ? filteredTargets[currentIndex + 1].title
-          : "Tamamlandı!"
-      }`,
+      description: `Sıradaki: ${nextTarget ? nextTarget.title : "Tamamlandı!"}`,
     });
   };
 

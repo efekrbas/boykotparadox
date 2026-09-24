@@ -86,7 +86,7 @@ export function CorporateTargetsSection({
                     1★ MÜHÜRLENDİ
                   </div>
                 )}
-                <div>
+                <div className="flex-1 flex flex-col">
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-[10px] uppercase tracking-wider text-seal font-bold">
                       [{target.importance}]
@@ -107,10 +107,10 @@ export function CorporateTargetsSection({
                   <button
                     type="button"
                     onClick={() => handleOpenTarget(target.id, target.url)}
-                    className="inline-flex w-full items-center justify-center gap-2 bg-paper px-3 py-2.5 font-mono text-xs uppercase tracking-[0.1em] text-ink font-semibold transition-colors hover:bg-seal hover:text-paper"
+                    className="inline-flex h-11 w-full items-center justify-center gap-2 bg-paper px-3 font-mono text-xs uppercase tracking-wider text-ink font-semibold transition-colors hover:bg-seal hover:text-paper text-center"
                   >
-                    <span>{target.actionText}</span>
-                    <ExternalLink className="size-3.5" />
+                    <span className="leading-tight">{target.actionText}</span>
+                    <ExternalLink className="size-3.5 shrink-0" />
                   </button>
 
                   <button
@@ -119,13 +119,13 @@ export function CorporateTargetsSection({
                       playStampSound();
                       onToggleStamp(target.id);
                     }}
-                    className={`inline-flex items-center justify-center gap-1.5 py-1.5 font-mono text-[10px] uppercase tracking-wider transition-colors ${
+                    className={`inline-flex h-8 w-full items-center justify-center gap-1.5 font-mono text-[10px] uppercase tracking-wider transition-colors ${
                       isStamped
                         ? "text-seal font-bold hover:text-paper"
                         : "text-paper/40 hover:text-paper"
                     }`}
                   >
-                    <Check className={`size-3 ${isStamped ? "text-seal" : "text-paper/40"}`} />
+                    <Check className={`size-3 shrink-0 ${isStamped ? "text-seal" : "text-paper/40"}`} />
                     <span>{isStamped ? "Mührü Kaldır" : "1★ Verdim Olarak İşaretle"}</span>
                   </button>
                 </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Share2, Copy, Check, MessageCircle, Send, MessageSquare } from "lucide-react";
+import { Share2, Copy, Check, MessageCircle, Send, MessageSquare, Linkedin } from "lucide-react";
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
 
@@ -70,6 +70,15 @@ export function ShareBar() {
     window.open(`https://t.me/share/url?url=${url}&text=${text}`, "_blank", "noopener,noreferrer");
   };
 
+  const handleLinkedInShare = () => {
+    const url = encodeURIComponent(shareUrl);
+    window.open(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 border-2 border-ink bg-paper p-5">
       <div className="flex items-center gap-3">
@@ -111,6 +120,15 @@ export function ShareBar() {
         >
           <Send className="size-3.5" />
           <span>Telegram</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={handleLinkedInShare}
+          className="inline-flex items-center gap-2 border border-ink/30 bg-paper px-3.5 py-2 font-mono text-xs uppercase tracking-wider transition-colors hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]"
+        >
+          <Linkedin className="size-3.5" />
+          <span>LinkedIn</span>
         </button>
 
         <button

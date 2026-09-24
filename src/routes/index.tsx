@@ -32,6 +32,10 @@ import { NewsSourcesSection } from "@/components/NewsSourcesSection";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
+      {
+        name: "google-site-verification",
+        content: "hYFGZJAo0Z4zRDGxUsflXR2QQ-RwHAbmVURjZO-EBDw",
+      },
       { title: "Boykot Paradox — Tüm Platformlarda 1 Yıldız Kampanyası" },
       {
         name: "description",

@@ -5,11 +5,11 @@ import { REVIEW_TEMPLATES } from "@/data/boycottData";
 import { playStampSound } from "@/lib/audio";
 
 export function ReviewTemplatesSection() {
-  const [selectedId, setSelectedId] = useState(REVIEW_TEMPLATES[0].id);
+  const [selectedId, setSelectedId] = useState(REVIEW_TEMPLATES[0]?.id ?? "");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const activeTemplate =
-    REVIEW_TEMPLATES.find((t) => t.id === selectedId) ?? REVIEW_TEMPLATES[0];
+    REVIEW_TEMPLATES.find((t) => t.id === selectedId) || REVIEW_TEMPLATES[0]!;
 
   const handleCopy = (id: string, text: string) => {
     playStampSound();

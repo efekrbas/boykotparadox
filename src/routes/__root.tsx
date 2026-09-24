@@ -78,6 +78,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5" },
+      {
+        name: "google-site-verification",
+        content: "hYFGZJAo0Z4zRDGxUsflXR2QQ-RwHAbmVURjZO-EBDw",
+      },
       { title: "Boykot Paradox — Tüm Platformlarda 1 Yıldız Kampanyası" },
       {
         name: "description",
