@@ -416,7 +416,6 @@ function Index() {
               <Flame className="size-3" />
               <span>Hızlı Baskın Modu</span>
             </button>
-            <span className="text-paper/30">|</span>
             <AudioStampToggle />
           </div>
         </div>
