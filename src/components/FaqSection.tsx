@@ -101,7 +101,7 @@ export function FaqSection() {
   };
 
   return (
-    <section id="faq" className="mx-auto max-w-[1240px] px-5 py-14">
+    <section id="faq" className="mx-auto max-w-[1240px] px-5 py-14 scroll-mt-24 sm:scroll-mt-28">
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-ink pb-4">
         <div>

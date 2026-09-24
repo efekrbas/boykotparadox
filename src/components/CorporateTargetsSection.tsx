@@ -42,7 +42,7 @@ export function CorporateTargetsSection({
   };
 
   return (
-    <section id="kurumsal" className="border-y-2 border-ink bg-ink text-paper py-14">
+    <section id="kurumsal" className="border-y-2 border-ink bg-ink text-paper py-14 scroll-mt-24 sm:scroll-mt-28">
       <div className="mx-auto max-w-[1240px] px-5">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-paper/20 pb-4">
           <div>

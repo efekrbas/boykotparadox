@@ -22,7 +22,7 @@ export function PetitionSection() {
   };
 
   return (
-    <section id="imza" className="mx-auto max-w-[1240px] px-5 py-14">
+    <section id="imza" className="mx-auto max-w-[1240px] px-5 py-14 scroll-mt-24 sm:scroll-mt-28">
       <div className="relative overflow-hidden border-2 border-seal bg-ink text-paper shadow-2xl">
         {/* Subtle red ambient glow */}
         <div
