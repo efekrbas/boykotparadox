@@ -237,14 +237,14 @@ export function Ataturk3DScene() {
 
             <div className="mt-8 flex items-center gap-2 text-xs font-mono text-paper/50">
               <Sparkles className="size-3.5 text-seal animate-pulse" />
-              <span>İnteraktif 3D Anıt: Farenizi heykelin üzerine getirerek 3D açıyı değiştirin.</span>
+              <span>İnteraktif 3D Anıt: Farenizi görselin üzerine getirerek 3D perspektifi değiştirin.</span>
             </div>
           </div>
 
           {/* Right 3D Interactive Monument Card */}
           <div className="lg:col-span-6 flex items-center justify-center">
             <div
-              className="relative w-full max-w-[420px] aspect-[4/5] [perspective:1200px]"
+              className="relative w-full max-w-[440px] aspect-[3/4] [perspective:1200px]"
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
             >
@@ -279,8 +279,8 @@ export function Ataturk3DScene() {
                 <div className="relative size-full overflow-hidden">
                   <img
                     src="/ataturk-3d-bust.jpg"
-                    alt="3D Mustafa Kemal Atatürk Anıt Büstü"
-                    className="size-full object-cover object-center scale-105 transition-transform duration-500"
+                    alt="3D Mustafa Kemal Atatürk - Tam Boy Dijital Heykel"
+                    className="size-full object-cover object-top scale-[1.02] transition-transform duration-500"
                     loading="eager"
                   />
                   {/* Subtle vignette gradient */}
@@ -290,7 +290,7 @@ export function Ataturk3DScene() {
                 {/* Top Badge Overlay */}
                 <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between">
                   <div className="border border-seal bg-ink/80 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-seal backdrop-blur-md">
-                    3D ANIT BÜST
+                    3D DİJİTAL ANIT
                   </div>
                   <div className="border border-paper/20 bg-ink/70 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-paper/70 backdrop-blur-md">
                     1881 - 1938
