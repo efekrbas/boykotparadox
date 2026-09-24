@@ -1,0 +1,41 @@
+# Boykot Paradox (Boycott Paradox Interactive) — Campaign Dossier
+
+> **Summary**: Official documentation and briefing on the independent gaming community boycott targeting Paradox Interactive (Paradox Interactive AB, Stockholm, Sweden). The campaign was launched in September 2024 following hate speech, censorship, and anti-Turkish moderation on the official Hearts of Iron IV Discord server regarding the founder of modern Turkey, Gazi Mustafa Kemal Atatürk.
+
+## 1. Executive Overview
+- **Campaign Name**: Boykot Paradox / Boycott Paradox
+- **Official Portal**: https://boykotparadox.vercel.app/
+- **Primary Action**: 1-star (1★) review campaign across all Paradox Interactive game titles, Steam store and publisher pages, Metacritic user scores, Trustpilot corporate profile, and Google Maps HQ reviews.
+- **Core Stance**: Zero tolerance for hate speech against Mustafa Kemal Atatürk, unfair bans against protesting Turkish players, and the lack of a formal corporate apology from Paradox Interactive management.
+
+## 2. The Core Incident
+1. **Discord Moderation Scandal**: On the official Hearts of Iron IV (HOI4) Discord server managed by Paradox Interactive, moderators allowed and defended derogatory statements and hate speech targeting Mustafa Kemal Atatürk.
+2. **Unfair Censorship**: Turkish players who peacefully protested the insults were banned, muted, and silenced without justification by Discord moderators.
+3. **Historical Distortion**: Moderators falsely categorized Mustafa Kemal Atatürk using derogatory historical labels, completely disregarding factual history and insulting the national values of millions of Turkish players.
+4. **Corporate Inaction**: Paradox Interactive upper management failed to issue an official, transparent, and direct apology, issuing only dismissive or partial statements that did not hold responsible moderators accountable.
+
+## 3. Prominent Reactions & Media Coverage
+- **Prof. Dr. Emrah Safa Gürkan (Historian & Author)**: With over 6,000+ hours in Paradox games, the prominent historian publicly announced he deleted Paradox titles from his library, condemning Paradox's biased stance as outright hostility and historical manipulation.
+- **National Media**: Covered widely by major Turkish newspapers and portals including Sözcü, OdaTV, Onedio, Webtekno, ShiftDelete, and Ensonhaber.
+- **Community Response**: Hundreds of thousands of Turkish gamers joined the movement, resulting in "Overwhelmingly Negative" recent review trends across Hearts of Iron IV and Europa Universalis IV.
+
+## 4. Key Demands of the Campaign
+1. **Formal and Sincere Apology**: An official corporate public statement from Paradox Interactive management apologizing to the Turkish player base and honoring Mustafa Kemal Atatürk.
+2. **Dismissal of Biased Moderators**: Revocation of moderation privileges for the Discord moderators who allowed hate speech and unfairly censored Turkish players.
+3. **Revocation of Unjust Bans**: Immediate reinstatement of all Turkish players who were banned or silenced on official Paradox Discord and forum channels during the protest.
+4. **Strict Anti-Hate Speech Standards**: Clear revision of moderation guidelines across all Paradox community channels to prevent xenophobia, racism, and disrespect towards national founding leaders.
+
+## 5. Targeted Platforms & Action Checklist
+- **Steam**: Hearts of Iron IV (AppID: 394360), Europa Universalis IV (AppID: 236850), Crusader Kings III (AppID: 1158310), Stellaris (AppID: 281990), Victoria 3 (AppID: 529340), Cities: Skylines (AppID: 255710), and the Paradox Interactive Steam Publisher Hub.
+- **Trustpilot**: Paradox Interactive corporate reputation score (https://www.trustpilot.com/review/paradoxinteractive.com).
+- **Google Reviews**: Paradox Interactive AB Stockholm HQ on Google Maps and Google Search.
+- **Metacritic**: User scores for all Paradox Interactive titles.
+- **Epic Games, GOG, Xbox Store**: User ratings and reviews.
+
+## 6. Frequently Asked Questions (FAQ)
+- **Q: Why is Paradox Interactive being boycotted?**
+  **A**: Due to hate speech allowed on their official Discord against Mustafa Kemal Atatürk, the silencing/banning of Turkish players protesting this, and the absence of a sincere formal apology from corporate leadership.
+- **Q: How can players ensure their Steam reviews are not filtered as "off-topic"?**
+  **A**: Steam filters mass reviews that don't discuss gameplay unless they explicitly address company policy, toxic community moderation, and customer trust. Players are advised to mention community management, lack of player respect, and customer dissatisfaction in their reviews.
+- **Q: How can international players support the movement?**
+  **A**: International players can support by rating Paradox Interactive 1-star on Metacritic and Trustpilot, sharing the hashtag #BoycottParadox, and demanding respectful community moderation standards for all player communities globally.
