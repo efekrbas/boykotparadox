@@ -1,9 +1,60 @@
-import { useState } from "react";
-import { Newspaper, ExternalLink, Quote, Sparkles, Filter } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Newspaper, ExternalLink, Quote, Sparkles, Filter, RefreshCw, Rss } from "lucide-react";
 import { NEWS_SOURCES, type NewsSource } from "@/data/newsSources";
+import { toast } from "sonner";
+import { playStampSound } from "@/lib/audio";
+
+interface LiveNewsItem {
+  title: string;
+  link: string;
+  pubDate: string;
+  source?: string;
+}
+
+const GOOGLE_NEWS_RSS = "https://news.google.com/rss/search?q=Paradox+Interactive+Atat%C3%BCrk&hl=tr&gl=TR&ceid=TR:tr";
+const RSS2JSON_ENDPOINT = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(GOOGLE_NEWS_RSS)}`;
 
 export function NewsSourcesSection() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [liveNews, setLiveNews] = useState<LiveNewsItem[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+
+  const fetchLiveNews = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch(RSS2JSON_ENDPOINT);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.status === "ok" && Array.isArray(data.items) && data.items.length > 0) {
+          const items: LiveNewsItem[] = data.items.slice(0, 4).map((it: any) => ({
+            title: it.title || "Paradox Interactive Skandalı Haberi",
+            link: it.link || "#",
+            pubDate: it.pubDate ? new Date(it.pubDate).toLocaleDateString("tr-TR") : "Güncel",
+            source: it.author || "Google Haberler",
+          }));
+          setLiveNews(items);
+          setLastUpdated(new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }));
+        }
+      }
+    } catch {
+      // Silently keep static fallback
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchLiveNews();
+  }, []);
+
+  const handleManualRefresh = () => {
+    playStampSound();
+    fetchLiveNews();
+    toast.info("Google News Akışı Yenileniyor...", {
+      description: "En güncel medya haberleri taranıyor.",
+    });
+  };
 
   const categories = [
     { id: "all", label: `Tümü (${NEWS_SOURCES.length})` },
@@ -69,63 +120,144 @@ export function NewsSourcesSection() {
         </div>
       </div>
 
-      {/* Category Filter Pills */}
-      <div className="mt-8 flex flex-wrap gap-2">
-        {categories.map((cat) => (
-          <button
-            key={cat.id}
-            type="button"
-            onClick={() => setActiveCategory(cat.id)}
-            className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
-              activeCategory === cat.id
-                ? "bg-ink text-paper"
-                : "border border-ink/20 bg-paper text-ink hover:border-ink"
-            }`}
-          >
-            {cat.label}
-          </button>
-        ))}
+      {/* Live Auto-fetching Google News Feed Box */}
+      <div className="mt-8 border-2 border-ink bg-ink text-paper p-5 sm:p-7 shadow-lg">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-paper/15 pb-4">
+          <div className="flex items-center gap-2.5">
+            <span className="relative flex size-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex size-2.5 rounded-full bg-emerald-500"></span>
+            </span>
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-400">
+              Canlı Otomatik Basın Takibi (Google News API)
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {lastUpdated && (
+              <span className="hidden font-mono text-[11px] text-paper/60 sm:inline">
+                Son Güncelleme: {lastUpdated}
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={handleManualRefresh}
+              disabled={isLoading}
+              className="inline-flex items-center gap-1.5 border border-paper/20 bg-paper/10 px-2.5 py-1 font-mono text-[11px] uppercase tracking-wider text-paper hover:bg-paper/20 transition-colors disabled:opacity-50"
+            >
+              <RefreshCw className={`size-3 ${isLoading ? "animate-spin" : ""}`} />
+              <span>{isLoading ? "Taranıyor..." : "Yenile"}</span>
+            </button>
+          </div>
+        </div>
+
+        {liveNews.length > 0 ? (
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {liveNews.map((item, idx) => (
+              <a
+                key={idx}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col justify-between border border-paper/15 bg-paper/5 p-3.5 hover:border-seal hover:bg-paper/10 transition-all"
+              >
+                <div>
+                  <div className="flex items-center justify-between font-mono text-[10px] text-paper/60">
+                    <span className="text-emerald-400 font-bold">{item.source}</span>
+                    <span>{item.pubDate}</span>
+                  </div>
+                  <h4 className="mt-1.5 font-display text-base uppercase leading-snug text-paper group-hover:text-seal transition-colors line-clamp-2">
+                    {item.title}
+                  </h4>
+                </div>
+                <div className="mt-2.5 flex items-center gap-1 font-mono text-[10px] uppercase text-seal">
+                  <span>Habere Git</span>
+                  <ExternalLink className="size-2.5" />
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-4 flex items-center justify-between font-mono text-xs text-paper/70 bg-paper/5 p-3 border border-paper/10">
+            <div className="flex items-center gap-2">
+              <Rss className="size-4 text-emerald-400" />
+              <span>Google Haberler'de "Paradox Interactive & Atatürk" anahtar kelimeleri taranıyor...</span>
+            </div>
+            <a
+              href="https://news.google.com/search?q=Paradox+Interactive+Atat%C3%BCrk&hl=tr&gl=TR&ceid=TR%3Atr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-seal underline font-bold"
+            >
+              Google News'te Aç →
+            </a>
+          </div>
+        )}
+      </div>
+
+      {/* Category Filter Pills for Curated Archives */}
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
+                activeCategory === cat.id
+                  ? "bg-ink text-paper"
+                  : "border border-ink/20 bg-paper text-ink hover:border-ink"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+        <span className="font-mono text-xs text-mute">Arşivlenmiş 10 Doğrulanmış Kaynak</span>
       </div>
 
       {/* News Cards Grid */}
-      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredSources.map((source) => (
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {filteredSources.map((item) => (
           <article
-            key={source.id}
-            className="flex flex-col justify-between border-2 border-ink/20 bg-paper p-5 transition-all hover:border-ink hover:shadow-[3px_3px_0_0_oklch(0.183_0.014_70)]"
+            key={item.id}
+            className="flex flex-col justify-between border-2 border-ink/20 bg-paper p-5 transition-colors hover:border-ink"
           >
             <div>
-              <div className="flex items-center justify-between gap-2 border-b border-ink/10 pb-2.5">
-                <span className="font-mono text-xs font-bold uppercase tracking-wider text-seal">
-                  {source.outlet}
+              {/* Badge & Date */}
+              <div className="flex items-center justify-between text-xs font-mono text-mute">
+                <span className="border border-ink/15 bg-ink/5 px-2 py-0.5 uppercase tracking-wider text-seal font-bold">
+                  {item.category}
                 </span>
-                <span className="font-mono text-[10px] text-mute">{source.date}</span>
+                <span>{item.date}</span>
               </div>
 
-              {source.badge && (
-                <div className="mt-2 inline-block border border-ink/20 bg-ink/5 px-2 py-0.5 font-mono text-[10px] uppercase font-bold text-ink">
-                  {source.badge}
-                </div>
-              )}
+              {/* Source Name */}
+              <div className="mt-3 font-mono text-xs font-bold uppercase tracking-wider text-ink/70">
+                {item.source}
+              </div>
 
-              <h3 className="mt-2 font-display text-lg uppercase tracking-tight text-ink leading-tight">
-                {source.title}
+              {/* Title */}
+              <h3 className="mt-1 font-display text-lg uppercase tracking-tight leading-snug">
+                {item.title}
               </h3>
 
+              {/* Summary */}
               <p className="mt-2 text-xs text-mute leading-relaxed">
-                {source.summary}
+                {item.summary}
               </p>
             </div>
 
-            <div className="mt-5 border-t border-ink/10 pt-3">
+            {/* Link Button */}
+            <div className="mt-5 pt-3 border-t border-ink/10">
               <a
-                href={source.url}
+                href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-between font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:text-seal"
+                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-seal hover:underline font-bold"
               >
-                <span>Kaynağa Git</span>
-                <ExternalLink className="size-3.5" />
+                <span>Haber Kaynağına Git</span>
+                <ExternalLink className="size-3" />
               </a>
             </div>
           </article>

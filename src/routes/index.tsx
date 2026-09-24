@@ -16,6 +16,7 @@ import {
   ArrowRight,
   TrendingUp,
   PenLine,
+  Send,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -26,6 +27,8 @@ import { ReviewTemplatesSection } from "@/components/ReviewTemplatesSection";
 import { CorporateTargetsSection } from "@/components/CorporateTargetsSection";
 import { PetitionSection, PETITION_URL } from "@/components/PetitionSection";
 import { AntiSpamGuideSection } from "@/components/AntiSpamGuideSection";
+import { CeoRaidSection } from "@/components/CeoRaidSection";
+import { BoycottGuidesSection } from "@/components/BoycottGuidesSection";
 import { BulkLauncherModal } from "@/components/BulkLauncherModal";
 import { ShareBar } from "@/components/ShareBar";
 import { Ataturk3DScene } from "@/components/Ataturk3DScene";
@@ -571,6 +574,24 @@ function Index() {
 
             <button
               type="button"
+              onClick={() => scrollTo("tweet-baskini")}
+              className="inline-flex items-center gap-2 border border-[#1d9bf0]/50 bg-[#1d9bf0]/10 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-[#1d9bf0] transition-colors hover:bg-[#1d9bf0] hover:text-white"
+            >
+              <Send className="size-4" />
+              <span>X / CEO Baskını</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollTo("eylem-rehberleri")}
+              className="inline-flex items-center gap-2 border border-paper/20 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-paper/80 transition-colors hover:text-seal"
+            >
+              <ShieldAlert className="size-4" />
+              <span>İade & Şikayet</span>
+            </button>
+
+            <button
+              type="button"
               onClick={() => scrollTo("imza")}
               className="inline-flex items-center gap-2 border border-seal/50 bg-seal/10 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-seal transition-colors hover:bg-seal hover:text-paper"
             >
@@ -601,7 +622,7 @@ function Index() {
               onClick={() => scrollTo("kaynaklar")}
               className="inline-flex items-center gap-2 border border-paper/20 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-paper/80 transition-colors hover:text-seal"
             >
-              <span>Haber Kaynakları (10)</span>
+              <span>Haber Kaynakları</span>
             </button>
           </div>
 
@@ -617,7 +638,7 @@ function Index() {
               <div className="font-mono text-[10px] uppercase tracking-wider text-paper/50">
                 Kapsanan Oyunlar
               </div>
-              <div className="font-display text-2xl text-paper">6 Ana Oyun</div>
+              <div className="font-display text-2xl text-paper">{GAMES.length} Oyun & Seri</div>
             </div>
             <div>
               <div className="font-mono text-[10px] uppercase tracking-wider text-paper/50">
@@ -991,11 +1012,17 @@ function Index() {
         onToggleStamp={toggleStampPlatform}
       />
 
+      {/* Direct X / Twitter Pressure Center on Paradox CEO & Company */}
+      <CeoRaidSection />
+
       {/* Ready-to-copy Review Templates */}
       <ReviewTemplatesSection />
 
       {/* Anti-Spam / Anti-Review Bombing Guidelines */}
       <AntiSpamGuideSection />
+
+      {/* Action Guides: Steam Refund, Discord Report & Avatar Protest Kit */}
+      <BoycottGuidesSection />
 
       {/* FAQ & AEO / GEO Bilgi Merkezi */}
       <FaqSection />
