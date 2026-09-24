@@ -544,10 +544,10 @@ function Index() {
                 });
               }}
               title="Tıkla ve 1★ damgasını vur!"
-              className="group cursor-pointer select-none transition-all duration-300 hover:scale-105 active:scale-95"
+              className="group cursor-pointer select-none transition-transform active:scale-95"
             >
               {/* Stamp Card */}
-              <div className="relative border-2 border-dashed border-seal bg-paper/5 backdrop-blur-md p-5 shadow-2xl shadow-seal/20 rotate-[-3deg] group-hover:rotate-0 transition-transform duration-300 w-[270px]">
+              <div className="relative border-2 border-dashed border-seal bg-paper/5 backdrop-blur-md p-5 shadow-2xl shadow-seal/20 transition-all duration-200 group-hover:-translate-y-1 group-hover:shadow-seal/35 group-hover:bg-paper/10 w-[270px]">
                 {/* Header Tag */}
                 <div className="absolute -top-3 left-4 bg-seal px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-paper shadow-sm">
                   TOPLULUK DERECESİ
