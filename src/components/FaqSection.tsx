@@ -17,16 +17,16 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "TEMEL NEDEN",
     question: "Paradox Interactive neden boykot ediliyor?",
     answer:
-      "Paradox Interactive'in resmi Hearts of Iron IV Discord sunucusunda Türkiye Cumhuriyeti'nin kurucusu Gazi Mustafa Kemal Atatürk'e ve Türk milletine yönelik ağır hakaret ve nefret söylemine izin verilmiş; duruma barışçıl tepki gösteren Türk oyuncular ise taraflı moderasyon ekibi tarafından haksızca susturulup banlanmıştır. Paradox Interactive üst yönetiminin resmi, kurumsal ve şeffaf bir özür dilememesi ve sorumlu moderatörler hakkında işlem yapmaması üzerine bağımsız Türk oyuncu topluluğu tarafından tüm platformlarda 1 yıldız (1★) boykotu başlatılmıştır.",
-    highlight: "Atatürk'e hakaret, haklı tepki gösteren oyunculara sansür ve şirketin resmi özür dilememesi.",
+      "Resmi Hearts of Iron IV Discord sunucusunda Gazi Mustafa Kemal Atatürk'ün fotoğrafını profil resmi yapan bir Türk oyuncu banlanmış; yapılan itirazda 'chakerathe' adlı moderatör Atatürk'ü 'tartışmalı figür' ilan ederek 1915 olayları ve İttihat Terakki üzerinden asılsız şekilde soykırımla ilişkilendirmiştir. Stalin ve Churchill gibi figürlerin profil fotoğrafları serbestken Atatürk'e atılan bu soykırım iftirasına ve çifte standarda tepki gösteren Türk oyuncular kitlesel olarak susturulup banlanmıştır. Paradox yönetiminin resmi bir özür dilememesi ve sorumlu moderatör 'chakerathe' hakkında işlem yapmaması üzerine küresel 1 yıldız boykotu başlatılmıştır.",
+    highlight: "Moderatör 'chakerathe'in Atatürk'e attığı 1915 soykırım iftirası ve Türk oyunculara uygulanan sansür.",
   },
   {
     id: "discord-olayi",
     category: "KRONOLOJİ",
     question: "Hearts of Iron IV Discord sunucusunda tam olarak ne yaşandı?",
     answer:
-      "Resmi Paradox HOI4 Discord sunucusunda bazı kullanıcılar Atatürk'ü mesnetsizce tarihi olaylarla ilişkilendirip 'tartışmalı lider' kisvesi altında hakaret içeren ifadeler kullanmıştır. Türk oyuncuların kanıtlarla ve saygı çerçevesinde yaptığı itirazlar moderasyon tarafından 'kışkırtma' sayılarak Türk oyuncular kitlesel olarak banlanmış ve susturulmuştur. Hakaret eden kullanıcıların korunması ve yetkililerin ayrımcı tutumu olayın küresel bir krize dönüşmesine yol açmıştır.",
-    highlight: "Yetkililer hakaret edenleri korurken, saygılı şekilde tepki gösteren Türk oyuncuları banladı.",
+      "Resmi Paradox HOI4 Discord sunucusunda bir Türk oyuncu, profil resminde Atatürk portresi kullandığı için sunucudan uzaklaştırıldı. Destek biletinde (ticket) moderatör 'chakerathe', Atatürk'ü İttihat ve Terakki Cemiyeti ve 1915 olaylarıyla mesnetsizce bağdaştırarak 'soykırımla ilişkili tartışmalı figür' ithamında bulundu ve fotoğraf kaldırılmadıkça yasağın kalkmayacağını belirtti. Oysa tarihi bir gerçek olarak 1915'te Atatürk hükümette değil, Çanakkale Anafartalar cephesinde kahramanca vatan savunan bir askeri komutandı. Bu tarihi cehalete ve iftiraya itiraz eden yüzlerce Türk oyuncu ise kurallara uymalarına rağmen sunucudan haksızca banlandı.",
+    highlight: "Moderatör 'chakerathe' Atatürk'e 1915 soykırım iftirası attı; haklı itiraz eden tüm Türkler banlandı.",
   },
   {
     id: "steam-off-topic",
@@ -57,8 +57,8 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: "NET TALEPLER",
     question: "Boykot kampanyasının Paradox yönetiminden 4 temel talebi nedir?",
     answer:
-      "1. Resmi ve Samimi Özür: Üst yönetimin tüm resmi kanallarda Atatürk ve Türk milletinden kamuoyuna açık özür yayınlaması. 2. Sorumlu Moderatörlerin Görevden Alınması: Hakarete göz yuman ve taraflı ceza kesen Discord moderatörlerinin yetkilerinin feshedilmesi. 3. Haksız Yasakların Kaldırılması: Olayda haksız yere banlanan tüm Türk oyuncuların hesap haklarının iade edilmesi. 4. Moderasyon Standartlarının Güncellenmesi: Kurucu liderlere hakaret ve nefret söylemine karşı tavizsiz sıfır tolerans kuralının yazılı hale getirilmesi.",
-    highlight: "Resmi özür, sorumlu moderatörlerin ihracı, haksız banların açılması ve sıfır tolerans kuralı.",
+      "1. Resmi ve Samimi Özür: Üst yönetimin tüm resmi kanallarda Atatürk ve Türk milletinden kamuoyuna açık özür yayınlaması. 2. Sorumlu Moderatör 'chakerathe' ve Ekibin İhracı: Atatürk'e 1915 üzerinden soykırım iftirası atan moderatör 'chakerathe' ve taraflı moderasyon ekibinin tüm yetkilerinin feshedilmesi. 3. Haksız Yasakların Kaldırılması: Olayda haksız yere banlanan tüm Türk oyuncuların hesap haklarının iade edilmesi. 4. Moderasyon Standartlarının Güncellenmesi: Kurucu liderlere hakaret ve nefret söylemine karşı tavizsiz sıfır tolerans kuralının yazılı hale getirilmesi.",
+    highlight: "Resmi özür, 'chakerathe' ve ekibin ihracı, haksız banların açılması ve sıfır tolerans kuralı.",
   },
   {
     id: "global-destek",

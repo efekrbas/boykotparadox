@@ -392,8 +392,8 @@ export const DEMANDS = [
   },
   {
     number: "02",
-    title: "Sorumlu Moderatörlerin Görevden Alınması",
-    description: "Resmi Discord sunucusunda Atatürk'e hakaret içeren paylaşımlara izin veren ve taraflı moderasyon yapan kişilerin yetkilerinin feshedilmesi.",
+    title: "Sorumlu Moderatör 'chakerathe' ve Ekibin İhracı",
+    description: "Atatürk profil fotoğrafı nedeniyle Türk oyuncuyu banlayan, Atatürk'e 1915 olayları üzerinden mesnetsiz soykırım iftirası atan moderatör 'chakerathe' ve taraflı moderasyon ekibinin tüm yetkilerinin derhal feshedilmesi.",
   },
   {
     number: "03",

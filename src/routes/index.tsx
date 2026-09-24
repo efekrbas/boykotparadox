@@ -899,27 +899,25 @@ function Index() {
         <div className="mt-8 grid gap-6 sm:grid-cols-3">
           <div className="border-2 border-ink/20 bg-paper p-5 transition-colors hover:border-ink">
             <div className="font-mono text-xs font-bold uppercase tracking-wider text-seal">
-              (A) Resmi Sunucuda Hakaret
+              (A) Profil Fotoğrafı & 1915 İftirası
             </div>
             <h3 className="mt-2 font-display text-2xl uppercase leading-none">
-              Atatürk Hedef Alındı
+              Moderatör 'chakerathe' İftirası
             </h3>
             <p className="mt-3 text-sm text-mute leading-relaxed">
-              Paradox Interactive'in en popüler oyunu Hearts of Iron IV'ün resmi Discord sunucusunda,
-              Türkiye Cumhuriyeti'nin kurucusu Gazi Mustafa Kemal Atatürk'e ve Türk milletine yönelik ağır hakaretler içeren paylaşımlar yapıldı.
+              Resmi HOI4 Discord'unda Atatürk portresini profil fotoğrafı yapan Türk oyuncu banlandı. İtiraz talebinde moderatör <strong>'chakerathe'</strong>, Atatürk'ü İttihat ve Terakki ile bağdaştırıp 1915 olayları üzerinden açıkça <strong>soykırımcı iftirası</strong> attı ve fotoğrafı kaldırmazsa banın kalkmayacağını söyledi.
             </p>
           </div>
 
           <div className="border-2 border-ink/20 bg-paper p-5 transition-colors hover:border-ink">
             <div className="font-mono text-xs font-bold uppercase tracking-wider text-seal">
-              (B) Taraflı Moderasyon & Sansür
+              (B) Çifte Standart & Sansür
             </div>
             <h3 className="mt-2 font-display text-2xl uppercase leading-none">
-              Türk Oyuncular Banlandı
+              Stalin Serbest, Atatürk Yasak
             </h3>
             <p className="mt-3 text-sm text-mute leading-relaxed">
-              Hakarete itiraz eden ve kuralların uygulanmasını isteyen Türk oyuncular, sunucu moderatörleri
-              tarafından susturuldu, hakaret edenler korunurken itiraz edenler sunucudan haksızca atıldı.
+              Sunucuda Stalin ve Churchill fotoğraflarına izin verilirken; 1915'te Çanakkale'de cephede vatan savunan Atatürk'e atılan bu iftiraya itiraz eden ve gerçeği anlatan Türk oyuncular, sunucu yetkilileri tarafından susturuldu ve kitlesel olarak banlandı.
             </p>
           </div>
 
@@ -931,8 +929,7 @@ function Index() {
               Tüm Cephelerde Boykot
             </h3>
             <p className="mt-3 text-sm text-mute leading-relaxed">
-              Yalnızca tek bir oyun değil; Paradox'un tüm oyunları, Trustpilot kurumsal sayfası, Metacritic
-              ve Google Maps profili 1 yıldız yağmuruna tutuluyor.
+              Tarihçi Prof. Dr. Emrah Safa Gürkan 6000+ saatlik oyun kütüphanesini silerek tepki gösterdi. Yalnızca HOI4 değil; Paradox'un tüm oyunları, Trustpilot kurumsal sayfası ve Google Maps profili 1 yıldızla mühürleniyor.
             </p>
           </div>
         </div>

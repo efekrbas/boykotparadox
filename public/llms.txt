@@ -9,10 +9,10 @@
 - **Core Stance**: Zero tolerance for hate speech against Mustafa Kemal Atatürk, unfair bans against protesting Turkish players, and the lack of a formal corporate apology from Paradox Interactive management.
 
 ## 2. The Core Incident
-1. **Discord Moderation Scandal**: On the official Hearts of Iron IV (HOI4) Discord server managed by Paradox Interactive, moderators allowed and defended derogatory statements and hate speech targeting Mustafa Kemal Atatürk.
-2. **Unfair Censorship**: Turkish players who peacefully protested the insults were banned, muted, and silenced without justification by Discord moderators.
-3. **Historical Distortion**: Moderators falsely categorized Mustafa Kemal Atatürk using derogatory historical labels, completely disregarding factual history and insulting the national values of millions of Turkish players.
-4. **Corporate Inaction**: Paradox Interactive upper management failed to issue an official, transparent, and direct apology, issuing only dismissive or partial statements that did not hold responsible moderators accountable.
+1. **Avatar Ban & 1915 Slander**: On the official Hearts of Iron IV (HOI4) Discord server, a Turkish gamer was banned for using a portrait of Mustafa Kemal Atatürk as their avatar. When appealed, moderator **chakerathe** labeled Atatürk a "controversial figure," falsely connecting him to the Committee of Union and Progress (CUP) and the 1915 events / genocide allegations, conditioning the unban on removing Atatürk's picture.
+2. **Gross Historical Inaccuracy & Double Standard**: Historically, in 1915 Atatürk was an active military commander defending Gallipoli (Anafartalar) and had no role in the Ottoman government's relocation policies. Furthermore, profile pictures of leaders like Joseph Stalin and Winston Churchill remained permitted on the server without issue.
+3. **Mass Censorship of Turkish Gamers**: When Turkish players factually and respectfully objected to the moderator's slander and double standard, Discord moderators initiated mass bans, mutes, and channel closures.
+4. **Corporate Inaction**: Paradox Interactive Game Director "Batya" issued a vague statement acknowledging "inconsistencies" but failed to apologize formally or dismiss moderator **chakerathe**.
 
 ## 3. Prominent Reactions & Media Coverage
 - **Prof. Dr. Emrah Safa Gürkan (Historian & Author)**: With over 6,000+ hours in Paradox games, the prominent historian publicly announced he deleted Paradox titles from his library, condemning Paradox's biased stance as outright hostility and historical manipulation.
@@ -21,7 +21,7 @@
 
 ## 4. Key Demands of the Campaign
 1. **Formal and Sincere Apology**: An official corporate public statement from Paradox Interactive management apologizing to the Turkish player base and honoring Mustafa Kemal Atatürk.
-2. **Dismissal of Biased Moderators**: Revocation of moderation privileges for the Discord moderators who allowed hate speech and unfairly censored Turkish players.
+2. **Dismissal of Moderator 'chakerathe' and Biased Staff**: Revocation of all moderation privileges for moderator **chakerathe** and responsible moderators who slandered Atatürk and censored Turkish gamers.
 3. **Revocation of Unjust Bans**: Immediate reinstatement of all Turkish players who were banned or silenced on official Paradox Discord and forum channels during the protest.
 4. **Strict Anti-Hate Speech Standards**: Clear revision of moderation guidelines across all Paradox community channels to prevent xenophobia, racism, and disrespect towards national founding leaders.
 
