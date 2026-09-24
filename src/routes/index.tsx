@@ -534,6 +534,63 @@ function Index() {
             Steam · Metacritic · Trustpilot · Google · Epic · GOG · Xbox
           </div>
 
+          {/* Hero Desktop Right: Steam Parody 1★ Rating Card & Stamp */}
+          <div className="hidden lg:flex absolute right-5 top-16 xl:top-24 flex-col items-end pointer-events-auto z-10">
+            <div
+              onClick={() => {
+                playStampSound();
+                toast.success("1★ Boykot Damgası Vuruldu! Platformları açıp oylamayı unutmayın.", {
+                  icon: "★",
+                });
+              }}
+              title="Tıkla ve 1★ damgasını vur!"
+              className="group cursor-pointer select-none transition-all duration-300 hover:scale-105 active:scale-95"
+            >
+              {/* Stamp Card */}
+              <div className="relative border-2 border-dashed border-seal bg-paper/5 backdrop-blur-md p-5 shadow-2xl shadow-seal/20 rotate-[-3deg] group-hover:rotate-0 transition-transform duration-300 w-[270px]">
+                {/* Header Tag */}
+                <div className="absolute -top-3 left-4 bg-seal px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-paper shadow-sm">
+                  TOPLULUK DERECESİ
+                </div>
+
+                <div className="flex items-center justify-between gap-3 pt-1">
+                  <div className="flex items-baseline gap-1.5 text-seal">
+                    <Star className="size-8 fill-seal text-seal animate-pulse" />
+                    <span className="font-display text-5xl leading-none font-bold text-paper">
+                      1.0
+                    </span>
+                    <span className="font-mono text-xs text-paper/50">/ 5.0</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="inline-block border border-seal/40 bg-seal/20 px-2 py-0.5 font-mono text-[9px] font-bold uppercase text-seal">
+                      BOYKOT
+                    </span>
+                  </div>
+                </div>
+
+                {/* Steam Overwhelmingly Negative parody banner */}
+                <div className="mt-3 border-t border-b border-seal/30 py-2">
+                  <div className="flex items-center gap-1.5 font-mono text-[11px] font-black uppercase tracking-wider text-seal">
+                    <span className="size-2 rounded-full bg-seal animate-ping" />
+                    <span>EZİCİ ÇOĞUNLUKLA OLUMSUZ</span>
+                  </div>
+                  <p className="mt-1 font-mono text-[10px] text-paper/70 leading-relaxed">
+                    Steam, Metacritic, Google & Trustpilot üzerinde binlerce oyuncunun ortak kararı.
+                  </p>
+                </div>
+
+                <div className="mt-3 flex items-center justify-between font-mono text-[10px]">
+                  <span className="text-paper/40 uppercase">Gerekçe:</span>
+                  <span className="font-bold text-seal">Atatürk'e Saygısızlık</span>
+                </div>
+
+                <div className="mt-3 rounded border border-seal/30 bg-seal/10 py-1.5 text-center font-mono text-[10px] text-seal font-bold group-hover:bg-seal group-hover:text-paper transition-colors">
+                  👉 Tıkla ve Damgayı Vur!
+                </div>
+              </div>
+            </div>
+          </div>
+
           <h1
             className="rise mt-5 font-display text-[clamp(2.3rem,10vw,9.5rem)] leading-[0.98] tracking-tight uppercase"
             style={{ animationDelay: "80ms" }}
