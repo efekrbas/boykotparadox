@@ -520,7 +520,7 @@ function Index() {
           </div>
 
           <h1
-            className="rise mt-5 font-display text-[clamp(2.3rem,10vw,9.5rem)] leading-[0.88] tracking-tight uppercase"
+            className="rise mt-5 font-display text-[clamp(2.3rem,10vw,9.5rem)] leading-[0.98] tracking-tight uppercase"
             style={{ animationDelay: "80ms" }}
           >
             PARADOX
