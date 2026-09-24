@@ -150,6 +150,7 @@ export const GAMES: Game[] = [
     image: ck3,
     base: 2540,
     appId: 1158310,
+    badge: "Orta Çağ Hanedan",
     genre: "Orta Çağ RPG / Strateji",
     platforms: [
       {
@@ -192,6 +193,7 @@ export const GAMES: Game[] = [
     image: stellaris,
     base: 1208,
     appId: 281990,
+    badge: "Galaktik 4X",
     genre: "Uzay 4X / Bilim Kurgu",
     platforms: [
       {
@@ -234,6 +236,7 @@ export const GAMES: Game[] = [
     image: victoria3,
     base: 980,
     appId: 529340,
+    badge: "Sanayi & Diplomasi",
     genre: "Toplum Simülasyonu / Ekonomi",
     platforms: [
       {
@@ -268,6 +271,7 @@ export const GAMES: Game[] = [
     image: cities,
     base: 1440,
     appId: 255710,
+    badge: "Efsane Şehir",
     genre: "Şehir Kurma / Simülasyon",
     platforms: [
       {
@@ -466,7 +470,7 @@ export const GAMES: Game[] = [
     image: millennia,
     base: 720,
     appId: 1268590,
-    badge: "2024 Çıkışlı 4X",
+    badge: "Tarihsel 4X",
     genre: "Tarihsel Sıra Tabanlı 4X",
     platforms: [
       {

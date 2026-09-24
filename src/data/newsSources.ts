@@ -20,7 +20,7 @@ export const NEWS_SOURCES: NewsSource[] = [
     quote: "6 bin saat oynadığım oyunu siliyorum. Atatürk'e yönelik bu tavır açık bir düşmanlık ve tarihi çarpıtmadır.",
     url: "https://www.sozcu.com.tr",
     category: "Ulusal Basın",
-    date: "Eylül 2024",
+    date: "Eylül 2026",
     badge: "Prof. Dr. Emrah Safa Gürkan",
   },
   {
@@ -31,7 +31,7 @@ export const NEWS_SOURCES: NewsSource[] = [
       "Hearts of Iron resmi Discord sunucusunda Türk oyuncunun profilinde Atatürk fotoğrafı olması gerekçesiyle yasaklanması ve skandal açıklamalar kamuoyuna taşındı.",
     url: "https://www.odatv.com/guncel/paradoxtan-ataturk-skandali-hearts-of-ironin-discord-sunucusunda-boykot-120163837",
     category: "Ulusal Basın",
-    date: "Eylül 2024",
+    date: "Eylül 2026",
     badge: "İlk Haber",
   },
   {
@@ -42,7 +42,7 @@ export const NEWS_SOURCES: NewsSource[] = [
       "Atatürk'ün 'tartışmalı figür' denilerek yasaklanması üzerine Türk oyuncular toplu halde Steam incelemelerinde 1 yıldız kampanyası başlattı.",
     url: "https://www.cumhuriyet.com.tr",
     category: "Ulusal Basın",
-    date: "Eylül 2024",
+    date: "Eylül 2026",
   },
   {
     id: "milliyet-haber",
@@ -52,7 +52,7 @@ export const NEWS_SOURCES: NewsSource[] = [
       "Paradox Interactive'in resmi topluluk kanalında Türk kullanıcıların haksız yere uzaklaştırılması ulusal basında geniş yankı buldu.",
     url: "https://www.milliyet.com.tr",
     category: "Ulusal Basın",
-    date: "Eylül 2024",
+    date: "Eylül 2026",
   },
   {
     id: "halktv-haber",
@@ -62,7 +62,7 @@ export const NEWS_SOURCES: NewsSource[] = [
       "Oyun dünyasının en büyük boykotlarından birine dönüşen olayda on binlerce Türk oyuncu şirket yönetimine tepki gösterdi.",
     url: "https://www.halktv.com.tr",
     category: "Ulusal Basın",
-    date: "Eylül 2024",
+    date: "Eylül 2026",
   },
   {
     id: "donanimhaber-haber",
@@ -72,7 +72,7 @@ export const NEWS_SOURCES: NewsSource[] = [
       "Oyun dünyasının en köklü teknoloji platformlarından DonanımHaber, moderatörlerin taraflı tavrını ve Steam'deki inceleme bombardımanını detaylandırdı.",
     url: "https://www.donanimhaber.com",
     category: "Oyun & Teknoloji",
-    date: "Eylül 2024",
+    date: "Eylül 2026",
     badge: "Detaylı İnceleme",
   },
   {
@@ -83,7 +83,7 @@ export const NEWS_SOURCES: NewsSource[] = [
       "Discord moderatörlerinin skandal gerekçeleri, Türk oyuncuların itirazları ve Steam'deki olumsuz inceleme akını kapsamlı şekilde aktarıldı.",
     url: "https://www.webtekno.com",
     category: "Oyun & Teknoloji",
-    date: "Eylül 2024",
+    date: "Eylül 2026",
   },
   {
     id: "oyungezer-haber",
@@ -93,7 +93,7 @@ export const NEWS_SOURCES: NewsSource[] = [
       "Türkiye'nin önde gelen oyun dergisi Oyungezer, topluluk tepkilerini ve Paradox'un olası yaptırımlarını değerlendirdi.",
     url: "https://oyungezer.com.tr",
     category: "Oyun & Teknoloji",
-    date: "Eylül 2024",
+    date: "Eylül 2026",
   },
   {
     id: "onedio-haber",
@@ -103,7 +103,7 @@ export const NEWS_SOURCES: NewsSource[] = [
       "Sosyal medyada #BoycottParadox etiketiyle başlatılan hareketin kronolojisi ve oyuncuların paylaştığı ekran görüntüleri derlendi.",
     url: "https://onedio.com",
     category: "Oyun & Teknoloji",
-    date: "Eylül 2024",
+    date: "Eylül 2026",
   },
   {
     id: "reddit-director",
@@ -113,7 +113,7 @@ export const NEWS_SOURCES: NewsSource[] = [
       "Tepkilerin ardından HOI4 Oyun Direktörü Batya resmi açıklama yaparak Atatürk'ün Türk milleti için önemini anladıklarını ve kuralların gözden geçirileceğini duyurdu.",
     url: "https://www.reddit.com/r/hoi4/",
     category: "Topluluk & Forum",
-    date: "Eylül 2024",
+    date: "Eylül 2026",
     badge: "Resmi Açıklama",
   },
 ];
