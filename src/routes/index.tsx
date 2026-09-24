@@ -369,95 +369,7 @@ function Index() {
         </div>
       </section>
 
-      {/* 3D Atatürk Monument Scene */}
-      <div id="anit">
-        <Ataturk3DScene />
-      </div>
-
-      {/* Incident Summary & Demands */}
-      <section className="mx-auto max-w-[1240px] px-5 py-14">
-        <div className="flex flex-wrap items-baseline justify-between gap-4 border-b-2 border-ink pb-4">
-          <h2 className="font-display text-3xl tracking-tight uppercase sm:text-4xl">
-            Olay Nasıl Gelişti?
-          </h2>
-          <a
-            href={SOURCE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 font-mono text-xs uppercase tracking-wider text-seal hover:underline"
-          >
-            <span>OdaTV Haberi & Kaynak</span>
-            <ExternalLink className="size-3" />
-          </a>
-        </div>
-
-        <div className="mt-8 grid gap-6 sm:grid-cols-3">
-          <div className="border-2 border-ink/20 bg-paper p-5 transition-colors hover:border-ink">
-            <div className="font-mono text-xs font-bold uppercase tracking-wider text-seal">
-              (A) Resmi Sunucuda Hakaret
-            </div>
-            <h3 className="mt-2 font-display text-2xl uppercase leading-none">
-              Atatürk Hedef Alındı
-            </h3>
-            <p className="mt-3 text-sm text-mute leading-relaxed">
-              Paradox Interactive'in en popüler oyunu Hearts of Iron IV'ün resmi Discord sunucusunda,
-              Türkiye Cumhuriyeti'nin kurucusu Gazi Mustafa Kemal Atatürk'e ve Türk milletine yönelik ağır hakaretler içeren paylaşımlar yapıldı.
-            </p>
-          </div>
-
-          <div className="border-2 border-ink/20 bg-paper p-5 transition-colors hover:border-ink">
-            <div className="font-mono text-xs font-bold uppercase tracking-wider text-seal">
-              (B) Taraflı Moderasyon & Sansür
-            </div>
-            <h3 className="mt-2 font-display text-2xl uppercase leading-none">
-              Türk Oyuncular Banlandı
-            </h3>
-            <p className="mt-3 text-sm text-mute leading-relaxed">
-              Hakarete itiraz eden ve kuralların uygulanmasını isteyen Türk oyuncular, sunucu moderatörleri
-              tarafından susturuldu, hakaret edenler korunurken itiraz edenler sunucudan haksızca atıldı.
-            </p>
-          </div>
-
-          <div className="border-2 border-ink/20 bg-paper p-5 transition-colors hover:border-ink">
-            <div className="font-mono text-xs font-bold uppercase tracking-wider text-seal">
-              (C) Topluluk Cevabı
-            </div>
-            <h3 className="mt-2 font-display text-2xl uppercase leading-none">
-              Tüm Cephelerde Boykot
-            </h3>
-            <p className="mt-3 text-sm text-mute leading-relaxed">
-              Yalnızca tek bir oyun değil; Paradox'un tüm oyunları, Trustpilot kurumsal sayfası, Metacritic
-              ve Google Maps profili 1 yıldız yağmuruna tutuluyor.
-            </p>
-          </div>
-        </div>
-
-        {/* 4 Demands Banner */}
-        <div className="mt-12 border-2 border-ink bg-paper p-6 sm:p-8">
-          <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-seal">
-            <Award className="size-4" />
-            Topluluğun Net 4 Talebi
-          </div>
-          <h3 className="mt-2 font-display text-2xl sm:text-3xl uppercase tracking-tight">
-            Paradox Interactive Ne Yapmalı?
-          </h3>
-
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {DEMANDS.map((demand) => (
-              <div key={demand.number} className="border border-ink/15 p-4 bg-ink/5">
-                <span className="font-mono text-2xl font-bold text-seal">{demand.number}</span>
-                <h4 className="mt-1 font-display text-lg uppercase tracking-tight">{demand.title}</h4>
-                <p className="mt-2 text-xs text-mute leading-relaxed">{demand.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* News & Media Sources Section */}
-      <NewsSourcesSection />
-
-      {/* Games Catalog Section */}
+      {/* Games Catalog Section — primary action, right after hero */}
       <section id="oyunlar" className="mx-auto max-w-[1240px] px-5 py-14">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-ink pb-4">
           <div>
@@ -558,14 +470,12 @@ function Index() {
                     : "border-ink/20 hover:border-ink"
                 }`}
               >
-                {/* Stamp overlay */}
                 {isVoted && (
                   <div className="seal-stamp absolute top-3 right-3 z-20 border-2 border-seal bg-paper/85 px-3 py-1 font-mono text-xs font-bold text-seal backdrop-blur-md">
                     1 ★ MÜHÜRLENDİ
                   </div>
                 )}
 
-                {/* Badge if any */}
                 {game.badge && (
                   <div className="absolute top-3 left-3 z-20 bg-ink px-2.5 py-1 font-mono text-[10px] uppercase font-bold tracking-wider text-paper">
                     {game.badge}
@@ -604,7 +514,6 @@ function Index() {
                       </div>
                     </div>
 
-                    {/* Star display */}
                     <div className="mt-2.5 flex items-center gap-1">
                       <Star className="size-4 fill-seal text-seal" />
                       <Star className="size-4 text-ink/15" />
@@ -616,7 +525,6 @@ function Index() {
                       </span>
                     </div>
 
-                    {/* Platform Review Links Section */}
                     <div className="mt-4 border-t border-ink/15 pt-3">
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-[10px] uppercase tracking-wider font-semibold text-mute">
@@ -659,7 +567,6 @@ function Index() {
                   </div>
                 </div>
 
-                {/* Bottom Actions */}
                 <div className="border-t border-ink/15 p-4 sm:p-5 pt-3 bg-paper/50 flex flex-col gap-2">
                   <button
                     type="button"
@@ -689,6 +596,92 @@ function Index() {
         </div>
       </section>
 
+      {/* 3D Atatürk Monument Scene */}
+      <div id="anit">
+        <Ataturk3DScene />
+      </div>
+
+      {/* Incident Summary & Demands */}
+      <section className="mx-auto max-w-[1240px] px-5 py-14">
+        <div className="flex flex-wrap items-baseline justify-between gap-4 border-b-2 border-ink pb-4">
+          <h2 className="font-display text-3xl tracking-tight uppercase sm:text-4xl">
+            Olay Nasıl Gelişti?
+          </h2>
+          <a
+            href={SOURCE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 font-mono text-xs uppercase tracking-wider text-seal hover:underline"
+          >
+            <span>OdaTV Haberi & Kaynak</span>
+            <ExternalLink className="size-3" />
+          </a>
+        </div>
+
+        <div className="mt-8 grid gap-6 sm:grid-cols-3">
+          <div className="border-2 border-ink/20 bg-paper p-5 transition-colors hover:border-ink">
+            <div className="font-mono text-xs font-bold uppercase tracking-wider text-seal">
+              (A) Resmi Sunucuda Hakaret
+            </div>
+            <h3 className="mt-2 font-display text-2xl uppercase leading-none">
+              Atatürk Hedef Alındı
+            </h3>
+            <p className="mt-3 text-sm text-mute leading-relaxed">
+              Paradox Interactive'in en popüler oyunu Hearts of Iron IV'ün resmi Discord sunucusunda,
+              Türkiye Cumhuriyeti'nin kurucusu Gazi Mustafa Kemal Atatürk'e ve Türk milletine yönelik ağır hakaretler içeren paylaşımlar yapıldı.
+            </p>
+          </div>
+
+          <div className="border-2 border-ink/20 bg-paper p-5 transition-colors hover:border-ink">
+            <div className="font-mono text-xs font-bold uppercase tracking-wider text-seal">
+              (B) Taraflı Moderasyon & Sansür
+            </div>
+            <h3 className="mt-2 font-display text-2xl uppercase leading-none">
+              Türk Oyuncular Banlandı
+            </h3>
+            <p className="mt-3 text-sm text-mute leading-relaxed">
+              Hakarete itiraz eden ve kuralların uygulanmasını isteyen Türk oyuncular, sunucu moderatörleri
+              tarafından susturuldu, hakaret edenler korunurken itiraz edenler sunucudan haksızca atıldı.
+            </p>
+          </div>
+
+          <div className="border-2 border-ink/20 bg-paper p-5 transition-colors hover:border-ink">
+            <div className="font-mono text-xs font-bold uppercase tracking-wider text-seal">
+              (C) Topluluk Cevabı
+            </div>
+            <h3 className="mt-2 font-display text-2xl uppercase leading-none">
+              Tüm Cephelerde Boykot
+            </h3>
+            <p className="mt-3 text-sm text-mute leading-relaxed">
+              Yalnızca tek bir oyun değil; Paradox'un tüm oyunları, Trustpilot kurumsal sayfası, Metacritic
+              ve Google Maps profili 1 yıldız yağmuruna tutuluyor.
+            </p>
+          </div>
+        </div>
+
+        {/* 4 Demands Banner */}
+        <div className="mt-12 border-2 border-ink bg-paper p-6 sm:p-8">
+          <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-seal">
+            <Award className="size-4" />
+            Topluluğun Net 4 Talebi
+          </div>
+          <h3 className="mt-2 font-display text-2xl sm:text-3xl uppercase tracking-tight">
+            Paradox Interactive Ne Yapmalı?
+          </h3>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {DEMANDS.map((demand) => (
+              <div key={demand.number} className="border border-ink/15 p-4 bg-ink/5">
+                <span className="font-mono text-2xl font-bold text-seal">{demand.number}</span>
+                <h4 className="mt-1 font-display text-lg uppercase tracking-tight">{demand.title}</h4>
+                <p className="mt-2 text-xs text-mute leading-relaxed">{demand.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
       {/* Corporate Targets Section (Trustpilot, Google, Metacritic Publisher) */}
       <CorporateTargetsSection
         stampedIds={stampedPlatforms}
@@ -705,6 +698,9 @@ function Index() {
       <div className="mx-auto max-w-[1240px] px-5 py-8">
         <ShareBar />
       </div>
+
+      {/* News & Media Sources — credibility section near footer */}
+      <NewsSourcesSection />
 
       {/* Bulk Launcher Modal */}
       <BulkLauncherModal
