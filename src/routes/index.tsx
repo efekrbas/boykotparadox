@@ -48,7 +48,10 @@ export const Route = createFileRoute("/")({
           "Sadece Steam değil: Metacritic, Trustpilot, Epic, GOG ve Google üzerinden Paradox'u tek dokunuşla 1 yıldızla mühürle.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://boykotparadox.vercel.app" },
+      { property: "og:image", content: "https://boykotparadox.vercel.app/ataturk-human.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://boykotparadox.vercel.app/ataturk-human.jpg" },
     ],
   }),
   component: Index,
@@ -157,6 +160,19 @@ function Index() {
     });
   };
 
+  const markPlatformAsStamped = (targetId: string) => {
+    setStampedPlatforms((prev) => {
+      if (prev.includes(targetId)) return prev;
+      const next = [...prev, targetId];
+      try {
+        localStorage.setItem(STORAGE_STAMPS_KEY, JSON.stringify(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  };
+
   const handleOpenGamePlatforms = (game: Game) => {
     playStampSound();
     toast.info(`${game.title} için tüm platform sayfaları açılıyor...`, {
@@ -171,7 +187,7 @@ function Index() {
     game.platforms.forEach((p, idx) => {
       setTimeout(() => {
         window.open(p.url, "_blank", "noopener,noreferrer");
-        toggleStampPlatform(`${game.id}-${p.id}`);
+        markPlatformAsStamped(`${game.id}-${p.id}`);
       }, idx * 250);
     });
   };
@@ -804,6 +820,7 @@ function Index() {
         onClose={() => setIsBulkModalOpen(false)}
         stampedIds={stampedPlatforms}
         onToggleStamp={toggleStampPlatform}
+        onMarkStamped={markPlatformAsStamped}
       />
 
       {/* Footer */}

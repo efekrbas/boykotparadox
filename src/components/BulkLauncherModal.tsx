@@ -17,6 +17,7 @@ interface BulkLauncherModalProps {
   onClose: () => void;
   stampedIds: string[];
   onToggleStamp: (id: string) => void;
+  onMarkStamped?: (id: string) => void;
 }
 
 export function BulkLauncherModal({
@@ -24,6 +25,7 @@ export function BulkLauncherModal({
   onClose,
   stampedIds,
   onToggleStamp,
+  onMarkStamped,
 }: BulkLauncherModalProps) {
   const [activeTab, setActiveTab] = useState<"all" | "games" | "corporate">("all");
   const [openingSequential, setOpeningSequential] = useState(false);
@@ -68,7 +70,11 @@ export function BulkLauncherModal({
     filteredTargets.forEach((target, i) => {
       setTimeout(() => {
         window.open(target.url, "_blank", "noopener,noreferrer");
-        onToggleStamp(target.id);
+        if (onMarkStamped) {
+          onMarkStamped(target.id);
+        } else {
+          onToggleStamp(target.id);
+        }
       }, i * 350);
     });
   };
@@ -83,7 +89,11 @@ export function BulkLauncherModal({
     const target = filteredTargets[currentIndex];
     playStampSound();
     window.open(target.url, "_blank", "noopener,noreferrer");
-    onToggleStamp(target.id);
+    if (onMarkStamped) {
+      onMarkStamped(target.id);
+    } else {
+      onToggleStamp(target.id);
+    }
     setCurrentIndex((prev) => prev + 1);
 
     toast.success(`Açıldı: ${target.title}`, {

@@ -89,7 +89,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content: "Tüm platformlarda Paradox'u tek dokunuşla 1 yıldızla mühürle.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://boykotparadox.vercel.app" },
+      { property: "og:image", content: "https://boykotparadox.vercel.app/ataturk-human.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://boykotparadox.vercel.app/ataturk-human.jpg" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -115,7 +118,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <head>
         <HeadContent />
       </head>

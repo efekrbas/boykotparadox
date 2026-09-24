@@ -1,36 +1,66 @@
 import { useState } from "react";
-import { Share2, Copy, Check, MessageCircle, Send } from "lucide-react";
+import { Share2, Copy, Check, MessageCircle, Send, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
 
 export function ShareBar() {
-  const [copied, setCopied] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedDiscord, setCopiedDiscord] = useState(false);
 
+  // Dynamic clean production URL
+  const getShareUrl = () => {
+    if (typeof window !== "undefined") {
+      const host = window.location.hostname;
+      if (host && !host.includes("localhost") && !host.includes("127.0.0.1")) {
+        return window.location.origin;
+      }
+    }
+    return "https://boykotparadox.vercel.app";
+  };
+
+  const shareUrl = getShareUrl();
   const shareText =
-    "Paradox Interactive'in resmi sunucusundaki Atatürk ve Türk topluluğu saygısızlığına karşı boykot büyüyor! Sen de oyunlara ve Trustpilot'a 1 yıldız vererek sesini duyur: ";
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "https://boykotparadox.com";
+    "Paradox Interactive'in resmi Discord sunucusundaki Atatürk ve Türk oyunculara yönelik saygısızlığa karşı tek ses! Bütün platformlarda 1 yıldız veriyoruz:";
 
   const handleCopyLink = () => {
     playStampSound();
     navigator.clipboard.writeText(shareUrl).then(() => {
-      setCopied(true);
+      setCopiedLink(true);
       toast.success("Boykot Bağlantısı Kopyalandı!", {
-        description: "Arkadaşlarınızla ve oyun gruplarınızla paylaşın.",
+        description: `${shareUrl} panoya kopyalandı.`,
       });
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopiedLink(false), 2000);
+    });
+  };
+
+  const handleCopyDiscord = () => {
+    playStampSound();
+    const discordMessage =
+      `🚨 **BOYKOT PARADOX — TÜM PLATFORMLARDA 1★ KAMPANYASI**\n\n` +
+      `Paradox Interactive'in resmi Hearts of Iron IV sunucusunda Gazi Mustafa Kemal Atatürk'e ve Türk oyunculara yönelik yapılan hakaret ve haksız sansüre karşı sessiz kalmıyoruz.\n\n` +
+      `🎮 Tek tıkla Steam, Metacritic, Trustpilot ve Google üzerinden 1 yıldız vererek sesini duyur:\n` +
+      `👉 ${shareUrl}\n\n` +
+      `#BoycottParadox #ParadoxBoykot @everyone`;
+
+    navigator.clipboard.writeText(discordMessage).then(() => {
+      setCopiedDiscord(true);
+      toast.success("Discord Duyuru Metni Kopyalandı!", {
+        description: "Discord sunucularınıza ve oyun kanallarınıza yapıştırabilirsiniz.",
+      });
+      setTimeout(() => setCopiedDiscord(false), 2500);
     });
   };
 
   const handleTwitterShare = () => {
     const tweet = encodeURIComponent(
-      "Paradox Interactive resmi sunucusundaki Atatürk ve Türk oyunculara yönelik saygısızlığa karşı tek yürek! Bütün platformlarda 1 yıldız veriyoruz! #BoycottParadox #ParadoxBoykot @PdxInteractive\n" +
+      "Paradox Interactive'in resmi Discord sunucusunda Atatürk ve Türk oyunculara yapılan saygısızlığa karşı tek ses! Bütün platformlarda 1 yıldız veriyoruz! #BoycottParadox #ParadoxBoykot @PdxInteractive\n" +
         shareUrl
     );
     window.open(`https://twitter.com/intent/tweet?text=${tweet}`, "_blank", "noopener,noreferrer");
   };
 
   const handleWhatsAppShare = () => {
-    const text = encodeURIComponent(shareText + shareUrl);
+    const text = encodeURIComponent(shareText + "\n" + shareUrl);
     window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank", "noopener,noreferrer");
   };
 
@@ -51,7 +81,7 @@ export function ShareBar() {
             Sesini Duyur & Kampanyayı Yay
           </div>
           <div className="font-mono text-xs text-mute">
-            Daha fazla Türk oyuncuya ulaşmak için boykotu paylaş
+            {shareUrl}
           </div>
         </div>
       </div>
@@ -85,11 +115,20 @@ export function ShareBar() {
 
         <button
           type="button"
-          onClick={handleCopyLink}
-          className="inline-flex items-center gap-2 bg-ink px-3.5 py-2 font-mono text-xs uppercase tracking-wider text-paper transition-transform active:translate-y-px"
+          onClick={handleCopyDiscord}
+          className="inline-flex items-center gap-2 border border-[#5865F2] bg-[#5865F2]/10 px-3.5 py-2 font-mono text-xs uppercase tracking-wider text-[#5865F2] transition-colors hover:bg-[#5865F2] hover:text-white"
         >
-          {copied ? <Check className="size-3.5 text-seal" /> : <Copy className="size-3.5" />}
-          <span>{copied ? "Kopyalandı!" : "Linki Kopyala"}</span>
+          {copiedDiscord ? <Check className="size-3.5" /> : <MessageSquare className="size-3.5" />}
+          <span>{copiedDiscord ? "Discord Metni Kopyalandı!" : "Discord İçin Kopyala"}</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={handleCopyLink}
+          className="inline-flex items-center gap-2 bg-ink px-3.5 py-2 font-mono text-xs uppercase tracking-wider text-paper transition-transform active:translate-y-px hover:bg-seal"
+        >
+          {copiedLink ? <Check className="size-3.5 text-paper" /> : <Copy className="size-3.5" />}
+          <span>{copiedLink ? "Kopyalandı!" : "Linki Kopyala"}</span>
         </button>
       </div>
     </div>
