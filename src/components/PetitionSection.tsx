@@ -77,12 +77,12 @@ export function PetitionSection() {
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+              <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                 <a
                   href={PETITION_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2.5 bg-seal px-6 py-4 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.14em] text-paper shadow-lg transition-transform active:translate-y-px hover:brightness-110"
+                  className="group inline-flex items-center justify-center gap-2.5 bg-seal px-6 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper shadow-lg shadow-seal/20 transition-all active:translate-y-px hover:brightness-110 min-w-[260px]"
                 >
                   <PenLine className="size-4 transition-transform group-hover:rotate-12" />
                   <span>Kampanyaya Git & İmzala</span>
@@ -92,7 +92,7 @@ export function PetitionSection() {
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="inline-flex items-center gap-2 border border-paper/30 bg-paper/10 px-5 py-4 font-mono text-xs sm:text-sm uppercase tracking-[0.12em] text-paper transition-colors hover:border-paper hover:bg-paper/20"
+                  className="inline-flex items-center justify-center gap-2.5 border-2 border-paper/30 bg-paper/10 px-6 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:border-paper hover:bg-paper/20 min-w-[260px]"
                 >
                   {copied ? (
                     <>
