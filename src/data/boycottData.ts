@@ -303,6 +303,15 @@ export const GAMES: Game[] = [
 
 export const CORPORATE_TARGETS: CorporateTarget[] = [
   {
+    id: "corp-steam-publisher",
+    name: "Steam — Paradox Interactive Yayıncı Merkezi (100+ Oyun & DLC)",
+    platform: "Steam Publisher Hub",
+    url: "https://store.steampowered.com/publisher/paradoxinteractive",
+    description: "Paradox'un Steam üzerindeki TÜM oyunlarını (Age of Wonders, Prison Architect, Magicka vb.) ve yüzlerce DLC'sini tek sayfada görün. Yayıncıyı takipten çıkın ve tüm oyunlara erişin.",
+    importance: "Kritik",
+    actionText: "Tüm Kataloğu Aç (Steam) →",
+  },
+  {
     id: "corp-trustpilot",
     name: "Trustpilot — Paradox Interactive",
     platform: "Trustpilot",
