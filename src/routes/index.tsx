@@ -395,43 +395,59 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-paper font-body text-ink antialiased selection:bg-seal selection:text-paper">
-      {/* Sticky Main Header — Single Unified Navigation Bar */}
-      <header className="sticky top-0 z-40 border-b-2 border-ink bg-paper/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 sm:py-2.5">
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+      {/* Top Banner Notice */}
+      <div className="border-b border-ink/20 bg-ink px-3 sm:px-4 py-2 font-mono text-[11px] text-paper">
+        <div className="mx-auto flex max-w-[1240px] flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-start sm:items-center gap-2 min-w-0">
+            <span className="mt-1 sm:mt-0 inline-block size-2 shrink-0 animate-ping rounded-full bg-emerald-400" />
+            <div className="leading-snug">
+              <strong className="text-emerald-400 uppercase tracking-wider mr-1.5 shrink-0">Canlı Akış:</strong>
+              <span className="text-paper/90">
+                {RECENT_LIVE_ACTIONS[activeNoticeIdx]}
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 shrink-0 pt-1.5 sm:pt-0 border-t border-paper/10 sm:border-t-0 text-[10px] sm:text-[11px]">
+            <button
+              type="button"
+              onClick={() => setIsBulkModalOpen(true)}
+              className="inline-flex items-center gap-1 font-bold text-seal underline hover:text-paper"
+            >
+              <Flame className="size-3" />
+              <span>Hızlı Baskın Modu</span>
+            </button>
+            <AudioStampToggle />
+          </div>
+        </div>
+      </div>
+
+      {/* Sticky Main Header */}
+      <header className="sticky top-0 z-40 border-b-2 border-ink bg-paper/85 backdrop-blur-md">
+        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 sm:py-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <img
               src="/favicon.png"
               alt="Atatürk Rozet Logo"
               className="size-7 sm:size-8 object-contain drop-shadow-sm rounded-full"
             />
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2.5">
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
               <span className="font-display text-xl sm:text-2xl leading-none tracking-tight">
                 BOYKOT PARADOX
               </span>
-              <span className="hidden font-mono text-[10px] uppercase tracking-[0.16em] text-seal font-bold lg:block">
+              <span className="hidden font-mono text-[11px] uppercase tracking-[0.18em] text-seal font-bold sm:block">
                 Tüm Platformlarda 1★ Kampanyası
               </span>
             </div>
           </div>
 
-          {/* Desktop Live Ticker in Center */}
-          <div className="hidden xl:flex items-center gap-2 border-x border-ink/15 px-3.5 py-1 font-mono text-xs text-mute max-w-sm">
-            <span className="relative flex size-2 shrink-0">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
-            </span>
-            <span className="font-bold text-emerald-600 uppercase text-[10px] tracking-wider shrink-0">Canlı:</span>
-            <span className="truncate text-ink/80 text-[11px]">{RECENT_LIVE_ACTIONS[activeNoticeIdx]}</span>
-          </div>
-
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* User progress counter */}
             <div className="hidden text-right leading-none md:block">
               <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-mute">
                 Senin Katkın
               </div>
               <div className="font-mono text-sm font-bold text-ink">
-                <span className="text-seal">{stampedPlatforms.length}</span> / {totalTargetsCount}
+                <span className="text-seal">{stampedPlatforms.length}</span> / {totalTargetsCount} Platform
               </div>
             </div>
 
@@ -463,25 +479,20 @@ function Index() {
               </div>
             </div>
 
-            {/* Sound Toggle */}
-            <AudioStampToggle />
-
-            {/* İmza Kampanyası Button */}
             <button
               type="button"
               onClick={() => scrollTo("imza")}
-              className="inline-flex items-center gap-1.5 border border-seal/40 bg-seal/10 px-2.5 py-1.5 sm:px-3 sm:py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.12em] text-seal hover:bg-seal hover:text-paper transition-colors"
+              className="inline-flex items-center gap-1.5 border border-seal/40 bg-seal/10 px-2.5 py-1.5 sm:px-3 sm:py-2.5 font-mono text-[11px] sm:text-xs uppercase tracking-[0.12em] text-seal hover:bg-seal hover:text-paper transition-colors"
             >
               <PenLine className="size-3.5" />
               <span className="hidden sm:inline">İmza Kampanyası</span>
               <span className="sm:hidden">İmza</span>
             </button>
 
-            {/* Bulk Raid Button */}
             <button
               type="button"
               onClick={() => setIsBulkModalOpen(true)}
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-seal px-2.5 py-1.5 sm:px-3.5 sm:py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.12em] text-paper transition-transform active:translate-y-px hover:brightness-110"
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-seal px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 font-mono text-[11px] sm:text-xs uppercase tracking-[0.12em] text-paper transition-transform active:translate-y-px hover:brightness-110"
             >
               <Flame className="size-3.5 sm:size-4 animate-bounce" />
               <span className="hidden sm:inline">Tüm Platformları Aç</span>
@@ -501,19 +512,7 @@ function Index() {
           }}
         />
 
-        <div className="relative mx-auto max-w-[1240px] px-5 pt-8 pb-16 sm:pt-14 sm:pb-24">
-          {/* Live Action Ticker Pill */}
-          <div className="rise inline-flex items-center gap-2 border border-paper/20 bg-paper/10 px-3.5 py-1.5 font-mono text-[11px] text-paper backdrop-blur-sm mb-4 max-w-full">
-            <span className="relative flex size-2 shrink-0">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
-            </span>
-            <strong className="font-bold uppercase tracking-wider text-emerald-400 shrink-0">Canlı Akış:</strong>
-            <span className="text-paper/90 font-sans sm:font-mono text-xs truncate">
-              {RECENT_LIVE_ACTIONS[activeNoticeIdx]}
-            </span>
-          </div>
-
+        <div className="relative mx-auto max-w-[1240px] px-5 pt-14 pb-16 sm:pt-20 sm:pb-24">
           <div className="rise flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-seal">
             <span className="size-2 animate-pulse rounded-full bg-seal" />
             Steam · Metacritic · Trustpilot · Google · Epic · GOG · Xbox
