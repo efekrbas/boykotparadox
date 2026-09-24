@@ -202,20 +202,18 @@ export function Ataturk3DScene() {
               {/* Ambient Spotlight Glow behind statue */}
               <div className="pointer-events-none absolute top-1/4 size-[320px] rounded-full bg-seal/15 blur-3xl" />
 
-              {/* Statue Visual - Standing Proud & Frameless */}
-              <div className="relative z-10 w-full overflow-hidden flex justify-center">
+              {/* Leader Visual - Standing Proud & Transparent Cutout */}
+              <div className="relative z-10 w-full flex justify-center">
                 <img
-                  src="/ataturk-human.jpg"
+                  src="/ataturk-transparent.png"
                   alt="Gazi Mustafa Kemal Atatürk"
-                  className="w-full max-h-[560px] object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.95)]"
+                  className="w-full max-h-[580px] object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.9)]"
                   loading="eager"
                 />
-                {/* Soft gradient blend at the bottom */}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-ink via-ink/70 to-transparent" />
               </div>
 
               {/* Dignified Memorial Monument Pedestal (Kaide) */}
-              <div className="relative z-20 -mt-6 w-full max-w-[400px] border-t-2 border-seal/60 bg-ink/95 px-6 py-4 text-center shadow-2xl backdrop-blur-md">
+              <div className="relative z-20 -mt-3 w-full max-w-[400px] border-t-2 border-seal/60 bg-ink/95 px-6 py-4 text-center shadow-2xl backdrop-blur-md">
                 <div className="font-display text-xl uppercase tracking-widest text-paper sm:text-2xl">
                   Gazi Mustafa Kemal Atatürk
                 </div>

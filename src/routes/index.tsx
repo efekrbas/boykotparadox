@@ -60,6 +60,21 @@ const SOURCE_URL =
 const STORAGE_VOTES_KEY = "boykot-paradox-oylar";
 const STORAGE_STAMPS_KEY = "boykot-paradox-stamps";
 
+// Campaign reference start: 22 September 2026 12:00:00
+const CAMPAIGN_REF_MS = new Date("2026-09-22T12:00:00+03:00").getTime();
+const BASE_TOTAL_VOTES = 6934;
+
+const RECENT_LIVE_ACTIONS = [
+  "Hearts of Iron IV için Steam'de yeni 1★ mühürlendi",
+  "Paradox Interactive için Trustpilot'ta 1★ inceleme paylaşıldı",
+  "Europa Universalis IV için Epic Games'te 1★ verildi",
+  "Crusader Kings III için Steam mağazasında 1★ mühürlendi",
+  "Victoria 3 için Metacritic'te 1★ puanlama yapıldı",
+  "Paradox Interactive için Google Haritalar'da 1★ bırakıldı",
+  "Cities: Skylines II için Steam'de yeni 1★ kaydedildi",
+  "Hearts of Iron IV topluluk boykotuna +1 destek eklendi",
+];
+
 const tr = (n: number) => n.toLocaleString("tr-TR");
 
 function Index() {
@@ -68,6 +83,36 @@ function Index() {
   const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+
+  // Live Simulated Community Ticker
+  const [liveGrowth, setLiveGrowth] = useState(() => {
+    const elapsedSec = Math.max(0, Math.floor((Date.now() - CAMPAIGN_REF_MS) / 1000));
+    return Math.floor(elapsedSec / 16);
+  });
+  const [justTicked, setJustTicked] = useState(false);
+  const [lastIncrement, setLastIncrement] = useState(1);
+  const [activeNoticeIdx, setActiveNoticeIdx] = useState(0);
+
+  useEffect(() => {
+    let timeoutId: any;
+
+    const tick = () => {
+      const nextDelay = Math.floor(Math.random() * 4500) + 4000;
+      timeoutId = setTimeout(() => {
+        const added = Math.random() > 0.75 ? 2 : 1;
+        setLastIncrement(added);
+        setLiveGrowth((prev) => prev + added);
+        setJustTicked(true);
+        setActiveNoticeIdx((prev) => (prev + 1) % RECENT_LIVE_ACTIONS.length);
+
+        setTimeout(() => setJustTicked(false), 1400);
+        tick();
+      }, nextDelay);
+    };
+
+    tick();
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   useEffect(() => {
     try {
@@ -131,11 +176,8 @@ function Index() {
     });
   };
 
-  // Calculate total votes
-  const totalVotes = GAMES.reduce(
-    (sum, g) => sum + g.base + (votedGames.includes(g.id) ? 1 : 0),
-    0
-  );
+  // Calculate total votes (Base + Live Organic Community Growth + User's local votes)
+  const totalVotes = BASE_TOTAL_VOTES + liveGrowth + votedGames.length;
 
   // Total possible stamp count (games platforms + corporate targets)
   const totalTargetsCount =
@@ -173,10 +215,10 @@ function Index() {
       <div className="border-b border-ink/20 bg-ink px-4 py-2 font-mono text-[11px] text-paper">
         <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="inline-block size-2 animate-ping rounded-full bg-seal" />
-            <strong className="text-seal uppercase tracking-wider">Topluluk Seferberliği:</strong>
-            <span className="text-paper/80">
-              Sadece Steam değil, Trustpilot, Metacritic ve Google üzerinden 1 yıldız veriyoruz!
+            <span className="inline-block size-2 animate-ping rounded-full bg-emerald-400" />
+            <strong className="text-emerald-400 uppercase tracking-wider">Canlı Akış:</strong>
+            <span className="text-paper/90 transition-opacity duration-300">
+              {RECENT_LIVE_ACTIONS[activeNoticeIdx]}
             </span>
           </div>
           <div className="flex items-center gap-3">
@@ -228,11 +270,27 @@ function Index() {
 
             {/* Total 1 star counter */}
             <div className="text-right leading-none">
-              <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-mute">
-                Toplam 1 Yıldız
+              <div className="flex items-center justify-end gap-1.5 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-mute">
+                <span className="relative flex size-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500"></span>
+                </span>
+                <span className="font-bold text-emerald-600">Canlı</span>
+                <span>Toplam 1★</span>
               </div>
-              <div className="font-mono text-xl sm:text-2xl font-bold tabular-nums text-seal">
-                {tr(totalVotes)}
+              <div className="flex items-center justify-end gap-1.5 mt-0.5">
+                {justTicked && (
+                  <span className="font-mono text-xs font-bold text-emerald-600 animate-pulse">
+                    +{lastIncrement}
+                  </span>
+                )}
+                <div
+                  className={`font-mono text-xl sm:text-2xl font-bold tabular-nums transition-colors duration-300 ${
+                    justTicked ? "text-emerald-600" : "text-seal"
+                  }`}
+                >
+                  {tr(totalVotes)}
+                </div>
               </div>
             </div>
 
@@ -459,7 +517,8 @@ function Index() {
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredGames.map((game) => {
             const isVoted = votedGames.includes(game.id);
-            const count = game.base + (isVoted ? 1 : 0);
+            const gameShare = Math.floor((liveGrowth * game.base) / BASE_TOTAL_VOTES);
+            const count = game.base + gameShare + (isVoted ? 1 : 0);
 
             return (
               <article
