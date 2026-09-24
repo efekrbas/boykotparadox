@@ -510,7 +510,7 @@ function Index() {
               className="inline-flex items-center gap-1.5 sm:gap-2 bg-seal px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 font-mono text-[11px] sm:text-xs uppercase tracking-[0.12em] text-paper transition-transform active:translate-y-px hover:brightness-110"
             >
               <Flame className="size-3.5 sm:size-4 animate-bounce" />
-              <span className="hidden sm:inline">Tüm Platformları Aç</span>
+              <span className="hidden sm:inline">1★ Baskını Başlat</span>
               <span className="sm:hidden">1★ Baskın</span>
             </button>
           </div>
@@ -562,7 +562,7 @@ function Index() {
               className="group inline-flex w-full sm:w-auto items-center justify-center gap-2.5 bg-seal px-5 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:brightness-110 shadow-lg shadow-seal/25 active:translate-y-px"
             >
               <Flame className="size-4 animate-bounce" />
-              <span>Tek Tıkla Tüm Platformları Aç</span>
+              <span>Tek Tıkla 1★ Baskını Başlat</span>
             </button>
 
             <a
