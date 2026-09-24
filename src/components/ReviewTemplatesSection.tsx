@@ -129,6 +129,14 @@ export function ReviewTemplatesSection() {
                 <span>{activeTemplate.language === "tr" ? "Türkçe" : "English"}</span>
               </div>
             </div>
+
+            {/* Steam Off-Topic / Kalıcılık Uyarısı */}
+            <div className="mt-3 flex items-start gap-2 border-l-2 border-seal bg-seal/5 p-3 font-mono text-[11px] text-ink/85 leading-relaxed">
+              <span className="text-seal font-bold shrink-0">⚠️ Steam 'Konu Dışı' Uyarısı:</span>
+              <span>
+                Steam, sadece "Atatürk" yazıp geçilen birebir kopyala-yapıştır yorumları otomatik algılayıp "Off-Topic" (Konu Dışı) sayarak puanlamadan düşebilir. İncelemenizin <strong>kalıcı olması ve silinmemesi için</strong> metne oyun deneyiminiz, Paradox'un topluluk yönetimi veya moderatör çifte standardı hakkında <strong>kendi cümlenizden de 1-2 kelime ekleyin!</strong>
+              </span>
+            </div>
           </div>
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-ink/15 pt-4">

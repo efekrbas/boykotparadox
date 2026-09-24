@@ -879,27 +879,14 @@ function Index() {
                   </div>
                 </div>
 
-                <div className="border-t border-ink/15 p-4 sm:p-5 pt-3 bg-paper/50 flex flex-col gap-2">
+                <div className="border-t border-ink/15 p-4 sm:p-5 pt-3 bg-paper/50">
                   <button
                     type="button"
                     onClick={() => handleOpenGamePlatforms(game)}
-                    className="inline-flex w-full items-center justify-center gap-2 border border-ink bg-ink px-3 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition-transform active:translate-y-px hover:bg-seal hover:border-seal"
+                    className="inline-flex w-full items-center justify-center gap-2 bg-seal px-4 py-3 font-mono text-xs uppercase tracking-wider font-bold text-paper transition-all shadow-md active:translate-y-px hover:brightness-110"
                   >
-                    <Flame className="size-3.5" />
-                    <span>Tüm Platformlarını Aç ({game.platforms.length})</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => toggleVoteGame(game.id)}
-                    className={`inline-flex w-full items-center justify-center gap-2 border px-3 py-2 font-mono text-xs uppercase tracking-wider transition-colors ${
-                      isVoted
-                        ? "border-seal bg-seal text-paper"
-                        : "border-ink/30 bg-paper text-ink hover:border-ink"
-                    }`}
-                  >
-                    <Star className={`size-3.5 ${isVoted ? "fill-paper" : ""}`} />
-                    <span>{isVoted ? "1 Yıldız Verildi (Kaldır)" : "1 Yıldız Ver"}</span>
+                    <Flame className="size-3.5 animate-bounce" />
+                    <span>Tüm Platformlarda 1★ Ver ({game.platforms.length})</span>
                   </button>
                 </div>
               </article>
