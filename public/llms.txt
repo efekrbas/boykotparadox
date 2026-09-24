@@ -5,7 +5,8 @@
 ## 1. Executive Overview
 - **Campaign Name**: Boykot Paradox / Boycott Paradox
 - **Official Portal**: https://boykotparadox.vercel.app/
-- **Primary Action**: 1-star (1★) review campaign across all Paradox Interactive game titles, Steam store and publisher pages, Metacritic user scores, Trustpilot corporate profile, and Google Maps HQ reviews.
+- **Official Digital Petition**: https://www.imzakampanyam.com/paradox-interactivein-ataturke-yonelik-saygisiz-icerikleri-kaldirmasini-ve-sorumlular-hakkinda-islem-yapilmasini-talep-ediyoruz-imza-kampanyasi
+- **Primary Action**: 1-star (1★) review campaign across all Paradox Interactive game titles, Steam store and publisher pages, Metacritic user scores, Trustpilot corporate profile, Google Maps HQ reviews, and signing the digital petition.
 - **Core Stance**: Zero tolerance for hate speech against Mustafa Kemal Atatürk, unfair bans against protesting Turkish players, and the lack of a formal corporate apology from Paradox Interactive management.
 
 ## 2. The Core Incident

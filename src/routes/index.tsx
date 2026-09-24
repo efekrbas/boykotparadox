@@ -15,6 +15,7 @@ import {
   Sparkles,
   ArrowRight,
   TrendingUp,
+  PenLine,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -23,6 +24,7 @@ import { playStampSound } from "@/lib/audio";
 import { AudioStampToggle } from "@/components/AudioStampToggle";
 import { ReviewTemplatesSection } from "@/components/ReviewTemplatesSection";
 import { CorporateTargetsSection } from "@/components/CorporateTargetsSection";
+import { PetitionSection, PETITION_URL } from "@/components/PetitionSection";
 import { AntiSpamGuideSection } from "@/components/AntiSpamGuideSection";
 import { BulkLauncherModal } from "@/components/BulkLauncherModal";
 import { ShareBar } from "@/components/ShareBar";
@@ -480,6 +482,16 @@ function Index() {
 
             <button
               type="button"
+              onClick={() => scrollTo("imza")}
+              className="inline-flex items-center gap-1.5 border border-seal/40 bg-seal/10 px-2.5 py-1.5 sm:px-3 sm:py-2.5 font-mono text-[11px] sm:text-xs uppercase tracking-[0.12em] text-seal hover:bg-seal hover:text-paper transition-colors"
+            >
+              <PenLine className="size-3.5" />
+              <span className="hidden sm:inline">İmza Kampanyası</span>
+              <span className="sm:hidden">İmza</span>
+            </button>
+
+            <button
+              type="button"
               onClick={() => setIsBulkModalOpen(true)}
               className="inline-flex items-center gap-1.5 sm:gap-2 bg-seal px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 font-mono text-[11px] sm:text-xs uppercase tracking-[0.12em] text-paper transition-transform active:translate-y-px hover:brightness-110"
             >
@@ -498,13 +510,6 @@ function Index() {
           style={{
             background:
               "radial-gradient(130% 90% at 50% 120%, oklch(0.556 0.216 27.5) 0%, transparent 55%)",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.12]"
-          style={{
-            background:
-              "repeating-linear-gradient(115deg, transparent 0 46px, oklch(0.948 0.015 85) 46px 48px)",
           }}
         />
 
@@ -545,6 +550,17 @@ function Index() {
               <span>Tek Tıkla Tüm Platformları Aç</span>
             </button>
 
+            <a
+              href={PETITION_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 border-2 border-seal bg-seal/20 px-5 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:bg-seal hover:text-paper"
+            >
+              <PenLine className="size-4 text-seal group-hover:text-paper transition-colors" />
+              <span>İmza Kampanyasına Katıl</span>
+              <ExternalLink className="size-3.5 opacity-80" />
+            </a>
+
             <button
               type="button"
               onClick={() => scrollTo("sablonlar")}
@@ -552,6 +568,15 @@ function Index() {
             >
               <FileText className="size-4" />
               <span>Hazır 1★ Metinleri</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollTo("imza")}
+              className="inline-flex items-center gap-2 border border-seal/50 bg-seal/10 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-seal transition-colors hover:bg-seal hover:text-paper"
+            >
+              <PenLine className="size-4" />
+              <span>Resmi Dilekçe</span>
             </button>
 
             <button
@@ -566,7 +591,7 @@ function Index() {
             <button
               type="button"
               onClick={() => scrollTo("anit")}
-              className="inline-flex items-center gap-2 border border-seal/50 bg-seal/10 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-seal transition-colors hover:bg-seal hover:text-paper"
+              className="inline-flex items-center gap-2 border border-paper/20 px-4 py-3.5 font-mono text-xs uppercase tracking-[0.12em] text-paper/80 transition-colors hover:text-seal"
             >
               <Sparkles className="size-4" />
               <span>3D Atatürk Anıtı</span>
@@ -958,6 +983,8 @@ function Index() {
         </div>
       </section>
 
+      {/* Official Petition Campaign Section */}
+      <PetitionSection />
 
       {/* Corporate Targets Section (Trustpilot, Google, Metacritic Publisher) */}
       <CorporateTargetsSection

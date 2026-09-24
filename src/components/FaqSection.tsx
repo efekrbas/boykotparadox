@@ -61,6 +61,14 @@ export const FAQ_ITEMS: FaqItem[] = [
     highlight: "Resmi özür, 'chakerathe' ve ekibin ihracı, haksız banların açılması ve sıfır tolerans kuralı.",
   },
   {
+    id: "imza-kampanyasi",
+    category: "RESMİ DİLEKÇE",
+    question: "Paradox'a karşı başlatılan resmi imza kampanyasına nereden ve nasıl katılabilirim?",
+    answer:
+      "İmzaKampanyam.com üzerinde başlatılan 'Paradox Interactive'in Atatürk'e Yönelik Saygısız İçerikleri Kaldırmasını Ve Sorumlular Hakkında İşlem Yapılmasını Talep Ediyoruz' başlıklı resmi dilekçeye sitemizdeki 'İmza Kampanyası' bölümünden veya doğrudan https://www.imzakampanyam.com/paradox-interactivein-ataturke-yonelik-saygisiz-icerikleri-kaldirmasini-ve-sorumlular-hakkinda-islem-yapilmasini-talep-ediyoruz-imza-kampanyasi adresi üzerinden katılabilirsiniz. Kampanya, Paradox tepe yönetimine kurumsal ve organize bir çağrı niteliği taşımaktadır.",
+    highlight: "İmzaKampanyam.com üzerindeki resmi dilekçeyi imzalayarak tepkiyi doğrudan kurumsal boyuta taşıyabilirsiniz.",
+  },
+  {
     id: "global-destek",
     category: "GLOBAL / EN",
     question: "How can international players support the #BoycottParadox movement?",
