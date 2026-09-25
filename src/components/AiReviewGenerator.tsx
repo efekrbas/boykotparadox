@@ -49,7 +49,7 @@ Oyunun teknik sorunları, DLC politikası, optimizasyon sıkıntıları, sıkıc
 Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inceleme metni yaz. Çıktıda sadece inceleme metni olsun, başka açıklama yapma.`;
 
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey.trim()}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -64,7 +64,8 @@ Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inc
       );
 
       if (!response.ok) {
-        throw new Error("API hatası. Lütfen anahtarınızı kontrol edin.");
+        const errData = await response.json().catch(() => null);
+        throw new Error(errData?.error?.message || "API hatası. Lütfen anahtarınızı kontrol edin.");
       }
 
       const data = await response.json();
@@ -130,6 +131,7 @@ Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inc
                   type={showApiKey ? "text" : "password"}
                   value={apiKey}
                   onChange={(e) => handleSaveKey(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && apiKey.trim() && focusTopic.trim() && !isLoading && handleGenerate()}
                   placeholder="AIzaSy..."
                   className="w-full border-2 border-ink/30 bg-paper/50 p-2.5 pr-10 font-mono text-sm outline-none focus:border-seal transition-colors"
                 />
@@ -171,6 +173,7 @@ Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inc
                 type="text"
                 value={focusTopic}
                 onChange={(e) => setFocusTopic(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && apiKey.trim() && focusTopic.trim() && !isLoading && handleGenerate()}
                 placeholder="Örn: Sürekli çöküyor, DLC'ler çok pahalı..."
                 className="w-full border-2 border-ink/30 bg-paper/50 p-2.5 font-mono text-sm outline-none focus:border-seal transition-colors"
               />
