@@ -71,17 +71,36 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
 
     try {
       const cleanKey = apiKey.trim();
-      const modelsToTry = [
-        "gemini-1.5-flash",
-        "gemini-2.0-flash",
-        "gemini-1.5-flash-8b",
+      const preferredModel = typeof window !== "undefined" ? localStorage.getItem("preferred_gemini_model") : null;
+      
+      const defaultModels = [
+        "gemini-3.8-flash",
         "gemini-2.5-flash",
+        "gemini-2.0-flash",
+        "gemini-1.5-flash",
+        "gemini-1.5-flash-8b",
       ];
 
+      // Build model queue, prioritizing previously working model
+      const queue: string[] = [];
+      if (preferredModel && defaultModels.includes(preferredModel)) {
+        queue.push(preferredModel);
+      }
+      for (const m of defaultModels) {
+        if (!queue.includes(m)) {
+          queue.push(m);
+        }
+      }
+
+      const triedModels = new Set<string>();
       let success = false;
       let lastErrorMsg = "";
 
-      for (const model of modelsToTry) {
+      while (queue.length > 0) {
+        const model = queue.shift()!;
+        if (triedModels.has(model)) continue;
+        triedModels.add(model);
+
         try {
           const response = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(cleanKey)}`,
@@ -106,13 +125,26 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
             const msg = errData?.error?.message || `HTTP ${response.status} hatası.`;
             lastErrorMsg = msg;
 
-            // If API key itself is invalid or permission denied, don't keep looping with false model errors
-            if (response.status === 400 || response.status === 403) {
-              if (msg.toLowerCase().includes("api key") || msg.toLowerCase().includes("permission") || msg.toLowerCase().includes("location")) {
-                break;
+            // Dynamically detect if Google suggested a newer model in the error message
+            // e.g.: "Please update your code to use models/gemini-3.8-flash"
+            const suggestedMatch = msg.match(/models\/(gemini-[a-zA-Z0-9.-]+)/i) || msg.match(/use (gemini-[a-zA-Z0-9.-]+)/i);
+            if (suggestedMatch && suggestedMatch[1]) {
+              const suggestedModel = suggestedMatch[1];
+              if (!triedModels.has(suggestedModel) && !queue.includes(suggestedModel)) {
+                queue.unshift(suggestedModel); // Immediately try the suggested model next
               }
             }
-            continue; // Try next model
+
+            // Only stop if the API key format itself is invalid or region blocked
+            const isKeyInvalid = response.status === 400 && (msg.toLowerCase().includes("api key not valid") || msg.toLowerCase().includes("invalid api key"));
+            const isLocationBlocked = response.status === 403 && msg.toLowerCase().includes("user location is not supported");
+
+            if (isKeyInvalid || isLocationBlocked) {
+              break;
+            }
+
+            // In all other cases (e.g. model deprecated, not available, 404), seamlessly continue to next model
+            continue;
           }
 
           const data = await response.json();
@@ -122,10 +154,11 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
             setGeneratedText(text.trim());
             setIsFallback(false);
             setErrorMessage(null);
-            toast.success("Özgün inceleme üretildi!");
+            toast.success(`Özgün inceleme üretildi! (${model})`);
+            localStorage.setItem("preferred_gemini_model", model);
             playStampSound();
             success = true;
-            break; // Stop trying models if successful
+            break;
           }
         } catch (err: any) {
           lastErrorMsg = err.message;
@@ -134,8 +167,8 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
 
       if (!success) {
         let userFriendlyMsg = lastErrorMsg;
-        if (lastErrorMsg.includes("not found") || lastErrorMsg.includes("API key") || lastErrorMsg.includes("permission")) {
-          userFriendlyMsg = "Google API anahtarınız bu modellere erişemedi (Geçersiz anahtar, hesap veya bölge kısıtlaması). Lütfen aistudio.google.com üzerinden yeni bir anahtar alın veya aşağıdaki butonlarla harici yapay zekaya sorun.";
+        if (lastErrorMsg.includes("not found") || lastErrorMsg.includes("API key") || lastErrorMsg.includes("permission") || lastErrorMsg.includes("no longer available")) {
+          userFriendlyMsg = `Modeller yanıt vermedi (${lastErrorMsg.substring(0, 100)}...). Lütfen aşağıdaki butonlarla harici yapay zekaya sorun.`;
         }
         throw new Error(userFriendlyMsg);
       }
