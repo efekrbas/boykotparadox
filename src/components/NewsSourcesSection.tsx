@@ -6,19 +6,17 @@ import { NEWS_SOURCES, type NewsSource } from "@/data/newsSources";
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
 
-interface LiveNewsItem {
-  title: string;
-  link: string;
-  pubDate: string;
-  source?: string;
+interface LiveReviewItem {
+  review: string;
+  author: string;
+  playtime: number;
+  date: string;
 }
-
-const GOOGLE_NEWS_RSS = "https://news.google.com/rss/search?q=Paradox+Interactive+Atat%C3%BCrk&hl=tr&gl=TR&ceid=TR:tr";
-const RSS2JSON_ENDPOINT = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(GOOGLE_NEWS_RSS)}`;
 
 export function NewsSourcesSection() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [liveNews, setLiveNews] = useState<LiveNewsItem[]>([]);
+  const [liveReviews, setLiveReviews] = useState<LiveReviewItem[]>([]);
+  const [liveAppId, setLiveAppId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -57,39 +55,42 @@ export function NewsSourcesSection() {
     return () => slider.removeEventListener("wheel", handleWheel);
   }, []);
 
-  const fetchLiveNews = async () => {
+  const fetchLiveReviews = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(RSS2JSON_ENDPOINT);
+      const res = await fetch("/api/steam-live");
       if (res.ok) {
         const data = await res.json();
-        if (data.status === "ok" && Array.isArray(data.items) && data.items.length > 0) {
-          const items: LiveNewsItem[] = data.items.slice(0, 4).map((it: any) => ({
-            title: it.title || "Paradox Interactive Skandalı Haberi",
-            link: it.link || "#",
-            pubDate: it.pubDate ? new Date(it.pubDate).toLocaleDateString("tr-TR") : "Güncel",
-            source: it.author || "Google Haberler",
+        if (data.success && Array.isArray(data.reviews) && data.reviews.length > 0) {
+          const items: LiveReviewItem[] = data.reviews.slice(0, 4).map((it: any) => ({
+            review: it.review || "Boş inceleme",
+            author: `Oyuncu_${it.author?.steamid?.slice(-4) || "Gizli"}`,
+            playtime: Math.round((it.author?.playtime_forever || 0) / 60),
+            date: new Date((it.timestamp_updated || it.timestamp_created) * 1000).toLocaleDateString("tr-TR"),
           }));
-          setLiveNews(items);
-          setLastUpdated(new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }));
+          setLiveReviews(items);
+          setLiveAppId(data.appId);
+          setLastUpdated(new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
         }
       }
     } catch {
-      // Silently keep static fallback
+      // Silently fail
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchLiveNews();
+    fetchLiveReviews();
+    const interval = setInterval(fetchLiveReviews, 30000); // Fetch new reviews every 30 seconds
+    return () => clearInterval(interval);
   }, []);
 
   const handleManualRefresh = () => {
     playStampSound();
-    fetchLiveNews();
-    toast.info("Google News Akışı Yenileniyor...", {
-      description: "En güncel medya haberleri taranıyor.",
+    fetchLiveReviews();
+    toast.info("Steam İncelemeleri Yenileniyor...", {
+      description: "En güncel 1 Yıldız incelemeler çekiliyor.",
     });
   };
 
@@ -157,16 +158,16 @@ export function NewsSourcesSection() {
         </div>
       </div>
 
-      {/* Live Auto-fetching Google News Feed Box */}
+      {/* Live Auto-fetching Steam Reviews Box */}
       <div className="mt-8 border-2 border-ink bg-ink text-paper p-5 sm:p-7 shadow-lg">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-paper/15 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="relative flex size-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex size-2.5 rounded-full bg-emerald-500"></span>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex size-2.5 rounded-full bg-red-500"></span>
             </span>
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-400">
-              Canlı Otomatik Basın Takibi (Google News API)
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-red-400">
+              Canlı Steam Boykot Akışı
             </span>
           </div>
 
@@ -188,46 +189,35 @@ export function NewsSourcesSection() {
           </div>
         </div>
 
-        {liveNews.length > 0 ? (
+        {liveReviews.length > 0 ? (
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {liveNews.map((item, idx) => (
-              <a
+            {liveReviews.map((item, idx) => (
+              <div
                 key={idx}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group flex flex-col justify-between border border-paper/15 bg-paper/5 p-3.5 hover:border-seal hover:bg-paper/10 transition-all"
               >
                 <div>
                   <div className="flex items-center justify-between font-mono text-[10px] text-paper/60">
-                    <span className="text-emerald-400 font-bold">{item.source}</span>
-                    <span>{item.pubDate}</span>
+                    <span className="text-red-400 font-bold">Steam Oyuncusu</span>
+                    <span>{item.date}</span>
                   </div>
-                  <h4 className="mt-1.5 font-display text-base uppercase leading-snug text-paper group-hover:text-seal transition-colors line-clamp-2">
-                    {item.title}
+                  <h4 className="mt-1.5 font-mono text-xs leading-relaxed text-paper group-hover:text-seal transition-colors line-clamp-3">
+                    "{item.review}"
                   </h4>
                 </div>
-                <div className="mt-2.5 flex items-center gap-1 font-mono text-[10px] uppercase text-seal">
-                  <span>Habere Git</span>
-                  <ExternalLink className="size-2.5" />
+                <div className="mt-2.5 pt-2.5 border-t border-paper/10 flex items-center justify-between font-mono text-[10px] uppercase text-paper/50">
+                  <span>{item.author}</span>
+                  <span className="text-red-400 font-bold">★ {item.playtime} Saat Oynama</span>
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         ) : (
           <div className="mt-4 flex items-center justify-between font-mono text-xs text-paper/70 bg-paper/5 p-3 border border-paper/10">
             <div className="flex items-center gap-2">
-              <Rss className="size-4 text-emerald-400" />
-              <span>Google Haberler'de "Paradox Interactive & Atatürk" anahtar kelimeleri taranıyor...</span>
+              <RefreshCw className="size-4 animate-spin text-red-400" />
+              <span>Steam'den güncel olumsuz incelemeler çekiliyor...</span>
             </div>
-            <a
-              href="https://news.google.com/search?q=Paradox+Interactive+Atat%C3%BCrk&hl=tr&gl=TR&ceid=TR%3Atr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-seal underline font-bold"
-            >
-              Google News'te Aç →
-            </a>
           </div>
         )}
       </div>

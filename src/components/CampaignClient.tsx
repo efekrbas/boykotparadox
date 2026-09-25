@@ -57,12 +57,10 @@ const tr = (n: number) => n.toLocaleString("tr-TR");
 
 interface CampaignClientProps {
   initialSteamReviews?: Record<number, SteamReviewSummary>;
-  initialLiveGrowth?: number;
 }
 
 export function CampaignClient({
   initialSteamReviews,
-  initialLiveGrowth = 0,
 }: CampaignClientProps = {}) {
   const [steamReviews, setSteamReviews] = useState<Record<number, SteamReviewSummary>>(
     initialSteamReviews || DEFAULT_STEAM_REVIEWS
@@ -112,34 +110,6 @@ export function CampaignClient({
     };
   }, []);
 
-  // Live Simulated Community Ticker (initialized with server prop to prevent hydration mismatch)
-  const [liveGrowth, setLiveGrowth] = useState(initialLiveGrowth);
-  const [justTicked, setJustTicked] = useState(false);
-  const [lastIncrement, setLastIncrement] = useState(1);
-
-  useEffect(() => {
-    // Re-sync with client clock on mount
-    const elapsedSec = Math.max(0, Math.floor((Date.now() - CAMPAIGN_REF_MS) / 1000));
-    setLiveGrowth(Math.floor(elapsedSec / 16));
-
-    let timeoutId: ReturnType<typeof setTimeout>;
-
-    const tick = () => {
-      const nextDelay = Math.floor(Math.random() * 4500) + 4000;
-      timeoutId = setTimeout(() => {
-        const added = Math.random() > 0.75 ? 2 : 1;
-        setLastIncrement(added);
-        setLiveGrowth((prev) => prev + added);
-        setJustTicked(true);
-
-        setTimeout(() => setJustTicked(false), 1400);
-        tick();
-      }, nextDelay);
-    };
-
-    tick();
-    return () => clearTimeout(timeoutId);
-  }, []);
 
   useEffect(() => {
     try {
@@ -249,8 +219,8 @@ export function CampaignClient({
     });
   };
 
-  // Calculate total votes (Base + Live Organic Community Growth + User's local votes)
-  const totalVotes = BASE_TOTAL_VOTES + liveGrowth + votedGames.length;
+  // Calculate total votes (Base + Real Steam API Negatives + User's local votes)
+  const totalVotes = BASE_TOTAL_VOTES + totalSteamNegatives + votedGames.length;
 
   // Total possible stamp count (games platforms + corporate targets)
   const totalTargetsCount =
@@ -351,15 +321,9 @@ export function CampaignClient({
                 <span className="hidden xs:inline">Toplam 1★</span>
               </div>
               <div className="flex items-center justify-end gap-1 mt-0.5">
-                {justTicked && (
-                  <span className="font-mono text-[11px] sm:text-xs font-bold text-emerald-600 animate-pulse">
-                    +{lastIncrement}
-                  </span>
-                )}
                 <div
                   suppressHydrationWarning
-                  className={`font-mono text-lg sm:text-2xl font-bold tabular-nums transition-colors duration-300 ${justTicked ? "text-emerald-600" : "text-seal"
-                    }`}
+                  className="font-mono text-lg sm:text-2xl font-bold tabular-nums transition-colors duration-300 text-seal"
                 >
                   {tr(totalVotes)}
                 </div>

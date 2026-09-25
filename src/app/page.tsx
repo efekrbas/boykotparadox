@@ -141,9 +141,6 @@ export default async function Home() {
     console.warn("SSR Steam fetch fallback:", e);
   }
 
-  const elapsedSec = Math.max(0, Math.floor((Date.now() - CAMPAIGN_REF_MS) / 1000));
-  const initialLiveGrowth = Math.floor(elapsedSec / 16);
-
   return (
     <>
       <script
@@ -152,7 +149,6 @@ export default async function Home() {
       />
       <CampaignClient
         initialSteamReviews={initialReviews}
-        initialLiveGrowth={initialLiveGrowth}
       />
     </>
   );
