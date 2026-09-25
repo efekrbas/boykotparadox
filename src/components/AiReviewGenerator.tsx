@@ -19,7 +19,7 @@ export function AiReviewGenerator() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    const savedKey = localStorage.getItem("gemini_api_key");
+    const savedKey = localStorage.getItem("openrouter_api_key");
     if (savedKey) {
       setApiKey(savedKey);
     }
@@ -27,7 +27,7 @@ export function AiReviewGenerator() {
 
   const handleSaveKey = (val: string) => {
     setApiKey(val);
-    localStorage.setItem("gemini_api_key", val);
+    localStorage.setItem("openrouter_api_key", val);
   };
 
   const buildPrompt = () => {
@@ -71,27 +71,15 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
 
     try {
       const cleanKey = apiKey.trim();
-      const preferredModel = typeof window !== "undefined" ? localStorage.getItem("preferred_gemini_model") : null;
       
       const defaultModels = [
-        "gemini-3.8-flash",
-        "gemini-2.5-flash",
-        "gemini-2.0-flash",
-        "gemini-1.5-flash",
-        "gemini-1.5-flash-8b",
+        "google/gemini-flash-1.5-8b",
+        "google/gemini-2.0-flash-exp:free",
+        "mistralai/mistral-7b-instruct:free",
+        "meta-llama/llama-3.1-8b-instruct:free"
       ];
 
-      // Build model queue, prioritizing previously working model
-      const queue: string[] = [];
-      if (preferredModel && defaultModels.includes(preferredModel)) {
-        queue.push(preferredModel);
-      }
-      for (const m of defaultModels) {
-        if (!queue.includes(m)) {
-          queue.push(m);
-        }
-      }
-
+      const queue: string[] = [...defaultModels];
       const triedModels = new Set<string>();
       let success = false;
       let lastErrorMsg = "";
@@ -103,59 +91,38 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
 
         try {
           const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(cleanKey)}`,
+            "https://openrouter.ai/api/v1/chat/completions",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                "x-goog-api-key": cleanKey,
+                "Authorization": `Bearer ${cleanKey}`,
+                "HTTP-Referer": "https://boykotparadox.vercel.app/",
+                "X-Title": "Boykot Paradox"
               },
               body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }],
-                generationConfig: {
-                  temperature: 0.75,
-                  maxOutputTokens: 1200,
-                }
+                model: model,
+                messages: [{ role: "user", content: prompt }],
+                temperature: 0.75,
+                max_tokens: 1200,
               }),
             }
           );
 
           if (!response.ok) {
             const errData = await response.json().catch(() => null);
-            const msg = errData?.error?.message || `HTTP ${response.status} hatası.`;
-            lastErrorMsg = msg;
-
-            // Dynamically detect if Google suggested a newer model in the error message
-            // e.g.: "Please update your code to use models/gemini-3.8-flash"
-            const suggestedMatch = msg.match(/models\/(gemini-[a-zA-Z0-9.-]+)/i) || msg.match(/use (gemini-[a-zA-Z0-9.-]+)/i);
-            if (suggestedMatch && suggestedMatch[1]) {
-              const suggestedModel = suggestedMatch[1];
-              if (!triedModels.has(suggestedModel) && !queue.includes(suggestedModel)) {
-                queue.unshift(suggestedModel); // Immediately try the suggested model next
-              }
-            }
-
-            // Only stop if the API key format itself is invalid or region blocked
-            const isKeyInvalid = response.status === 400 && (msg.toLowerCase().includes("api key not valid") || msg.toLowerCase().includes("invalid api key"));
-            const isLocationBlocked = response.status === 403 && msg.toLowerCase().includes("user location is not supported");
-
-            if (isKeyInvalid || isLocationBlocked) {
-              break;
-            }
-
-            // In all other cases (e.g. model deprecated, not available, 404), seamlessly continue to next model
-            continue;
+            lastErrorMsg = errData?.error?.message || `HTTP ${response.status} hatası.`;
+            continue; // Try next OpenRouter model
           }
 
           const data = await response.json();
-          const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          const text = data.choices?.[0]?.message?.content;
 
           if (text) {
             setGeneratedText(text.trim());
             setIsFallback(false);
             setErrorMessage(null);
             toast.success(`Özgün inceleme üretildi! (${model})`);
-            localStorage.setItem("preferred_gemini_model", model);
             playStampSound();
             success = true;
             break;
@@ -208,12 +175,12 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
             AI ile Özgün İnceleme Üret
           </h3>
           <span className="ml-auto font-mono text-[10px] uppercase bg-ink text-paper px-2 py-1 font-bold">
-            Gemini Destekli
+            OpenRouter Destekli
           </span>
         </div>
 
         <p className="text-sm text-ink/80 mb-6 max-w-[70ch]">
-          Steam'in otomatik spam filtresine ("Konu Dışı" uyarısı) takılmamak için kendi API anahtarınızı kullanarak her seferinde tamamen benzersiz ve özgün 1 yıldız inceleme metinleri üretebilirsiniz. <br />
+          Steam'in otomatik spam filtresine ("Konu Dışı" uyarısı) takılmamak için kendi OpenRouter API anahtarınızı kullanarak her seferinde tamamen benzersiz ve özgün 1 yıldız inceleme metinleri üretebilirsiniz. <br />
           <strong className="text-seal font-mono text-xs">Not: API anahtarınız sadece tarayıcınızda (Local Storage) tutulur, hiçbir sunucuya gönderilmez.</strong>
         </p>
 
@@ -223,7 +190,7 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
             <div>
               <label className="flex items-center gap-2 font-mono text-xs font-bold uppercase text-ink mb-1.5">
                 <KeyRound className="size-3.5" />
-                Gemini API Key
+                OpenRouter API Key
               </label>
               <div className="relative">
                 <input
@@ -231,7 +198,7 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
                   value={apiKey}
                   onChange={(e) => handleSaveKey(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && apiKey.trim() && focusTopic.trim() && !isLoading && handleGenerate()}
-                  placeholder="AIzaSy..."
+                  placeholder="sk-or-v1-..."
                   className="w-full border-2 border-ink/30 bg-paper/50 p-2.5 pr-10 font-mono text-sm outline-none focus:border-seal transition-colors"
                 />
                 <button
@@ -243,8 +210,8 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
                 </button>
               </div>
               <div className="mt-1 font-mono text-[9px] text-ink/50">
-                <a href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                  Google AI Studio'dan ücretsiz alabilirsiniz.
+                <a href="https://openrouter.ai/settings/keys" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  openrouter.ai adresinden alabilirsiniz.
                 </a>
               </div>
             </div>
