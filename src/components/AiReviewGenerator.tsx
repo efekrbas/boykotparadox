@@ -11,6 +11,7 @@ export function AiReviewGenerator() {
   const [showApiKey, setShowApiKey] = useState(false);
   const [focusTopic, setFocusTopic] = useState("");
   const [selectedGame, setSelectedGame] = useState(GAMES[0]?.title || "");
+  const [reviewLength, setReviewLength] = useState<"short" | "medium" | "long">("medium");
   const [generatedText, setGeneratedText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -42,18 +43,25 @@ export function AiReviewGenerator() {
     setGeneratedText("");
 
     try {
+      let lengthDesc = "1-2 paragraflık, doyurucu ve akıcı bir Steam oyuncu incelemesi olsun.";
+      if (reviewLength === "short") {
+        lengthDesc = "2-3 cümlelik, kısa, net ve vurucu bir sitem metni olsun.";
+      } else if (reviewLength === "long") {
+        lengthDesc = "2-3 paragraflık, oyunun mekaniklerini, sorunlarını ve hissettirdiği hayal kırıklığını derinlemesine anlatan uzun ve detaylı bir Steam incelemesi olsun.";
+      }
+
       const prompt = `Sen bir oyuncusun. Steam'de bir Paradox Interactive oyununa kötü bir inceleme (1 yıldız) yazıyorsun. 
 Oyunun adı: ${selectedGame}. Bu oyun hakkında inceleme yapacaksın.
-Oyunun teknik sorunları, DLC politikası, optimizasyon sıkıntıları, sıkıcı mekanikleri veya oyunun pahalılığı gibi tamamen "oyunla ilgili" konulardan şikayet etmelisin. Siyasi hiçbir şeyden, Discord'dan veya Atatürk'ten BAHSETME. Amacımız Steam'in "konu dışı" filtresine takılmamak. Tamamen normal ama çok kızgın bir oyuncunun oyun hakkındaki kötü yorumu gibi görünmeli.
+Oyunun teknik sorunları, DLC politikası, optimizasyon sıkıntıları, sıkıcı mekanikleri veya oyunun pahalılığı gibi tamamen "oyunla ilgili" konulardan şikayet etmelisin. Siyasi hiçbir şeyden, Discord'dan veya Atatürk'ten ASLA BAHSETME. Amacımız Steam'in "konu dışı" filtresine takılmamak. Tamamen normal ama oyuna kırgın/öfkeli bir oyuncunun dürüst Steam incelemesi gibi hissettirmeli.
 Özellikle şu konuya odaklan: ${focusTopic}.
-Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inceleme metni yaz. Çıktıda sadece inceleme metni olsun, başka açıklama yapma.`;
+Metin boyutu: ${lengthDesc}
+Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapıştırılmaya hazır inceleme metnini ver, tırnak işareti, başlık veya ek açıklama yapma.`;
 
       const modelsToTry = [
+        "gemini-2.5-flash",
         "gemini-2.0-flash",
         "gemini-1.5-flash",
-        "gemini-1.5-flash-latest",
         "gemini-1.5-pro",
-        "gemini-pro"
       ];
 
       let success = false;
@@ -62,18 +70,18 @@ Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inc
       for (const model of modelsToTry) {
         try {
           const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent`,
+            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
             {
               method: "POST",
-              headers: { 
+              headers: {
                 "Content-Type": "application/json",
                 "x-goog-api-key": apiKey.trim()
               },
               body: JSON.stringify({
                 contents: [{ parts: [{ text: prompt }] }],
                 generationConfig: {
-                  temperature: 0.7,
-                  maxOutputTokens: 200,
+                  temperature: 0.75,
+                  maxOutputTokens: 1200,
                 }
               }),
             }
@@ -139,7 +147,7 @@ Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inc
         </div>
 
         <p className="text-sm text-ink/80 mb-6 max-w-[70ch]">
-          Steam'in otomatik spam filtresine ("Konu Dışı" uyarısı) takılmamak için kendi API anahtarınızı kullanarak her seferinde tamamen benzersiz ve özgün 1 yıldız inceleme metinleri üretebilirsiniz. <br/>
+          Steam'in otomatik spam filtresine ("Konu Dışı" uyarısı) takılmamak için kendi API anahtarınızı kullanarak her seferinde tamamen benzersiz ve özgün 1 yıldız inceleme metinleri üretebilirsiniz. <br />
           <strong className="text-seal font-mono text-xs">Not: API anahtarınız sadece tarayıcınızda (Local Storage) tutulur, hiçbir sunucuya gönderilmez.</strong>
         </p>
 
@@ -169,7 +177,9 @@ Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inc
                 </button>
               </div>
               <div className="mt-1 font-mono text-[9px] text-ink/50">
-                Google AI Studio'dan ücretsiz alabilirsiniz.
+                <a href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  Google AI Studio'dan ücretsiz alabilirsiniz.
+                </a>
               </div>
             </div>
 
@@ -202,6 +212,32 @@ Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inc
                 placeholder="Örn: Sürekli çöküyor, DLC'ler çok pahalı..."
                 className="w-full border-2 border-ink/30 bg-paper/50 p-2.5 font-mono text-sm outline-none focus:border-seal transition-colors"
               />
+            </div>
+
+            <div>
+              <label className="block font-mono text-xs font-bold uppercase text-ink mb-1.5">
+                İnceleme Uzunluğu
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { id: "short", label: "Kısa" },
+                  { id: "medium", label: "Orta (Standart)" },
+                  { id: "long", label: "Uzun (Detaylı)" },
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => setReviewLength(item.id as "short" | "medium" | "long")}
+                    className={`border-2 py-1.5 px-2 font-mono text-xs font-bold transition-all text-center ${
+                      reviewLength === item.id
+                        ? "border-seal bg-seal text-paper shadow-sm"
+                        : "border-ink/20 bg-paper/60 text-ink/70 hover:border-ink hover:text-ink"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <button
