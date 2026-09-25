@@ -403,7 +403,7 @@ export function CampaignClient({
               <div className="relative border-2 border-dashed border-seal bg-paper/5 backdrop-blur-md p-5 shadow-2xl shadow-seal/20 transition-all duration-200 group-hover:-translate-y-1 group-hover:shadow-seal/35 group-hover:bg-paper/10 w-[270px]">
                 {/* Header Tag */}
                 <div className="absolute -top-3 left-4 bg-seal px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-paper shadow-sm">
-                  TOPLULUK DERECESİ
+                  BOYKOT HEDEFİ
                 </div>
 
                 <div className="flex items-center justify-between gap-3 pt-1">
@@ -425,10 +425,10 @@ export function CampaignClient({
                 <div className="mt-3 border-t border-b border-seal/30 py-2">
                   <div className="flex items-center gap-1.5 font-mono text-[11px] font-black uppercase tracking-wider text-seal">
                     <span className="size-2 rounded-full bg-seal animate-ping" />
-                    <span>OLUMSUZ'U BASIYORUZ</span>
+                    <span>HEDEF: SON DERECE OLUMSUZ</span>
                   </div>
                   <p className="mt-1 font-mono text-[10px] text-paper/70 leading-relaxed">
-                    Steam, Metacritic, Google & Trustpilot üzerinde binlerce oyuncunun ortak kararı.
+                    Steam, Metacritic, Google & Trustpilot üzerinde binlerce oyuncunun ortak hedefi.
                   </p>
                 </div>
 
