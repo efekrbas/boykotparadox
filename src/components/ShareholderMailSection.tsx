@@ -56,6 +56,16 @@ export function ShareholderMailSection() {
     });
   };
 
+  const handleOpenGmail = () => {
+    playStampSound();
+    // Gmail web compose link
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(SHAREHOLDER_EMAILS)}&su=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`;
+    window.open(gmailUrl, "_blank", "noopener,noreferrer");
+    toast.success("Gmail açılıyor...", {
+      description: "Tarayıcınızda Gmail sayfası açıldı. İsminizi ekleyip gönderebilirsiniz.",
+    });
+  };
+
   return (
     <section id="hissedar-baskisi" className="mx-auto max-w-[1240px] px-5 py-12 scroll-mt-16 sm:scroll-mt-20">
       <div className="border-2 border-seal bg-paper p-6 sm:p-10 shadow-[8px_8px_0_0_oklch(0.556_0.216_27.5)] relative overflow-hidden">
@@ -108,21 +118,29 @@ export function ShareholderMailSection() {
                   {EMAIL_BODY}
                 </div>
 
-                <div className="mt-4 flex flex-wrap items-center gap-3">
+                <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   <button
                     type="button"
-                    onClick={handleOpenMailClient}
-                    className="inline-flex items-center gap-2.5 bg-seal hover:brightness-110 border-2 border-seal px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] font-bold text-paper transition-all active:translate-y-px flex-1 sm:flex-none justify-center"
+                    onClick={handleOpenGmail}
+                    className="inline-flex items-center gap-2.5 bg-seal hover:brightness-110 border-2 border-seal px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] font-bold text-paper transition-all active:translate-y-px justify-center"
                   >
                     <Mail className="size-4 text-paper" />
-                    <span>Mail Uygulamasını Aç</span>
+                    <span>Gmail İle Gönder (Tarayıcıda)</span>
                     <ExternalLink className="size-3.5 opacity-80" />
                   </button>
 
                   <button
                     type="button"
+                    onClick={handleOpenMailClient}
+                    className="inline-flex items-center gap-2 border-2 border-ink/20 bg-paper/5 px-4 py-3 font-mono text-xs uppercase tracking-wider text-ink hover:border-ink hover:bg-ink/5 transition-colors justify-center"
+                  >
+                    <span>Diğer (Outlook vb.)</span>
+                  </button>
+
+                  <button
+                    type="button"
                     onClick={handleCopy}
-                    className="inline-flex items-center gap-2 border-2 border-ink/20 bg-paper px-4 py-3 font-mono text-xs uppercase tracking-[0.12em] text-ink hover:border-ink hover:bg-ink/5 transition-colors flex-1 sm:flex-none justify-center"
+                    className="inline-flex items-center gap-2 border-2 border-ink/20 bg-paper px-4 py-3 font-mono text-xs uppercase tracking-[0.12em] text-ink hover:border-ink hover:bg-ink/5 transition-colors justify-center"
                   >
                     {copied ? (
                       <>
@@ -132,7 +150,7 @@ export function ShareholderMailSection() {
                     ) : (
                       <>
                         <Copy className="size-4" />
-                        <span>Sadece Metni Kopyala</span>
+                        <span>Sadece Kopyala</span>
                       </>
                     )}
                   </button>
