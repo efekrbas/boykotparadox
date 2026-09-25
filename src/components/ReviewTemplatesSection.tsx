@@ -5,6 +5,7 @@ import { Copy, Check, MessageSquareText, Sparkles, ExternalLink } from "lucide-r
 import { toast } from "sonner";
 import { REVIEW_TEMPLATES } from "@/data/boycottData";
 import { playStampSound } from "@/lib/audio";
+import { AiReviewGenerator } from "./AiReviewGenerator";
 
 export function ReviewTemplatesSection() {
   const [selectedId, setSelectedId] = useState(REVIEW_TEMPLATES[0]?.id ?? "");
@@ -167,6 +168,8 @@ export function ReviewTemplatesSection() {
           </div>
         </div>
       </div>
+
+      <AiReviewGenerator />
     </section>
   );
 }
