@@ -43,12 +43,13 @@ Oyunun adı: ${selectedGame}.
 Siyasi şeylerden, Discord'dan veya Atatürk'ten ASLA BAHSETME. Sadece "oyunla ilgili" konulardan (optimizasyon, DLC para tuzağı, hatalar vb.) şikayet et.
 Özellikle şu konuya odaklan: ${focusTopic}.
 Metin boyutu: ${lengthDesc}
-ÇOK ÖNEMLİ (Yapay Zeka Tespiti Atlatma): Bu metnin yapay zeka tarafından yazıldığı ASLA anlaşılmamalı! Steam'in AI filtresini geçmek zorundayız.
-- Asla kusursuz, edebi veya resmi bir dil KULLANMA.
-- Noktalama işaretlerini sallama, bazen cümle sonuna nokta bile koyma.
-- İnandırıcı olmak için BİLEREK ufak yazım yanlışları yap (örneğin "de/da" ekini bazen bitişik yaz, "her şey" yerine "herşey", "geliyor" yerine "geliyo" yaz).
-- İnternet/oyuncu argosu kullan (örn: çöp, bomboş, kazık, leş gibi).
-- Metni asla tırnak işareti içine alma, sadece kopyalanacak saf metni ver.`;
+ÇOK ÖNEMLİ (Steam AI Filtresi Atlatma): Bu metnin yapay zeka tarafından yazıldığı kesinlikle anlaşılamamalı! Steam moderatörlerini kandırmalıyız.
+- Yapay zeka kelimelerini ASLA kullanma: "Öncelikle", "Sonuç olarak", "Açıkçası", "Genel olarak", "Özetle" gibi kelimeleri ASLA YAZMA.
+- Cümlelerin düzensiz, devrik ve aceleyle yazılmış gibi olsun. Bazen büyük harf kuralına bile uyma (cümleye küçük harfle başla vs).
+- Noktalama işaretlerini tamamen salla, virgül ve nokta kullanımını en aza indir.
+- BİLEREK yazım yanlışları yap (örneğin "de/da" ekini bitişik yaz, "herşey", "yapıyo", "geliyo" gibi kelimeler kullan).
+- Argolu oyuncu jargonu kullan (çöp, leş, bomboş, para tuzağı, kazık vb.).
+- Metni tırnak işareti içine alma, sadece kopyalanacak saf yazıyı ver.`;
   };
 
   const handleGenerate = async () => {
