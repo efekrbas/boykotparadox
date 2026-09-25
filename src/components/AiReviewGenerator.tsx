@@ -49,7 +49,7 @@ Oyunun teknik sorunları, DLC politikası, optimizasyon sıkıntıları, sıkıc
 Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inceleme metni yaz. Çıktıda sadece inceleme metni olsun, başka açıklama yapma.`;
 
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey.trim()}`,
+        `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey.trim()}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
