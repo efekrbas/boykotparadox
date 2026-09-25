@@ -49,6 +49,7 @@ Oyunun teknik sorunları, DLC politikası, optimizasyon sıkıntıları, sıkıc
 Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inceleme metni yaz. Çıktıda sadece inceleme metni olsun, başka açıklama yapma.`;
 
       const modelsToTry = [
+        "gemini-2.0-flash",
         "gemini-1.5-flash",
         "gemini-1.5-flash-latest",
         "gemini-1.5-pro",
@@ -61,10 +62,13 @@ Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inc
       for (const model of modelsToTry) {
         try {
           const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`,
+            `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent`,
             {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: { 
+                "Content-Type": "application/json",
+                "x-goog-api-key": apiKey.trim()
+              },
               body: JSON.stringify({
                 contents: [{ parts: [{ text: prompt }] }],
                 generationConfig: {
