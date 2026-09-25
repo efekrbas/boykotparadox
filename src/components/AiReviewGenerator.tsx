@@ -73,10 +73,11 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
       const cleanKey = apiKey.trim();
       
       const defaultModels = [
-        "google/gemini-flash-1.5-8b",
         "google/gemini-2.0-flash-exp:free",
-        "mistralai/mistral-7b-instruct:free",
-        "meta-llama/llama-3.1-8b-instruct:free"
+        "google/gemini-1.5-flash",
+        "meta-llama/llama-3.1-8b-instruct",
+        "mistralai/mistral-7b-instruct",
+        "google/gemma-2-9b-it:free"
       ];
 
       const queue: string[] = [...defaultModels];
