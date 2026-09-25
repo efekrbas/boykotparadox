@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Newspaper, ExternalLink, Quote, Sparkles, Filter, RefreshCw, Rss, ChevronLeft, ChevronRight } from "lucide-react";
 import { NEWS_SOURCES, type NewsSource } from "@/data/newsSources";
+import { GAMES } from "@/data/boycottData";
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
 
@@ -206,16 +207,18 @@ export function NewsSourcesSection() {
 
         {liveReviews.length > 0 ? (
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {liveReviews.map((item, idx) => (
-              <div
-                key={idx}
-                className="group flex flex-col justify-between border border-paper/15 bg-paper/5 p-3.5 hover:border-seal hover:bg-paper/10 transition-all"
-              >
-                <div>
-                  <div className="flex items-center justify-between font-mono text-[10px] text-paper/60">
-                    <span className="text-red-400 font-bold">Steam Oyuncusu</span>
-                    <span>{item.date}</span>
-                  </div>
+            {liveReviews.map((item, idx) => {
+              const gameName = GAMES.find(g => g.appId === liveAppId)?.title || "Paradox Oyunu";
+              return (
+                <div
+                  key={idx}
+                  className="group flex flex-col justify-between border border-paper/15 bg-paper/5 p-3.5 hover:border-seal hover:bg-paper/10 transition-all"
+                >
+                  <div>
+                    <div className="flex items-center justify-between font-mono text-[10px] text-paper/60">
+                      <span className="text-red-400 font-bold uppercase">{gameName} Oyuncusu</span>
+                      <span>{item.date}</span>
+                    </div>
                   <h4 className="mt-1.5 font-mono text-xs leading-relaxed text-paper group-hover:text-seal transition-colors line-clamp-3">
                     "{item.review}"
                   </h4>
@@ -225,7 +228,8 @@ export function NewsSourcesSection() {
                   <span className="text-red-400 font-bold">★ {item.playtime} Saat Oynama</span>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div className="mt-4 flex items-center justify-between font-mono text-xs text-paper/70 bg-paper/5 p-3 border border-paper/10">
