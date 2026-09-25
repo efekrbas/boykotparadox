@@ -38,12 +38,12 @@ export function AiReviewGenerator() {
       lengthDesc = "2-3 paragraflık, oyunun mekaniklerini, sorunlarını ve hissettirdiği hayal kırıklığını derinlemesine anlatan uzun ve detaylı bir Steam incelemesi olsun.";
     }
 
-    return `Sen bir oyuncusun. Steam'de bir Paradox Interactive oyununa kötü bir inceleme (1 yıldız) yazıyorsun. 
-Oyunun adı: ${selectedGame}. Bu oyun hakkında inceleme yapacaksın.
-Oyunun teknik sorunları, DLC politikası, optimizasyon sıkıntıları, sıkıcı mekanikleri veya oyunun pahalılığı gibi tamamen "oyunla ilgili" konulardan şikayet etmelisin. Siyasi hiçbir şeyden, Discord'dan veya Atatürk'ten ASLA BAHSETME. Amacımız Steam'in "konu dışı" filtresine takılmamak. Tamamen normal ama oyuna kırgın/öfkeli bir oyuncunun dürüst Steam incelemesi gibi hissettirmeli.
+    return `Sen bir Türk oyuncusun. Steam'de bir Paradox Interactive oyununa kötü bir inceleme (1 yıldız) yazıyorsun. 
+Oyunun adı: ${selectedGame}.
+Oyunun teknik sorunları, DLC politikası, optimizasyon sıkıntıları veya oyunun pahalılığı gibi tamamen "oyunla ilgili" konulardan şikayet etmelisin. Siyasi hiçbir şeyden, Discord'dan veya Atatürk'ten ASLA BAHSETME. Tamamen normal ama oyuna kırgın/öfkeli bir oyuncunun dürüst Steam incelemesi gibi hissettirmeli.
 Özellikle şu konuya odaklan: ${focusTopic}.
 Metin boyutu: ${lengthDesc}
-Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapıştırılmaya hazır inceleme metnini ver, tırnak işareti, başlık veya ek açıklama yapma.`;
+ÇOK ÖNEMLİ: Cümleleri çok doğal, günlük ve akıcı bir Türkçe ile yaz. Asla İngilizce'den çevrilmiş gibi duran, robotik veya anlamsız (halüsinasyon) cümleler kurma. Sadece doğrudan Steam'e yapıştırılmaya hazır inceleme metnini ver, tırnak işareti kullanma.`;
   };
 
   const handleGenerate = async () => {
@@ -74,10 +74,9 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
       
       const defaultModels = [
         "google/gemini-2.0-flash-exp:free",
+        "google/gemini-2.0-flash-lite-preview-02-05:free",
         "google/gemini-1.5-flash",
-        "meta-llama/llama-3.1-8b-instruct",
-        "mistralai/mistral-7b-instruct",
-        "google/gemma-2-9b-it:free"
+        "google/gemma-2-27b-it"
       ];
 
       const queue: string[] = [...defaultModels];
