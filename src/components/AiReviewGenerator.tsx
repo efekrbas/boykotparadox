@@ -11,7 +11,7 @@ export function AiReviewGenerator() {
   const [showApiKey, setShowApiKey] = useState(false);
   const [focusTopic, setFocusTopic] = useState("");
   const [selectedGame, setSelectedGame] = useState(GAMES[0]?.title || "");
-  const [reviewLength, setReviewLength] = useState<"short" | "medium" | "long">("medium");
+  const [reviewLength, setReviewLength] = useState<"micro" | "short" | "medium" | "long">("medium");
   const [generatedText, setGeneratedText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -32,7 +32,9 @@ export function AiReviewGenerator() {
 
   const buildPrompt = () => {
     let lengthDesc = "1-2 paragraflık, doyurucu ve akıcı bir Steam oyuncu incelemesi olsun.";
-    if (reviewLength === "short") {
+    if (reviewLength === "micro") {
+      lengthDesc = "SADECE TEK BİR KELİME (örn: çöp) VEYA EN FAZLA KISA TEK BİR CÜMLE (örn: paranıza yazık almayın) OLSUN. Asla uzun yazma, anında lafı yapıştır.";
+    } else if (reviewLength === "short") {
       lengthDesc = "2-3 cümlelik, kısa, net ve vurucu bir sitem metni olsun.";
     } else if (reviewLength === "long") {
       lengthDesc = "2-3 paragraflık, oyunun mekaniklerini, sorunlarını ve hissettirdiği hayal kırıklığını derinlemesine anlatan uzun ve detaylı bir Steam incelemesi olsun.";
@@ -257,16 +259,17 @@ Metin boyutu: ${lengthDesc}
               <label className="block font-mono text-xs font-bold uppercase text-ink mb-1.5">
                 İnceleme Uzunluğu
               </label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {[
+                  { id: "micro", label: "Tek Cümle" },
                   { id: "short", label: "Kısa" },
-                  { id: "medium", label: "Orta (Standart)" },
-                  { id: "long", label: "Uzun (Detaylı)" },
+                  { id: "medium", label: "Orta" },
+                  { id: "long", label: "Uzun" },
                 ].map((item) => (
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => setReviewLength(item.id as "short" | "medium" | "long")}
+                    onClick={() => setReviewLength(item.id as "micro" | "short" | "medium" | "long")}
                     className={`border-2 py-1.5 px-2 font-mono text-xs font-bold transition-all text-center ${
                       reviewLength === item.id
                         ? "border-seal bg-seal text-paper shadow-sm"
