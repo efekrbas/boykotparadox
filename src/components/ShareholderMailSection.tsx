@@ -144,7 +144,7 @@ export function ShareholderMailSection() {
                     className="inline-flex items-center gap-2.5 bg-seal hover:brightness-110 border-2 border-seal px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] font-bold text-paper transition-all active:translate-y-px justify-center"
                   >
                     <Mail className="size-4 text-paper" />
-                    <span>Gmail İle Gönder (Tarayıcıda)</span>
+                    <span>Gmail İle Gönder</span>
                     <ExternalLink className="size-3.5 opacity-80" />
                   </button>
 
