@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
 import { XIcon } from "@/components/icons/XIcon";
 import { LinkedinIcon } from "@/components/icons/LinkedinIcon";
+import { DiscordIcon } from "@/components/icons/DiscordIcon";
 
 export function ShareBar() {
   const [copiedLink, setCopiedLink] = useState(false);
@@ -139,9 +140,9 @@ export function ShareBar() {
         <button
           type="button"
           onClick={handleCopyDiscord}
-          className="inline-flex items-center gap-2 border border-[#5865F2] bg-[#5865F2]/10 px-3.5 py-2 font-mono text-xs uppercase tracking-wider text-[#5865F2] transition-colors hover:bg-[#5865F2] hover:text-white"
+          className="inline-flex items-center gap-2 border border-ink/30 bg-paper px-3.5 py-2 font-mono text-xs uppercase tracking-wider transition-colors hover:bg-[#5865F2] hover:text-white hover:border-[#5865F2]"
         >
-          {copiedDiscord ? <Check className="size-3.5" /> : <MessageSquare className="size-3.5" />}
+          {copiedDiscord ? <Check className="size-3.5" /> : <DiscordIcon className="size-3.5" />}
           <span>{copiedDiscord ? "Discord Metni Kopyalandı!" : "Discord İçin Kopyala"}</span>
         </button>
 

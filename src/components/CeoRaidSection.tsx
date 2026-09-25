@@ -97,7 +97,7 @@ export function CeoRaidSection() {
               </p>
 
               {/* Template Selector Tabs */}
-              <div className="mt-6 flex flex-wrap gap-2">
+              <div className="mt-6 flex flex-col gap-2">
                 {TWEET_PRESETS.map((p) => (
                   <button
                     key={p.id}
@@ -106,7 +106,7 @@ export function CeoRaidSection() {
                       playStampSound();
                       setSelectedId(p.id);
                     }}
-                    className={`px-3 py-2 font-mono text-xs uppercase tracking-wider transition-colors border ${
+                    className={`w-full text-left px-3 py-2 font-mono text-xs uppercase tracking-wider transition-colors border ${
                       selectedId === p.id
                         ? "border-seal bg-seal text-paper font-bold"
                         : "border-paper/20 bg-paper/5 text-paper/70 hover:border-paper/50 hover:text-paper"
