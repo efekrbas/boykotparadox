@@ -47,9 +47,9 @@ export function ShareholderMailSection() {
 
   const handleOpenMailClient = () => {
     playStampSound();
-    const mailtoUrl = \`mailto:\${SHAREHOLDER_EMAILS}?subject=\${encodeURIComponent(
+    const mailtoUrl = `mailto:${SHAREHOLDER_EMAILS}?subject=${encodeURIComponent(
       EMAIL_SUBJECT
-    )}&body=\${encodeURIComponent(EMAIL_BODY)}\`;
+    )}&body=${encodeURIComponent(EMAIL_BODY)}`;
     window.location.href = mailtoUrl;
     toast.success("E-posta uygulaması açılıyor...", {
       description: "Lütfen gönder tuşuna basmadan önce isminizi (en altta) güncelleyin.",
