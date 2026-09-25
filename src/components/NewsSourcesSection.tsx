@@ -13,6 +13,21 @@ interface LiveReviewItem {
   date: string;
 }
 
+// Relative time formatter (e.g., "5 dakika önce")
+function getRelativeTime(timestamp: number): string {
+  const rtf = new Intl.RelativeTimeFormat("tr", { numeric: "auto" });
+  const diffInSeconds = Math.floor((timestamp * 1000 - Date.now()) / 1000);
+  
+  const minutes = Math.floor(diffInSeconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (Math.abs(days) > 0) return rtf.format(days, "day");
+  if (Math.abs(hours) > 0) return rtf.format(hours, "hour");
+  if (Math.abs(minutes) > 0) return rtf.format(minutes, "minute");
+  return rtf.format(diffInSeconds, "second");
+}
+
 export function NewsSourcesSection() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [liveReviews, setLiveReviews] = useState<LiveReviewItem[]>([]);
@@ -66,7 +81,7 @@ export function NewsSourcesSection() {
             review: it.review || "Boş inceleme",
             author: `Oyuncu_${it.author?.steamid?.slice(-4) || "Gizli"}`,
             playtime: Math.round((it.author?.playtime_forever || 0) / 60),
-            date: new Date((it.timestamp_updated || it.timestamp_created) * 1000).toLocaleDateString("tr-TR"),
+            date: getRelativeTime(it.timestamp_updated || it.timestamp_created),
           }));
           setLiveReviews(items);
           setLiveAppId(data.appId);
