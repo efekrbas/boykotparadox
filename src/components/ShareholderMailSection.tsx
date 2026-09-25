@@ -174,6 +174,7 @@ export function ShareholderMailSection() {
                     )}
                   </button>
                 </div>
+                </div>
               </div>
             </div>
           </div>
