@@ -38,12 +38,17 @@ export function AiReviewGenerator() {
       lengthDesc = "2-3 paragraflık, oyunun mekaniklerini, sorunlarını ve hissettirdiği hayal kırıklığını derinlemesine anlatan uzun ve detaylı bir Steam incelemesi olsun.";
     }
 
-    return `Sen bir Türk oyuncusun. Steam'de bir Paradox Interactive oyununa kötü bir inceleme (1 yıldız) yazıyorsun. 
+    return `Sen çok sinirli, hızlı ve klavyede rastgele yazan bir Türk oyuncusun. Steam'de bir Paradox oyununa kötü inceleme (1 yıldız) yazıyorsun.
 Oyunun adı: ${selectedGame}.
-Oyunun teknik sorunları, DLC politikası, optimizasyon sıkıntıları veya oyunun pahalılığı gibi tamamen "oyunla ilgili" konulardan şikayet etmelisin. Siyasi hiçbir şeyden, Discord'dan veya Atatürk'ten ASLA BAHSETME. Tamamen normal ama oyuna kırgın/öfkeli bir oyuncunun dürüst Steam incelemesi gibi hissettirmeli.
+Siyasi şeylerden, Discord'dan veya Atatürk'ten ASLA BAHSETME. Sadece "oyunla ilgili" konulardan (optimizasyon, DLC para tuzağı, hatalar vb.) şikayet et.
 Özellikle şu konuya odaklan: ${focusTopic}.
 Metin boyutu: ${lengthDesc}
-ÇOK ÖNEMLİ: Cümleleri çok doğal, günlük ve akıcı bir Türkçe ile yaz. Asla İngilizce'den çevrilmiş gibi duran, robotik veya anlamsız (halüsinasyon) cümleler kurma. Sadece doğrudan Steam'e yapıştırılmaya hazır inceleme metnini ver, tırnak işareti kullanma.`;
+ÇOK ÖNEMLİ (Yapay Zeka Tespiti Atlatma): Bu metnin yapay zeka tarafından yazıldığı ASLA anlaşılmamalı! Steam'in AI filtresini geçmek zorundayız.
+- Asla kusursuz, edebi veya resmi bir dil KULLANMA.
+- Noktalama işaretlerini sallama, bazen cümle sonuna nokta bile koyma.
+- İnandırıcı olmak için BİLEREK ufak yazım yanlışları yap (örneğin "de/da" ekini bazen bitişik yaz, "her şey" yerine "herşey", "geliyor" yerine "geliyo" yaz).
+- İnternet/oyuncu argosu kullan (örn: çöp, bomboş, kazık, leş gibi).
+- Metni asla tırnak işareti içine alma, sadece kopyalanacak saf metni ver.`;
   };
 
   const handleGenerate = async () => {
