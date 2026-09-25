@@ -36,6 +36,7 @@ import { CorporateTargetsSection } from "@/components/CorporateTargetsSection";
 import { PetitionSection, PETITION_URL } from "@/components/PetitionSection";
 import { AntiSpamGuideSection } from "@/components/AntiSpamGuideSection";
 import { CeoRaidSection } from "@/components/CeoRaidSection";
+import { ShareholderMailSection } from "@/components/ShareholderMailSection";
 import { BoycottGuidesSection } from "@/components/BoycottGuidesSection";
 import { BulkLauncherModal } from "@/components/BulkLauncherModal";
 import { ShareBar } from "@/components/ShareBar";
@@ -925,6 +926,9 @@ export function CampaignClient({
 
       {/* Direct X / Twitter Pressure Center on Paradox CEO & Company */}
       <CeoRaidSection />
+
+      {/* Shareholder Financial Pressure Center */}
+      <ShareholderMailSection />
 
       {/* Ready-to-copy Review Templates */}
       <ReviewTemplatesSection />
