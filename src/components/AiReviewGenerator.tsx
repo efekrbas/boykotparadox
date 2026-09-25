@@ -33,6 +33,11 @@ export function AiReviewGenerator() {
       return;
     }
 
+    if (!focusTopic.trim()) {
+      toast.error("Lütfen oyun hakkında vurgulamak istediğiniz kusuru girin.");
+      return;
+    }
+
     setIsLoading(true);
     setGeneratedText("");
 
@@ -40,7 +45,7 @@ export function AiReviewGenerator() {
       const prompt = `Sen bir oyuncusun. Steam'de bir Paradox Interactive oyununa kötü bir inceleme (1 yıldız) yazıyorsun. 
 Oyunun adı: ${selectedGame}. Bu oyun hakkında inceleme yapacaksın.
 Oyunun teknik sorunları, DLC politikası, optimizasyon sıkıntıları, sıkıcı mekanikleri veya oyunun pahalılığı gibi tamamen "oyunla ilgili" konulardan şikayet etmelisin. Siyasi hiçbir şeyden, Discord'dan veya Atatürk'ten BAHSETME. Amacımız Steam'in "konu dışı" filtresine takılmamak. Tamamen normal ama çok kızgın bir oyuncunun oyun hakkındaki kötü yorumu gibi görünmeli.
-Özellikle şu konuya odaklan: ${focusTopic || "Oyunun optimizasyon sorunları ve DLC'lerin çok pahalı olması"}.
+Özellikle şu konuya odaklan: ${focusTopic}.
 Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inceleme metni yaz. Çıktıda sadece inceleme metni olsun, başka açıklama yapma.`;
 
       const response = await fetch(
@@ -160,7 +165,7 @@ Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inc
 
             <div>
               <label className="block font-mono text-xs font-bold uppercase text-ink mb-1.5">
-                Oyun Hakkında Vurgulamak İstediğiniz Kusur (Opsiyonel)
+                Oyun Hakkında Vurgulamak İstediğiniz Kusur (Zorunlu)
               </label>
               <input
                 type="text"
@@ -174,7 +179,7 @@ Lütfen çok kısa (en fazla 3-4 cümle), sitemkar, küfürsüz bir Türkçe inc
             <button
               type="button"
               onClick={handleGenerate}
-              disabled={isLoading || !apiKey.trim()}
+              disabled={isLoading || !apiKey.trim() || !focusTopic.trim()}
               className="w-full inline-flex justify-center items-center gap-2 bg-ink px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-paper transition-transform active:translate-y-px hover:bg-seal disabled:opacity-50 disabled:pointer-events-none"
             >
               {isLoading ? (
