@@ -21,7 +21,6 @@ export function NewsSourcesSection() {
   const [liveNews, setLiveNews] = useState<LiveNewsItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
-  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const scrollSlider = (direction: "left" | "right") => {
@@ -34,26 +33,29 @@ export function NewsSourcesSection() {
     }
   };
 
-  // Automatic horizontal scrolling
+  // Horizontal mouse wheel scrolling
   useEffect(() => {
-    if (isAutoScrollPaused) return;
+    const slider = sliderRef.current;
+    if (!slider) return;
 
-    const interval = setInterval(() => {
-      if (sliderRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
-        const maxScroll = scrollWidth - clientWidth;
-        const cardStep = 366; // card width + gap
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY !== 0) {
+        const canScrollLeft = slider.scrollLeft > 0;
+        const canScrollRight = slider.scrollLeft < slider.scrollWidth - slider.clientWidth - 2;
 
-        if (scrollLeft >= maxScroll - 20) {
-          sliderRef.current.scrollTo({ left: 0, behavior: "smooth" });
-        } else {
-          sliderRef.current.scrollBy({ left: cardStep, behavior: "smooth" });
+        if ((e.deltaY > 0 && canScrollRight) || (e.deltaY < 0 && canScrollLeft)) {
+          e.preventDefault();
+          slider.scrollBy({
+            left: e.deltaY * 1.5,
+            behavior: "auto",
+          });
         }
       }
-    }, 3500);
+    };
 
-    return () => clearInterval(interval);
-  }, [isAutoScrollPaused, activeCategory]);
+    slider.addEventListener("wheel", handleWheel, { passive: false });
+    return () => slider.removeEventListener("wheel", handleWheel);
+  }, []);
 
   const fetchLiveNews = async () => {
     setIsLoading(true);
@@ -250,10 +252,6 @@ export function NewsSourcesSection() {
         </div>
 
         <div className="flex items-center gap-3 self-end sm:self-auto">
-          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-1">
-            <span className={`size-1.5 rounded-full bg-emerald-500 ${isAutoScrollPaused ? "opacity-50" : "animate-pulse"}`} />
-            {isAutoScrollPaused ? "Duraklatıldı" : "Otomatik Kayıyor"}
-          </span>
           <span className="font-mono text-xs text-mute hidden md:inline">
             ({filteredSources.length} Kaynak)
           </span>
@@ -284,11 +282,7 @@ export function NewsSourcesSection() {
       <div
         ref={sliderRef}
         tabIndex={0}
-        onMouseEnter={() => setIsAutoScrollPaused(true)}
-        onMouseLeave={() => setIsAutoScrollPaused(false)}
-        onTouchStart={() => setIsAutoScrollPaused(true)}
-        onTouchEnd={() => setIsAutoScrollPaused(false)}
-        className="mt-6 flex gap-4 overflow-x-auto pb-4 pt-1 px-0.5 scroll-smooth snap-x snap-mandatory focus:outline-none [scrollbar-width:thin] [scrollbar-color:oklch(0.556_0.216_27.5)_transparent]"
+        className="mt-6 flex gap-4 overflow-x-auto pb-6 pt-1 px-0.5 scroll-smooth snap-x snap-mandatory focus:outline-none red-scrollbar"
       >
         {filteredSources.map((item) => (
           <article

@@ -60,12 +60,13 @@ export function Ataturk3DScene() {
                 <div className="font-display text-base uppercase tracking-widest text-paper sm:text-xl">
                   Gazi Mustafa Kemal Atatürk
                 </div>
-                <div className="mt-0.5 flex items-center justify-center gap-2 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-seal">
-                  <span>1881</span>
-                  <span>—</span>
-                  <span className="text-sm font-bold leading-none">∞</span>
-                  <span className="text-paper/30">|</span>
-                  <span>Türkiye Cumhuriyeti Kurucusu</span>
+                <div className="mt-1.5 flex flex-col items-center justify-center gap-1.5 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-seal">
+                  <span className="text-center leading-relaxed">Türkiye Cumhuriyeti Kurucusu</span>
+                  <div className="flex items-center justify-center gap-2">
+                    <span>1881</span>
+                    <span>—</span>
+                    <span className="text-sm font-bold leading-none">∞</span>
+                  </div>
                 </div>
               </div>
             </div>

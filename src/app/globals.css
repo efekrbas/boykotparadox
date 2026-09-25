@@ -179,3 +179,35 @@ html {
     font-family: var(--font-body);
   }
 }
+
+@utility red-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-seal) transparent;
+}
+.red-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.red-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.red-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-seal);
+}
+.red-scrollbar::-webkit-scrollbar-button:single-button {
+  background-color: transparent;
+  display: block;
+  height: 6px;
+  width: 12px;
+}
+.red-scrollbar::-webkit-scrollbar-button:single-button:horizontal:decrement {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='%23d02b2b'><path d='M8 1 L2 5 L8 9 Z'/></svg>");
+  background-size: 8px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.red-scrollbar::-webkit-scrollbar-button:single-button:horizontal:increment {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='%23d02b2b'><path d='M2 1 L8 5 L2 9 Z'/></svg>");
+  background-size: 8px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
