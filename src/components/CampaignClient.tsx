@@ -19,6 +19,7 @@ import {
   ChevronRight,
   Filter,
   ArrowUpDown,
+  TrendingDown,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -466,6 +467,15 @@ export function CampaignClient({
             >
               <XIcon className="size-4 text-paper" />
               <span>X / CEO Baskını</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollTo("hissedar-baskisi")}
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-seal/50 bg-paper/5 px-5 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-seal transition-all hover:border-seal hover:bg-seal/10 active:translate-y-px"
+            >
+              <TrendingDown className="size-4" />
+              <span>Hissedar Maili</span>
             </button>
           </div>
 
