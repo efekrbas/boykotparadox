@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Send, Copy, Check, AlertTriangle, Sparkles, ExternalLink } from "lucide-react";
 import { toast } from "sonner";

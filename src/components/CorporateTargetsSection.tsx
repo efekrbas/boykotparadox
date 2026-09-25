@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Building2, ExternalLink, ShieldAlert, Check } from "lucide-react";
 import { CORPORATE_TARGETS } from "@/data/boycottData";
@@ -69,13 +71,13 @@ export function CorporateTargetsSection({
           Steam incelemeleri dönemsel olarak "off-topic" filtresine takılabilir. Ancak <strong>Trustpilot</strong> ve <strong>Google Haritalar</strong> doğrudan Paradox Interactive şirketinin kurumsal itibarını ve Google arama sonuçlarındaki puanını etkiler!
         </p>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
           {CORPORATE_TARGETS.map((target) => {
             const isStamped = stampedIds.includes(target.id);
             return (
               <div
                 key={target.id}
-                className={`relative flex flex-col justify-between border-2 p-5 transition-all ${
+                className={`relative flex flex-col justify-between border-2 p-4 sm:p-5 transition-all last:sm:col-span-2 last:lg:col-span-1 ${
                   isStamped
                     ? "border-seal bg-paper/5 shadow-[0_0_15px_rgba(230,57,70,0.15)]"
                     : "border-paper/20 bg-paper/5 hover:border-paper/60"

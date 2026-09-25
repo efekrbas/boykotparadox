@@ -107,11 +107,11 @@ export const NEWS_SOURCES: NewsSource[] = [
   },
   {
     id: "reddit-director",
-    outlet: "Reddit (r/hoi4)",
+    outlet: "Paradox Forums",
     title: "Paradox Game Director Batya's Official Statement on Discord Moderation",
     summary:
       "Tepkilerin ardından HOI4 Oyun Direktörü Batya resmi açıklama yaparak Atatürk'ün Türk milleti için önemini anladıklarını ve kuralların gözden geçirileceğini duyurdu.",
-    url: "https://www.reddit.com/r/hoi4/",
+    url: "https://forum.paradoxplaza.com/forum/threads/regarding-the-recent-discord-moderation.1942577/",
     category: "Topluluk & Forum",
     date: "Eylül 2026",
     badge: "Resmi Açıklama",

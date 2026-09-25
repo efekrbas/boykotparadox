@@ -1,8 +1,11 @@
+"use client";
+
 import { useState } from "react";
-import { Share2, Copy, Check, MessageCircle, Send, MessageSquare, Linkedin } from "lucide-react";
+import { Share2, Copy, Check, MessageCircle, Send, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
 import { XIcon } from "@/components/icons/XIcon";
+import { LinkedinIcon } from "@/components/icons/LinkedinIcon";
 
 export function ShareBar() {
   const [copiedLink, setCopiedLink] = useState(false);
@@ -129,7 +132,7 @@ export function ShareBar() {
           onClick={handleLinkedInShare}
           className="inline-flex items-center gap-2 border border-ink/30 bg-paper px-3.5 py-2 font-mono text-xs uppercase tracking-wider transition-colors hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]"
         >
-          <Linkedin className="size-3.5" />
+          <LinkedinIcon className="size-3.5" />
           <span>LinkedIn</span>
         </button>
 

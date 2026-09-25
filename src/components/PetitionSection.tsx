@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { PenLine, Copy, Check, Sparkles, ArrowUpRight } from "lucide-react";
 import { toast } from "sonner";

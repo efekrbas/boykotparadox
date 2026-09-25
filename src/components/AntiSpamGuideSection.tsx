@@ -46,13 +46,6 @@ export function AntiSpamGuideSection() {
           </div>
         ))}
       </div>
-
-      <div className="mt-6 flex items-start gap-3 border border-seal/30 bg-seal/5 p-4">
-        <HelpCircle className="size-5 text-seal shrink-0 mt-0.5" />
-        <div className="text-xs leading-relaxed text-ink/80">
-          <strong className="font-semibold text-seal uppercase">Önemli Hatırlatma:</strong> Steam, tek bir günde binlerce olumsuz inceleme geldiğinde bunları otomatik olarak "Konu Dışı İnceleme Dönemi" olarak işaretleyip toplam puandan düşebilir. Bu nedenle incelemenizde şirketin resmi Discord'undaki denetimsizliğe, oyunculara uygulanan haksız sansüre ve müşteri memnuniyetsizliğine değinmek incelemenizin geçerli kalmasını sağlar.
-        </div>
-      </div>
     </section>
   );
 }

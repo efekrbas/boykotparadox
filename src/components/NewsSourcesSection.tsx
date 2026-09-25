@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
-import { Newspaper, ExternalLink, Quote, Sparkles, Filter, RefreshCw, Rss } from "lucide-react";
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { Newspaper, ExternalLink, Quote, Sparkles, Filter, RefreshCw, Rss, ChevronLeft, ChevronRight } from "lucide-react";
 import { NEWS_SOURCES, type NewsSource } from "@/data/newsSources";
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
@@ -19,6 +21,39 @@ export function NewsSourcesSection() {
   const [liveNews, setLiveNews] = useState<LiveNewsItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  const scrollSlider = (direction: "left" | "right") => {
+    if (sliderRef.current) {
+      const scrollAmount = Math.max(300, sliderRef.current.clientWidth * 0.75);
+      sliderRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // Automatic horizontal scrolling
+  useEffect(() => {
+    if (isAutoScrollPaused) return;
+
+    const interval = setInterval(() => {
+      if (sliderRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+        const maxScroll = scrollWidth - clientWidth;
+        const cardStep = 366; // card width + gap
+
+        if (scrollLeft >= maxScroll - 20) {
+          sliderRef.current.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          sliderRef.current.scrollBy({ left: cardStep, behavior: "smooth" });
+        }
+      }
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [isAutoScrollPaused, activeCategory]);
 
   const fetchLiveNews = async () => {
     setIsLoading(true);
@@ -195,8 +230,8 @@ export function NewsSourcesSection() {
         )}
       </div>
 
-      {/* Category Filter Pills for Curated Archives */}
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
+      {/* Category Filter Pills & Carousel Controls */}
+      <div className="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
           {categories.map((cat) => (
             <button
@@ -213,15 +248,52 @@ export function NewsSourcesSection() {
             </button>
           ))}
         </div>
-        <span className="font-mono text-xs text-mute">Arşivlenmiş 10 Doğrulanmış Kaynak</span>
+
+        <div className="flex items-center gap-3 self-end sm:self-auto">
+          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-1">
+            <span className={`size-1.5 rounded-full bg-emerald-500 ${isAutoScrollPaused ? "opacity-50" : "animate-pulse"}`} />
+            {isAutoScrollPaused ? "Duraklatıldı" : "Otomatik Kayıyor"}
+          </span>
+          <span className="font-mono text-xs text-mute hidden md:inline">
+            ({filteredSources.length} Kaynak)
+          </span>
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => scrollSlider("left")}
+              className="flex size-8 items-center justify-center border-2 border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper transition-colors"
+              title="Önceki haberler"
+              aria-label="Önceki haberler"
+            >
+              <ChevronLeft className="size-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollSlider("right")}
+              className="flex size-8 items-center justify-center border-2 border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper transition-colors"
+              title="Sonraki haberler"
+              aria-label="Sonraki haberler"
+            >
+              <ChevronRight className="size-4" />
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* News Cards Grid */}
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Horizontally Scrolling News Cards */}
+      <div
+        ref={sliderRef}
+        tabIndex={0}
+        onMouseEnter={() => setIsAutoScrollPaused(true)}
+        onMouseLeave={() => setIsAutoScrollPaused(false)}
+        onTouchStart={() => setIsAutoScrollPaused(true)}
+        onTouchEnd={() => setIsAutoScrollPaused(false)}
+        className="mt-6 flex gap-4 overflow-x-auto pb-4 pt-1 px-0.5 scroll-smooth snap-x snap-mandatory focus:outline-none [scrollbar-width:thin] [scrollbar-color:oklch(0.556_0.216_27.5)_transparent]"
+      >
         {filteredSources.map((item) => (
           <article
             key={item.id}
-            className="flex flex-col justify-between border-2 border-ink/20 bg-paper p-5 transition-colors hover:border-ink"
+            className="w-[290px] sm:w-[350px] shrink-0 snap-start flex flex-col justify-between border-2 border-ink/20 bg-paper p-5 transition-all hover:border-ink hover:-translate-y-1 shadow-sm"
           >
             <div>
               {/* Badge & Date */}
@@ -234,7 +306,7 @@ export function NewsSourcesSection() {
 
               {/* Source Name */}
               <div className="mt-3 font-mono text-xs font-bold uppercase tracking-wider text-ink/70">
-                {item.source}
+                {item.outlet}
               </div>
 
               {/* Title */}

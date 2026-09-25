@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Copy, Check, MessageSquareText, Sparkles, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
@@ -39,10 +41,19 @@ export function ReviewTemplatesSection() {
             Hazır 1 Yıldız İnceleme Metinleri
           </h2>
         </div>
-        <p className="max-w-[44ch] text-xs text-mute sm:text-sm">
-          Platformlar (Steam, Metacritic, Trustpilot) doğrudan harici metin aktarımına izin vermez.
-          Aşağıdaki hazır protesto metinlerinden birini tek tıkla kopyalayıp sayfaya yapıştırarak 1 yıldızı verin!
-        </p>
+      </div>
+
+      {/* Tek ve Net Steam 'Konu Dışı' Uyarısı Banner'ı */}
+      <div className="mt-6 flex items-start gap-3 border-2 border-seal bg-seal/10 p-4 shadow-sm">
+        <span className="text-lg leading-none shrink-0 mt-0.5">⚠️</span>
+        <div className="text-xs sm:text-sm font-mono leading-relaxed text-ink">
+          <strong className="text-seal font-bold uppercase tracking-wider block sm:inline mr-2">
+            Steam 'Konu Dışı' Uyarısı:
+          </strong>
+          <span>
+            Steam, sadece "Atatürk" yazıp geçilen birebir kopyala-yapıştır yorumları otomatik algılayıp "Off-Topic" (Konu Dışı) sayarak puanlamadan düşebilir. İncelemenizin <strong>kalıcı olması ve silinmemesi için</strong> metne oyun deneyiminiz, Paradox'un topluluk yönetimi veya moderatör çifte standardı hakkında <strong>kendi cümlenizden de 1-2 kelime ekleyin!</strong>
+          </span>
+        </div>
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-12">
@@ -55,26 +66,23 @@ export function ReviewTemplatesSection() {
                 key={tmpl.id}
                 type="button"
                 onClick={() => setSelectedId(tmpl.id)}
-                className={`group relative flex flex-col items-start border-2 p-4 text-left transition-all ${
-                  isSelected
+                className={`group relative flex flex-col items-start border-2 p-4 text-left transition-all ${isSelected
                     ? "border-ink bg-ink text-paper shadow-[4px_4px_0_0_oklch(0.556_0.216_27.5)]"
                     : "border-ink/20 bg-paper hover:border-ink hover:bg-paper/70"
-                }`}
+                  }`}
               >
                 <div className="flex w-full items-center justify-between gap-2">
                   <span
-                    className={`font-mono text-xs uppercase tracking-wider ${
-                      isSelected ? "text-seal" : "text-seal font-bold"
-                    }`}
+                    className={`font-mono text-xs uppercase tracking-wider ${isSelected ? "text-seal" : "text-seal font-bold"
+                      }`}
                   >
                     {tmpl.badge}
                   </span>
                   <span
-                    className={`font-mono text-[10px] uppercase px-1.5 py-0.5 border ${
-                      isSelected
+                    className={`font-mono text-[10px] uppercase px-1.5 py-0.5 border ${isSelected
                         ? "border-paper/30 text-paper/70"
                         : "border-ink/20 text-mute"
-                    }`}
+                      }`}
                   >
                     {tmpl.language === "tr" ? "TR" : "EN"}
                   </span>
@@ -83,9 +91,8 @@ export function ReviewTemplatesSection() {
                   {tmpl.title}
                 </div>
                 <div
-                  className={`mt-2 line-clamp-2 text-xs ${
-                    isSelected ? "text-paper/75" : "text-mute"
-                  }`}
+                  className={`mt-2 line-clamp-2 text-xs ${isSelected ? "text-paper/75" : "text-mute"
+                    }`}
                 >
                   {tmpl.text}
                 </div>
@@ -128,14 +135,6 @@ export function ReviewTemplatesSection() {
                 <span>Karakter sayısı: {activeTemplate.text.length}</span>
                 <span>{activeTemplate.language === "tr" ? "Türkçe" : "English"}</span>
               </div>
-            </div>
-
-            {/* Steam Off-Topic / Kalıcılık Uyarısı */}
-            <div className="mt-3 flex items-start gap-2 border-l-2 border-seal bg-seal/5 p-3 font-mono text-[11px] text-ink/85 leading-relaxed">
-              <span className="text-seal font-bold shrink-0">⚠️ Steam 'Konu Dışı' Uyarısı:</span>
-              <span>
-                Steam, sadece "Atatürk" yazıp geçilen birebir kopyala-yapıştır yorumları otomatik algılayıp "Off-Topic" (Konu Dışı) sayarak puanlamadan düşebilir. İncelemenizin <strong>kalıcı olması ve silinmemesi için</strong> metne oyun deneyiminiz, Paradox'un topluluk yönetimi veya moderatör çifte standardı hakkında <strong>kendi cümlenizden de 1-2 kelime ekleyin!</strong>
-              </span>
             </div>
           </div>
 

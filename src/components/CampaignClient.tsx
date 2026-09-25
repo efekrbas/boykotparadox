@@ -1,29 +1,34 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+"use client";
+
+import { useEffect, useMemo, useState, useRef } from "react";
 import {
   Flame,
   Star,
   ExternalLink,
   ShieldAlert,
   Search,
-  CheckCircle2,
   Building2,
   FileText,
-  HelpCircle,
   Award,
   Layers,
   Sparkles,
-  ArrowRight,
-  TrendingUp,
   PenLine,
-  Send,
   Newspaper,
+  RefreshCw,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  ArrowUpDown,
 } from "lucide-react";
 import { toast } from "sonner";
 
 import { XIcon } from "@/components/icons/XIcon";
-
 import { GAMES, CORPORATE_TARGETS, DEMANDS, type Game } from "@/data/boycottData";
+import { SteamRatingDisplay } from "@/components/SteamRatingDisplay";
+import {
+  DEFAULT_STEAM_REVIEWS,
+  type SteamReviewSummary,
+} from "@/lib/steam";
 import { playStampSound } from "@/lib/audio";
 import { AudioStampToggle } from "@/components/AudioStampToggle";
 import { ReviewTemplatesSection } from "@/components/ReviewTemplatesSection";
@@ -38,199 +43,6 @@ import { Ataturk3DScene } from "@/components/Ataturk3DScene";
 import { NewsSourcesSection } from "@/components/NewsSourcesSection";
 import { FaqSection } from "@/components/FaqSection";
 
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      {
-        name: "google-site-verification",
-        content: "hYFGZJAo0Z4zRDGxUsflXR2QQ-RwHAbmVURjZO-EBDw",
-      },
-      { title: "Boykot Paradox — Resmi Atatürk Skandalına Karşı 1★ Kampanyası | #BoycottParadox" },
-      {
-        name: "description",
-        content:
-          "Paradox Interactive resmi Discord'undaki Atatürk'e hakaret ve Türk oyuncuları sansürleme skandalına karşı tek ses! Steam, Metacritic, Trustpilot ve Google'da 1 yıldız vererek sesini duyur.",
-      },
-      {
-        name: "keywords",
-        content:
-          "paradox boykot, boykot paradox, hearts of iron 4 ataturk, hoi4 boykot, paradox interactive boykot, ataturk skandali, steam 1 yildiz, paradox inceleme boykotu, hoi4 discord atatürk, eu4 boykot, ck3, victoria 3, stellaris, cities skylines, boycott paradox, paradox interactive scandal, emrah safa gürkan boykot, trustpilot paradox boykot, google paradox 1 yıldız, steam review bomb paradox",
-      },
-      {
-        name: "news_keywords",
-        content:
-          "paradox boykot, boykot paradox, hearts of iron 4 ataturk, hoi4 discord, paradox interactive, ataturk skandali, steam boykot, emrah safa gürkan, paradox inceleme boykotu",
-      },
-      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
-      { name: "revisit-after", content: "1 days" },
-      { name: "rating", content: "general" },
-      { name: "distribution", content: "global" },
-      { name: "language", content: "tr" },
-      { property: "og:site_name", content: "Boykot Paradox — 1★ Boykot Hareketi" },
-      { property: "og:locale", content: "tr_TR" },
-      { property: "og:locale:alternate", content: "en_US" },
-      {
-        property: "og:title",
-        content: "Boykot Paradox — Resmi Atatürk Skandalına Karşı 1★ Kampanyası",
-      },
-      {
-        property: "og:description",
-        content:
-          "Sadece Steam değil: Metacritic, Trustpilot, Epic, GOG ve Google üzerinden Paradox'a tek dokunuşla 1 yıldız ver. Topluluğuna ve kurucu değerlerine saygı göstermeyen firmaya sıfır tolerans!",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://boykotparadox.vercel.app/" },
-      { property: "og:image", content: "https://boykotparadox.vercel.app/ataturk-human.jpg" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Gazi Mustafa Kemal Atatürk — Boykot Paradox Kampanyası" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Boykot Paradox — Resmi Atatürk Skandalına Karşı 1★ Kampanyası" },
-      {
-        name: "twitter:description",
-        content:
-          "Hearts of Iron IV Discord skandalına karşı Paradox Interactive oyunlarına ve kurumsal sayfalarına 1 yıldız vererek sesini duyur.",
-      },
-      { name: "twitter:image", content: "https://boykotparadox.vercel.app/ataturk-human.jpg" },
-    ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@graph": [
-            {
-              "@type": "WebSite",
-              "@id": "https://boykotparadox.vercel.app/#website",
-              "url": "https://boykotparadox.vercel.app/",
-              "name": "Boykot Paradox — Tüm Platformlarda 1 Yıldız Kampanyası",
-              "alternateName": ["Boycott Paradox Interactive", "Paradox Boykot"],
-              "description":
-                "Paradox Interactive'in resmi Discord sunucusunda Gazi Mustafa Kemal Atatürk'e ve Türk oyunculara yönelik saygısızlığına karşı başlatılan bağımsız oyuncu boykotu.",
-              "inLanguage": ["tr-TR", "en-US"],
-            },
-            {
-              "@type": "Organization",
-              "@id": "https://boykotparadox.vercel.app/#organization",
-              "name": "Türk Oyuncu Topluluğu İnisiyatifi",
-              "url": "https://boykotparadox.vercel.app/",
-              "logo": "https://boykotparadox.vercel.app/favicon.png",
-              "sameAs": [
-                "https://twitter.com/search?q=%23BoycottParadox",
-                "https://www.reddit.com/r/hoi4/",
-                "https://www.odatv.com/guncel/paradoxtan-ataturk-skandali-hearts-of-ironin-discord-sunucusunda-boykot-120163837",
-              ],
-            },
-            {
-              "@type": "NewsArticle",
-              "@id": "https://boykotparadox.vercel.app/#newsarticle",
-              "headline": "Paradox Interactive Resmi Discord Sunucusundaki Atatürk Skandalına Karşı Kitlesel 1 Yıldız Boykotu",
-              "alternativeHeadline": "Turkish Gamers Launch 1-Star Boycott Against Paradox Interactive Over Discord Moderation Hate Speech",
-              "description":
-                "Hearts of Iron IV resmi Discord kanalında Gazi Mustafa Kemal Atatürk'e ve Türk oyunculara yönelik saygısızlığa karşı tüm platformlarda 1 yıldız boykot kampanyası başlatıldı.",
-              "datePublished": "2026-09-22T12:00:00+03:00",
-              "dateModified": "2026-09-24T18:00:00+03:00",
-              "inLanguage": "tr-TR",
-              "mainEntityOfPage": "https://boykotparadox.vercel.app/",
-              "image": [
-                "https://boykotparadox.vercel.app/ataturk-human.jpg",
-                "https://boykotparadox.vercel.app/favicon.png",
-              ],
-              "author": {
-                "@type": "Organization",
-                "name": "Bağımsız Türk Oyuncu Topluluğu",
-                "url": "https://boykotparadox.vercel.app/",
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "Boykot Paradox",
-                "logo": {
-                  "@type": "ImageObject",
-                  "url": "https://boykotparadox.vercel.app/favicon.png",
-                },
-              },
-              "speakable": {
-                "@type": "SpeakableSpecification",
-                "cssSelector": ["h1", "h2", "#faq p", "blockquote"],
-              },
-            },
-            {
-              "@type": "FAQPage",
-              "@id": "https://boykotparadox.vercel.app/#faq",
-              "mainEntity": [
-                {
-                  "@type": "Question",
-                  "name": "Paradox Interactive neden boykot ediliyor?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "Paradox Interactive'in resmi Hearts of Iron IV Discord sunucusunda Türkiye Cumhuriyeti'nin kurucusu Gazi Mustafa Kemal Atatürk'e ve Türk milletine hakaret edilmiş, barışçıl tepki gösteren Türk oyuncular haksız moderasyon kararlarıyla susturulup banlanmıştır. Paradox yönetiminin resmi bir özür dilememesi nedeniyle boykot başlatılmıştır.",
-                  },
-                },
-                {
-                  "@type": "Question",
-                  "name": "Hearts of Iron IV Discord sunucusunda tam olarak ne yaşandı?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "Resmi Paradox HOI4 Discord sunucusunda bazı kullanıcılar Atatürk'ü mesnetsizce tarihi olaylarla ilişkilendirip hakaret içeren ifadeler kullanmıştır. Türk oyuncuların saygı çerçevesinde yaptığı itirazlar moderasyon tarafından 'kışkırtma' sayılarak Türk oyuncular kitlesel olarak banlanmıştır.",
-                  },
-                },
-                {
-                  "@type": "Question",
-                  "name": "Steam incelemelerinin 'Konu Dışı' (Off-Topic) filtresine takılması nasıl önlenir?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "İncelemenizin kalıcı olması için şirketin resmi Discord ve topluluk kanallarındaki 'müşteri memnuniyetsizliği', 'taraflı moderasyon', 'şirket etik politikası' ve 'oyuncu kitlesine saygısızlık' gibi doğrudan tüketici haklarını ilgilendiren ifadelere yer verilmelidir.",
-                  },
-                },
-                {
-                  "@type": "Question",
-                  "name": "Neden sadece Steam değil, Trustpilot ve Google da puanlanmalı?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "Steam incelemeleri dönemsel filtrelense dahi, Trustpilot ve Google Haritalar (Stockholm HQ) Paradox Interactive'in doğrudan kurumsal itibarını ve Google arama sonuçlarındaki şirket itibar puanını belirler.",
-                  },
-                },
-                {
-                  "@type": "Question",
-                  "name": "Tarihçi Prof. Dr. Emrah Safa Gürkan ve ulusal medya olaya nasıl yaklaştı?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "6.000 saati aşkın Paradox oyunu tecrübesi bulunan ünlü tarihçi Prof. Dr. Emrah Safa Gürkan, şirketin Atatürk'e yönelik tutumunun açık bir düşmanlık ve tarihi cehalet olduğunu belirterek tüm Paradox oyunlarını kütüphanesinden sildiğini açıklamıştır. Sözcü, OdaTV, Onedio gibi ulusal basın organları da skandalı haberleştirmiştir.",
-                  },
-                },
-                {
-                  "@type": "Question",
-                  "name": "Boykot kampanyasının Paradox yönetiminden 4 temel talebi nedir?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "1. Resmi ve samimi bir özür yayınlanması. 2. Sorumlu moderatörlerin yetkilerinin feshedilmesi. 3. Haksız yere banlanan Türk oyuncuların yasaklarının kaldırılması. 4. Moderasyon standartlarında milli değerlere ve kurucu liderlere saygının güvence altına alınması.",
-                  },
-                },
-                {
-                  "@type": "Question",
-                  "name": "How can international players support the #BoycottParadox movement?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text":
-                      "International gamers can support by leaving a 1-star review on Metacritic and Trustpilot, demanding fair community moderation, and posting on social media using the #BoycottParadox hashtag.",
-                  },
-                },
-              ],
-            },
-          ],
-        }),
-      },
-    ],
-  }),
-  component: Index,
-});
-
 const SOURCE_URL =
   "https://www.odatv.com/guncel/paradoxtan-ataturk-skandali-hearts-of-ironin-discord-sunucusunda-boykot-120163837";
 
@@ -238,40 +50,79 @@ const STORAGE_VOTES_KEY = "boykot-paradox-oylar";
 const STORAGE_STAMPS_KEY = "boykot-paradox-stamps";
 
 // Campaign reference start: 22 September 2026 12:00:00
-const CAMPAIGN_REF_MS = new Date("2026-09-22T12:00:00+03:00").getTime();
-const BASE_TOTAL_VOTES = 6934;
-
-const RECENT_LIVE_ACTIONS = [
-  "Hearts of Iron IV için Steam'de yeni 1★ verildi",
-  "Paradox Interactive için Trustpilot'ta 1★ inceleme paylaşıldı",
-  "Europa Universalis IV için Epic Games'te 1★ verildi",
-  "Crusader Kings III için Steam mağazasında 1★ verildi",
-  "Victoria 3 için Metacritic'te 1★ puanlama yapıldı",
-  "Paradox Interactive için Google Haritalar'da 1★ bırakıldı",
-  "Cities: Skylines II için Steam'de yeni 1★ kaydedildi",
-  "Hearts of Iron IV topluluk boykotuna +1 destek eklendi",
-];
+export const CAMPAIGN_REF_MS = new Date("2026-09-22T12:00:00+03:00").getTime();
+export const BASE_TOTAL_VOTES = 6934;
 
 const tr = (n: number) => n.toLocaleString("tr-TR");
 
-function Index() {
+interface CampaignClientProps {
+  initialSteamReviews?: Record<number, SteamReviewSummary>;
+  initialLiveGrowth?: number;
+}
+
+export function CampaignClient({
+  initialSteamReviews,
+  initialLiveGrowth = 0,
+}: CampaignClientProps = {}) {
+  const [steamReviews, setSteamReviews] = useState<Record<number, SteamReviewSummary>>(
+    initialSteamReviews || DEFAULT_STEAM_REVIEWS
+  );
+  const [isRefreshingSteam, setIsRefreshingSteam] = useState(false);
+  const [sortBy, setSortBy] = useState<"default" | "negative" | "rating">("default");
   const [votedGames, setVotedGames] = useState<string[]>([]);
   const [stampedPlatforms, setStampedPlatforms] = useState<string[]>([]);
   const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const gamesSliderRef = useRef<HTMLDivElement>(null);
 
-  // Live Simulated Community Ticker
-  const [liveGrowth, setLiveGrowth] = useState(() => {
-    const elapsedSec = Math.max(0, Math.floor((Date.now() - CAMPAIGN_REF_MS) / 1000));
-    return Math.floor(elapsedSec / 16);
-  });
+  const scrollGamesSlider = (direction: "left" | "right") => {
+    if (gamesSliderRef.current) {
+      const scrollAmount = Math.max(340, gamesSliderRef.current.clientWidth * 0.75);
+      gamesSliderRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // Horizontal mouse wheel scrolling
+  useEffect(() => {
+    const slider = gamesSliderRef.current;
+    if (!slider) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY !== 0) {
+        const canScrollLeft = slider.scrollLeft > 0;
+        const canScrollRight = slider.scrollLeft < slider.scrollWidth - slider.clientWidth - 2;
+
+        if ((e.deltaY > 0 && canScrollRight) || (e.deltaY < 0 && canScrollLeft)) {
+          e.preventDefault();
+          slider.scrollBy({
+            left: e.deltaY * 1.5,
+            behavior: "auto",
+          });
+        }
+      }
+    };
+
+    slider.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      slider.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
+  // Live Simulated Community Ticker (initialized with server prop to prevent hydration mismatch)
+  const [liveGrowth, setLiveGrowth] = useState(initialLiveGrowth);
   const [justTicked, setJustTicked] = useState(false);
   const [lastIncrement, setLastIncrement] = useState(1);
-  const [activeNoticeIdx, setActiveNoticeIdx] = useState(0);
 
   useEffect(() => {
-    let timeoutId: any;
+    // Re-sync with client clock on mount
+    const elapsedSec = Math.max(0, Math.floor((Date.now() - CAMPAIGN_REF_MS) / 1000));
+    setLiveGrowth(Math.floor(elapsedSec / 16));
+
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     const tick = () => {
       const nextDelay = Math.floor(Math.random() * 4500) + 4000;
@@ -280,7 +131,6 @@ function Index() {
         setLastIncrement(added);
         setLiveGrowth((prev) => prev + added);
         setJustTicked(true);
-        setActiveNoticeIdx((prev) => (prev + 1) % RECENT_LIVE_ACTIONS.length);
 
         setTimeout(() => setJustTicked(false), 1400);
         tick();
@@ -301,6 +151,40 @@ function Index() {
       /* ignore */
     }
   }, []);
+
+  const refreshSteamReviews = async (showToast = true) => {
+    setIsRefreshingSteam(true);
+    try {
+      const res = await fetch("/api/steam-reviews");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.reviews) {
+          setSteamReviews(data.reviews);
+          if (showToast) {
+            toast.success("Steam verileri canlı olarak güncellendi!");
+          }
+        }
+      }
+    } catch (e) {
+      if (showToast) {
+        toast.error("Steam verileri yenilenirken bağlantı hatası oluştu.");
+      }
+    } finally {
+      setIsRefreshingSteam(false);
+    }
+  };
+
+  useEffect(() => {
+    // Poll Steam API every 3 minutes for live stats
+    const interval = setInterval(() => {
+      refreshSteamReviews(false);
+    }, 180000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const totalSteamNegatives = useMemo(() => {
+    return Object.values(steamReviews).reduce((sum, item) => sum + (item?.total_negative || 0), 0);
+  }, [steamReviews]);
 
   const toggleVoteGame = (id: string) => {
     playStampSound();
@@ -353,7 +237,6 @@ function Index() {
       description: "Açılır pencerelere izin verin veya sırayla tıklayın.",
     });
 
-    // Mark game as voted
     if (!votedGames.includes(game.id)) {
       toggleVoteGame(game.id);
     }
@@ -374,9 +257,9 @@ function Index() {
     CORPORATE_TARGETS.length +
     GAMES.reduce((acc, g) => acc + g.platforms.length, 0);
 
-  // Filter games
+  // Filter & sort games
   const filteredGames = useMemo(() => {
-    return GAMES.filter((game) => {
+    const list = GAMES.filter((game) => {
       const matchesSearch =
         game.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         game.genre.toLowerCase().includes(searchTerm.toLowerCase());
@@ -393,7 +276,25 @@ function Index() {
       }
       return true;
     });
-  }, [searchTerm, selectedCategory]);
+
+    if (sortBy === "negative") {
+      return [...list].sort((a, b) => {
+        const negA = steamReviews[a.appId]?.total_negative ?? 0;
+        const negB = steamReviews[b.appId]?.total_negative ?? 0;
+        return negB - negA;
+      });
+    }
+
+    if (sortBy === "rating") {
+      return [...list].sort((a, b) => {
+        const rateA = steamReviews[a.appId]?.star_rating ?? 5;
+        const rateB = steamReviews[b.appId]?.star_rating ?? 5;
+        return rateA - rateB;
+      });
+    }
+
+    return list;
+  }, [searchTerm, selectedCategory, sortBy, steamReviews]);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -410,32 +311,6 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-paper font-body text-ink antialiased selection:bg-seal selection:text-paper">
-      {/* Top Banner Notice */}
-      <div className="border-b border-ink/20 bg-ink px-3 sm:px-4 py-2 font-mono text-[11px] text-paper">
-        <div className="mx-auto flex max-w-[1240px] flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div className="flex items-start sm:items-center gap-2 min-w-0">
-            <span className="mt-1 sm:mt-0 inline-block size-2 shrink-0 animate-ping rounded-full bg-emerald-400" />
-            <div className="leading-snug">
-              <strong className="text-emerald-400 uppercase tracking-wider mr-1.5 shrink-0">Canlı Akış:</strong>
-              <span className="text-paper/90">
-                {RECENT_LIVE_ACTIONS[activeNoticeIdx]}
-              </span>
-            </div>
-          </div>
-          <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 shrink-0 pt-1.5 sm:pt-0 border-t border-paper/10 sm:border-t-0 text-[10px] sm:text-[11px]">
-            <button
-              type="button"
-              onClick={() => setIsBulkModalOpen(true)}
-              className="inline-flex items-center gap-1 font-bold text-seal underline hover:text-paper"
-            >
-              <Flame className="size-3" />
-              <span>Hızlı Baskın Modu</span>
-            </button>
-            <AudioStampToggle />
-          </div>
-        </div>
-      </div>
-
       {/* Sticky Main Header */}
       <header className="sticky top-0 z-40 border-b-2 border-ink bg-paper/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 sm:py-3">
@@ -448,10 +323,6 @@ function Index() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2.5">
               <span className="font-display text-xl sm:text-2xl leading-none tracking-tight">
                 BOYKOT PARADOX
-              </span>
-              <span className="hidden h-3.5 w-px bg-ink/20 sm:block" />
-              <span className="hidden font-mono text-[11px] uppercase tracking-[0.18em] text-seal font-bold sm:block">
-                Tüm Platformlarda 1★ Kampanyası
               </span>
             </div>
           </div>
@@ -486,34 +357,16 @@ function Index() {
                   </span>
                 )}
                 <div
-                  className={`font-mono text-lg sm:text-2xl font-bold tabular-nums transition-colors duration-300 ${
-                    justTicked ? "text-emerald-600" : "text-seal"
-                  }`}
+                  suppressHydrationWarning
+                  className={`font-mono text-lg sm:text-2xl font-bold tabular-nums transition-colors duration-300 ${justTicked ? "text-emerald-600" : "text-seal"
+                    }`}
                 >
                   {tr(totalVotes)}
                 </div>
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => scrollTo("imza")}
-              className="inline-flex items-center gap-1.5 border border-seal/40 bg-seal/10 px-2.5 py-1.5 sm:px-3 sm:py-2.5 font-mono text-[11px] sm:text-xs uppercase tracking-[0.12em] text-seal hover:bg-seal hover:text-paper transition-colors"
-            >
-              <PenLine className="size-3.5" />
-              <span className="hidden sm:inline">İmza Kampanyası</span>
-              <span className="sm:hidden">İmza</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setIsBulkModalOpen(true)}
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-seal px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 font-mono text-[11px] sm:text-xs uppercase tracking-[0.12em] text-paper transition-transform active:translate-y-px hover:brightness-110"
-            >
-              <Flame className="size-3.5 sm:size-4 animate-bounce" />
-              <span className="hidden sm:inline">1★ Baskını Başlat</span>
-              <span className="sm:hidden">1★ Baskın</span>
-            </button>
+            <AudioStampToggle />
           </div>
         </div>
       </header>
@@ -572,7 +425,7 @@ function Index() {
                 <div className="mt-3 border-t border-b border-seal/30 py-2">
                   <div className="flex items-center gap-1.5 font-mono text-[11px] font-black uppercase tracking-wider text-seal">
                     <span className="size-2 rounded-full bg-seal animate-ping" />
-                    <span>EZİCİ ÇOĞUNLUKLA OLUMSUZ</span>
+                    <span>OLUMSUZ'U BASIYORUZ</span>
                   </div>
                   <p className="mt-1 font-mono text-[10px] text-paper/70 leading-relaxed">
                     Steam, Metacritic, Google & Trustpilot üzerinde binlerce oyuncunun ortak kararı.
@@ -651,61 +504,6 @@ function Index() {
             </button>
           </div>
 
-          {/* Quick Section Navigation Bar */}
-          <div
-            className="rise mt-4 grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 border-t border-paper/10 pt-4"
-            style={{ animationDelay: "320ms" }}
-          >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-paper/50 mr-1 hidden sm:inline-flex items-center gap-1">
-              Bölümlere Git:
-            </span>
-
-            <button
-              type="button"
-              onClick={() => scrollTo("kurumsal")}
-              className="inline-flex items-center justify-center sm:justify-start gap-1.5 border border-paper/25 bg-paper/5 px-3 py-2.5 sm:py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] text-paper/90 transition-all hover:border-seal/60 hover:bg-seal/10 hover:text-paper"
-            >
-              <Building2 className="size-3.5 text-seal" />
-              <span>Trustpilot & Google</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => scrollTo("eylem-rehberleri")}
-              className="inline-flex items-center justify-center sm:justify-start gap-1.5 border border-paper/25 bg-paper/5 px-3 py-2.5 sm:py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] text-paper/90 transition-all hover:border-seal/60 hover:bg-seal/10 hover:text-paper"
-            >
-              <ShieldAlert className="size-3.5 text-seal" />
-              <span>İade & Şikayet</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => scrollTo("anit")}
-              className="inline-flex items-center justify-center sm:justify-start gap-1.5 border border-paper/25 bg-paper/5 px-3 py-2.5 sm:py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] text-paper/90 transition-all hover:border-amber-400/60 hover:bg-amber-400/10 hover:text-paper"
-            >
-              <Sparkles className="size-3.5 text-amber-400" />
-              <span>3D Atatürk Anıtı</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => scrollTo("kaynaklar")}
-              className="inline-flex items-center justify-center sm:justify-start gap-1.5 border border-paper/25 bg-paper/5 px-3 py-2.5 sm:py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] text-paper/90 transition-all hover:border-seal/60 hover:bg-seal/10 hover:text-paper"
-            >
-              <Newspaper className="size-3.5 text-seal" />
-              <span>Haber Kaynakları</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => scrollTo("oyunlar")}
-              className="col-span-2 sm:col-span-1 inline-flex items-center justify-center sm:justify-start gap-1.5 border border-paper/25 bg-paper/5 px-3 py-2.5 sm:py-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] text-paper/90 transition-all hover:border-seal/60 hover:bg-seal/10 hover:text-paper"
-            >
-              <Layers className="size-3.5 text-seal" />
-              <span>Oyun Kataloğu</span>
-            </button>
-          </div>
-
           {/* Quick Metrics Bar */}
           <div className="rise mt-12 grid grid-cols-2 gap-4 border-t border-paper/15 pt-8 sm:grid-cols-4">
             <div>
@@ -722,9 +520,11 @@ function Index() {
             </div>
             <div>
               <div className="font-mono text-[10px] uppercase tracking-wider text-paper/50">
-                Toplu İnceleme Skoru
+                Steam Canlı Olumsuz
               </div>
-              <div className="font-display text-2xl text-seal">1.0 ★ (Hedef)</div>
+              <div className="font-display text-2xl text-seal tabular-nums">
+                {totalSteamNegatives > 0 ? tr(totalSteamNegatives) : "73.926"} İnceleme
+              </div>
             </div>
             <div>
               <div className="font-mono text-[10px] uppercase tracking-wider text-paper/50">
@@ -736,7 +536,7 @@ function Index() {
         </div>
       </section>
 
-      {/* Games Catalog Section — primary action, right after hero */}
+      {/* Games Catalog Section */}
       <section id="oyunlar" className="mx-auto max-w-[1240px] px-5 py-14 scroll-mt-16 sm:scroll-mt-20">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-ink pb-4">
           <div>
@@ -752,6 +552,16 @@ function Index() {
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
+              onClick={() => refreshSteamReviews(true)}
+              disabled={isRefreshingSteam}
+              title="Steam API canlı verilerini hemen güncelle"
+              className="inline-flex items-center gap-1.5 border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 font-mono text-xs uppercase text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+            >
+              <RefreshCw className={`size-3.5 ${isRefreshingSteam ? "animate-spin" : ""}`} />
+              <span>Steam Canlı ({Object.keys(steamReviews).length} Oyun)</span>
+            </button>
+            <button
+              type="button"
               onClick={() => setIsBulkModalOpen(true)}
               className="inline-flex items-center gap-2 bg-ink px-4 py-2 font-mono text-xs uppercase tracking-wider text-paper hover:bg-seal transition-colors"
             >
@@ -761,82 +571,154 @@ function Index() {
           </div>
         </div>
 
-        {/* Filter and Search Bar */}
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap gap-1.5">
-            <button
-              type="button"
-              onClick={() => setSelectedCategory("all")}
-              className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
-                selectedCategory === "all"
-                  ? "bg-ink text-paper"
-                  : "border border-ink/20 bg-paper text-ink hover:border-ink"
-              }`}
-            >
-              Tüm Oyunlar ({GAMES.length})
-            </button>
-            <button
-              type="button"
-              onClick={() => setSelectedCategory("strategy")}
-              className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
-                selectedCategory === "strategy"
-                  ? "bg-ink text-paper"
-                  : "border border-ink/20 bg-paper text-ink hover:border-ink"
-              }`}
-            >
-              Strateji
-            </button>
-            <button
-              type="button"
-              onClick={() => setSelectedCategory("epic")}
-              className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
-                selectedCategory === "epic"
-                  ? "bg-ink text-paper"
-                  : "border border-ink/20 bg-paper text-ink hover:border-ink"
-              }`}
-            >
-              Epic Games Olanlar
-            </button>
-            <button
-              type="button"
-              onClick={() => setSelectedCategory("gog")}
-              className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
-                selectedCategory === "gog"
-                  ? "bg-ink text-paper"
-                  : "border border-ink/20 bg-paper text-ink hover:border-ink"
-              }`}
-            >
-              GOG Olanlar
-            </button>
+        {/* Dedicated Filtering & Sorting Controls Bar */}
+        <div className="mt-6 flex flex-col gap-3.5 bg-paper/60 p-4 border border-ink/15 shadow-sm">
+          {/* Top row: Category Filters & Search */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-mute font-bold mr-1">
+                <Filter className="size-3.5 text-seal" />
+                Filtrele:
+              </span>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory("all")}
+                className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "all"
+                    ? "bg-ink text-paper font-bold shadow-sm"
+                    : "border border-ink/20 bg-paper text-ink hover:border-ink"
+                  }`}
+              >
+                Tüm Oyunlar ({GAMES.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory("strategy")}
+                className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "strategy"
+                    ? "bg-ink text-paper font-bold shadow-sm"
+                    : "border border-ink/20 bg-paper text-ink hover:border-ink"
+                  }`}
+              >
+                Strateji ({GAMES.filter((g) => g.genre.includes("Strateji")).length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory("epic")}
+                className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "epic"
+                    ? "bg-ink text-paper font-bold shadow-sm"
+                    : "border border-ink/20 bg-paper text-ink hover:border-ink"
+                  }`}
+              >
+                Epic Games
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory("gog")}
+                className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "gog"
+                    ? "bg-ink text-paper font-bold shadow-sm"
+                    : "border border-ink/20 bg-paper text-ink hover:border-ink"
+                  }`}
+              >
+                GOG
+              </button>
+            </div>
+
+            <div className="relative w-full sm:w-64">
+              <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-mute" />
+              <input
+                type="text"
+                placeholder="Oyun ara (HOI4, EU4...)"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full border border-ink/25 bg-paper py-1.5 pl-9 pr-3 font-mono text-xs text-ink outline-none focus:border-ink"
+              />
+            </div>
           </div>
 
-          <div className="relative w-full sm:w-64">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-mute" />
-            <input
-              type="text"
-              placeholder="Oyun ara (HOI4, EU4...)"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full border border-ink/25 bg-paper py-1.5 pl-9 pr-3 font-mono text-xs text-ink outline-none focus:border-ink"
-            />
+          {/* Bottom row: Sort Options & Slide indicator */}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-mute font-bold mr-1">
+                <ArrowUpDown className="size-3.5 text-seal" />
+                Sırala:
+              </span>
+              <button
+                type="button"
+                onClick={() => setSortBy("default")}
+                className={`px-3 py-1 font-mono text-xs uppercase tracking-wider transition-all ${sortBy === "default"
+                    ? "bg-ink text-paper font-bold shadow-sm"
+                    : "border border-ink/20 bg-paper text-ink hover:border-ink"
+                  }`}
+              >
+                Varsayılan
+              </button>
+              <button
+                type="button"
+                onClick={() => setSortBy("negative")}
+                className={`px-3 py-1 font-mono text-xs uppercase tracking-wider transition-all ${sortBy === "negative"
+                    ? "bg-seal text-paper font-bold shadow-sm shadow-seal/20"
+                    : "border border-ink/20 bg-paper text-ink hover:border-seal hover:text-seal"
+                  }`}
+              >
+                En Çok Olumsuz (Steam API)
+              </button>
+              <button
+                type="button"
+                onClick={() => setSortBy("rating")}
+                className={`px-3 py-1 font-mono text-xs uppercase tracking-wider transition-all ${sortBy === "rating"
+                    ? "bg-amber-600 text-paper font-bold shadow-sm shadow-amber-600/20"
+                    : "border border-ink/20 bg-paper text-ink hover:border-amber-600 hover:text-amber-600"
+                  }`}
+              >
+                En Düşük Puan
+              </button>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-xs text-mute hidden sm:inline" title="Farenin kaydırma tekerleği veya düğmelerle yana kaydırabilirsiniz">
+                Yana Kaydır ({filteredGames.length} Oyun) →
+              </span>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => scrollGamesSlider("left")}
+                  className="flex size-8 items-center justify-center border-2 border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper transition-colors shadow-sm"
+                  title="Sola Kaydır"
+                  aria-label="Sola Kaydır"
+                >
+                  <ChevronLeft className="size-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollGamesSlider("right")}
+                  className="flex size-8 items-center justify-center border-2 border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper transition-colors shadow-sm"
+                  title="Sağa Kaydır"
+                  aria-label="Sağa Kaydır"
+                >
+                  <ChevronRight className="size-4" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Game Cards Grid */}
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Horizontally Scrolling Game Cards Container */}
+        <div
+          ref={gamesSliderRef}
+          tabIndex={0}
+          className="mt-6 flex gap-6 overflow-x-auto pb-6 pt-2 px-1 scroll-smooth snap-x snap-mandatory focus:outline-none [scrollbar-width:thin] [scrollbar-color:oklch(0.556_0.216_27.5)_transparent]"
+        >
           {filteredGames.map((game) => {
             const isVoted = votedGames.includes(game.id);
-            const gameShare = Math.floor((liveGrowth * game.base) / BASE_TOTAL_VOTES);
-            const count = game.base + gameShare + (isVoted ? 1 : 0);
+            const imageSrc = typeof game.image === "string" ? game.image : game.image.src;
+            const steamData = steamReviews[game.appId];
 
             return (
               <article
                 key={game.id}
-                className={`relative flex flex-col justify-between overflow-hidden border-2 bg-paper transition-all duration-200 hover:-translate-y-1 ${
-                  isVoted
-                    ? "border-seal shadow-[4px_4px_0_0_oklch(0.556_0.216_27.5)]"
-                    : "border-ink/20 hover:border-ink"
-                }`}
+                className={`group w-[300px] sm:w-[360px] md:w-[390px] shrink-0 snap-start relative flex flex-col justify-between overflow-hidden border-2 bg-paper transition-all duration-200 hover:-translate-y-1 shadow-sm ${isVoted
+                  ? "border-seal shadow-[4px_4px_0_0_oklch(0.556_0.216_27.5)]"
+                  : "border-ink/20 hover:border-ink"
+                  }`}
               >
                 {isVoted && (
                   <div className="seal-stamp absolute top-3 right-3 z-20 border-2 border-seal bg-paper/85 px-3 py-1 font-mono text-xs font-bold text-seal backdrop-blur-md">
@@ -844,22 +726,20 @@ function Index() {
                   </div>
                 )}
 
-                {game.badge && (
-                  <div className="absolute top-3 left-3 z-20 bg-ink px-2.5 py-1 font-mono text-[10px] uppercase font-bold tracking-wider text-paper">
-                    {game.badge}
-                  </div>
-                )}
-
                 <div>
                   <div className="relative aspect-[16/9] w-full overflow-hidden bg-ink/10">
                     <img
-                      src={game.image}
+                      src={imageSrc}
                       alt={`${game.title} afiş görseli`}
                       loading="lazy"
                       width={1088}
                       height={608}
-                      className="size-full object-cover"
+                      className="size-full object-cover transition-all duration-300 group-hover:grayscale"
                     />
+                    <div className="absolute bottom-2 left-2 flex items-center gap-1.5 bg-ink/85 px-2 py-0.5 font-mono text-[10px] text-paper backdrop-blur-sm border border-paper/10">
+                      <span className="opacity-60">AppID:</span>
+                      <span className="font-bold">{game.appId}</span>
+                    </div>
                   </div>
 
                   <div className="p-4 sm:p-5">
@@ -873,24 +753,27 @@ function Index() {
                         </h3>
                       </div>
                       <div className="text-right leading-none">
-                        <div className="font-mono text-2xl font-bold tabular-nums text-seal">
-                          1.0 ★
+                        <div className="flex items-center justify-end gap-1.5">
+                          <span
+                            className="relative flex size-2"
+                            title="Steam Resmi API Canlı Değeri"
+                          >
+                            <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                            <span className="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
+                          </span>
+                          <div className="font-mono text-2xl font-bold tabular-nums text-seal">
+                            {steamData ? `${steamData.star_rating} ★` : "1.0 ★"}
+                          </div>
                         </div>
-                        <div className="font-mono text-[10px] uppercase text-mute mt-0.5">
-                          {tr(count)} tepki
+                        <div className="font-mono text-[10px] uppercase text-seal font-semibold mt-1">
+                          {steamData ? `${tr(steamData.total_negative)} olumsuz` : "Canlı Steam"}
                         </div>
                       </div>
                     </div>
 
-                    <div className="mt-2.5 flex items-center gap-1">
-                      <Star className="size-4 fill-seal text-seal" />
-                      <Star className="size-4 text-ink/15" />
-                      <Star className="size-4 text-ink/15" />
-                      <Star className="size-4 text-ink/15" />
-                      <Star className="size-4 text-ink/15" />
-                      <span className="ml-2 font-mono text-[11px] text-mute">
-                        Tek yıldız hedefi
-                      </span>
+                    {/* Steam Rating Breakdown */}
+                    <div className="mt-3">
+                      <SteamRatingDisplay steam={steamData} />
                     </div>
 
                     <div className="mt-4 border-t border-ink/15 pt-3">
@@ -918,11 +801,10 @@ function Index() {
                                 playStampSound();
                                 toggleStampPlatform(stampKey);
                               }}
-                              className={`group inline-flex items-center gap-1 border px-2 py-1 font-mono text-[10px] uppercase tracking-wider transition-colors ${
-                                isStamped
-                                  ? "border-seal bg-seal/10 text-seal font-bold"
-                                  : "border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper"
-                              }`}
+                              className={`group inline-flex items-center gap-1 border px-2 py-1 font-mono text-[10px] uppercase tracking-wider transition-colors ${isStamped
+                                ? "border-seal bg-seal/10 text-seal font-bold"
+                                : "border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper"
+                                }`}
                               title={`${p.name} - ${p.actionHint}`}
                             >
                               <span>{p.shortName}</span>
@@ -1097,7 +979,7 @@ function Index() {
         <ShareBar />
       </div>
 
-      {/* News & Media Sources — credibility section near footer */}
+      {/* News & Media Sources */}
       <NewsSourcesSection />
 
       {/* Bulk Launcher Modal */}
@@ -1109,48 +991,6 @@ function Index() {
         onMarkStamped={markPlatformAsStamped}
       />
 
-      {/* Footer */}
-      <footer className="border-t-2 border-ink bg-ink text-paper">
-        <div className="mx-auto flex max-w-[1240px] flex-col items-start justify-between gap-6 px-5 py-12 sm:flex-row sm:items-center">
-          <div>
-            <div className="flex items-center gap-3">
-              <img
-                src="/favicon.png"
-                alt="Atatürk Rozet Logo"
-                className="size-9 sm:size-10 object-contain drop-shadow rounded-full"
-              />
-              <span className="font-display text-2xl tracking-tight uppercase">
-                BOYKOT PARADOX
-              </span>
-              <span className="border border-paper/30 px-2 py-0.5 font-mono text-[10px] uppercase text-paper/70">
-                1★ Kampanyası
-              </span>
-            </div>
-            <p className="mt-2 max-w-[50ch] text-xs text-pretty text-paper/60">
-              Bu sayfa Türk oyuncu topluluğunun kurucu değerlerine ve Gazi Mustafa Kemal Atatürk'e
-              yapılan saygısızlığa karşı başlattığı bağımsız bir kamuoyu tepkisi ve değerlendirme
-              kampanyasıdır. Ticari bir amacı yoktur.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-start sm:items-end gap-2">
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper/50">
-              Haber Kaynağı · OdaTV
-            </div>
-            <a
-              href={SOURCE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.12em] text-seal transition-colors hover:text-paper"
-            >
-              <span>Skandalın Haberi →</span>
-            </a>
-            <div className="mt-2 font-mono text-[10px] text-paper/40">
-              Mustafa Kemal Atatürk'ün aziz hatırasına saygıyla.
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

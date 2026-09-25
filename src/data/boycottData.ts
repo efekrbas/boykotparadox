@@ -10,6 +10,8 @@ import imperator from "@/assets/imperator.jpg";
 import prison from "@/assets/prison.jpg";
 import millennia from "@/assets/millennia.jpg";
 
+import type { StaticImageData } from "next/image";
+
 export type PlatformLink = {
   id: string;
   name: string;
@@ -22,10 +24,9 @@ export type PlatformLink = {
 export type Game = {
   id: string;
   title: string;
-  image: string;
+  image: string | StaticImageData;
   base: number;
   appId: number;
-  badge?: string;
   genre: string;
   platforms: PlatformLink[];
 };
@@ -56,7 +57,6 @@ export const GAMES: Game[] = [
     image: hoi4,
     base: 1984,
     appId: 394360,
-    badge: "Olayın Merkez Üssü",
     genre: "Büyük Strateji / II. Dünya Savaşı",
     platforms: [
       {
@@ -107,7 +107,6 @@ export const GAMES: Game[] = [
     image: eu4,
     base: 3120,
     appId: 236850,
-    badge: "En Popüler",
     genre: "Büyük Strateji / Tarih",
     platforms: [
       {
@@ -150,7 +149,6 @@ export const GAMES: Game[] = [
     image: ck3,
     base: 2540,
     appId: 1158310,
-    badge: "Orta Çağ Hanedan",
     genre: "Orta Çağ RPG / Strateji",
     platforms: [
       {
@@ -193,7 +191,6 @@ export const GAMES: Game[] = [
     image: stellaris,
     base: 1208,
     appId: 281990,
-    badge: "Galaktik 4X",
     genre: "Uzay 4X / Bilim Kurgu",
     platforms: [
       {
@@ -236,7 +233,6 @@ export const GAMES: Game[] = [
     image: victoria3,
     base: 980,
     appId: 529340,
-    badge: "Sanayi & Diplomasi",
     genre: "Toplum Simülasyonu / Ekonomi",
     platforms: [
       {
@@ -271,7 +267,6 @@ export const GAMES: Game[] = [
     image: cities,
     base: 1440,
     appId: 255710,
-    badge: "Efsane Şehir",
     genre: "Şehir Kurma / Simülasyon",
     platforms: [
       {
@@ -314,7 +309,6 @@ export const GAMES: Game[] = [
     image: cities2,
     base: 2190,
     appId: 949230,
-    badge: "Yeni Nesil Şehir",
     genre: "Şehir Kurma / Yeni Nesil Simülasyon",
     platforms: [
       {
@@ -349,7 +343,6 @@ export const GAMES: Game[] = [
     image: aow4,
     base: 1420,
     appId: 1669000,
-    badge: "Popüler Fantezi",
     genre: "Fantezi 4X / Sıra Tabanlı Strateji",
     platforms: [
       {
@@ -392,7 +385,6 @@ export const GAMES: Game[] = [
     image: imperator,
     base: 980,
     appId: 859580,
-    badge: "Antik Roma",
     genre: "Büyük Strateji / Antik Tarih",
     platforms: [
       {
@@ -427,7 +419,6 @@ export const GAMES: Game[] = [
     image: prison,
     base: 1850,
     appId: 233450,
-    badge: "Milyonlar Satan",
     genre: "Yönetim & Cezaevi Simülasyonu",
     platforms: [
       {
@@ -470,7 +461,6 @@ export const GAMES: Game[] = [
     image: millennia,
     base: 720,
     appId: 1268590,
-    badge: "Tarihsel 4X",
     genre: "Tarihsel Sıra Tabanlı 4X",
     platforms: [
       {
@@ -534,7 +524,7 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
     id: "corp-glassdoor",
     name: "Glassdoor — Şirket & Yönetim Puanı",
     platform: "Glassdoor",
-    url: "https://www.glassdoor.com/Reviews/Paradox-Interactive-Reviews-E791244.htm",
+    url: "https://www.glassdoor.sg/Reviews/Paradox-Interactive-Reviews-E1008028.htm",
     description: "Yönetimin topluluk krizlerini yönetme biçimi ve kurumsal etik sicilini kamuoyuna gösterir.",
     importance: "Önemli",
     actionText: "Glassdoor Puanını Gör",
@@ -544,11 +534,11 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
 export const REVIEW_TEMPLATES: ReviewTemplate[] = [
   {
     id: "template-tr-detailed",
-    title: "Türkçe (Detaylı & Resmi)",
+    title: "Türkçe (Detaylı)",
     language: "tr",
     badge: "Önerilen",
-    recommendedFor: ["Steam", "Metacritic", "Trustpilot"],
-    text: "Hearts of Iron IV resmi Discord sunucusunda Türkiye Cumhuriyeti'nin kurucusu Gazi Mustafa Kemal Atatürk'e ve Türk milletine yönelik yapılan hakaret ve saygısızlığa karşı sessiz kalmıyoruz. Oyuncu topluluğunun sesine kulak tıkayan, haklı tepki gösteren Türk oyuncuları haksız yere sansürleyip banlayan ve resmi bir özür dilemeyen Paradox Interactive yönetimini boykot ediyoruz. Topluluğuna ve milli değerlerine saygı duymayan bir şirketin hiçbir oyununu tavsiye etmiyorum. #BoycottParadox",
+    recommendedFor: ["Steam", "Metacritic"],
+    text: "Gerçekten inanamıyorum, böyle zor bir oyun olamaz abi. 10 saat devirdim hala düzgün bir hat kuramadım. Oyunun kendisi zor, öğrenmesi çok zaman alıyor, yok neymiş kış olduğu için tanklar gidemiyor hay senin gibi takdın ve oyununda... Bunun yerine gidin Withcer oynayın kardeşim.",
   },
   {
     id: "template-tr-short",
@@ -556,15 +546,15 @@ export const REVIEW_TEMPLATES: ReviewTemplate[] = [
     language: "tr",
     badge: "Hızlı Puanlama",
     recommendedFor: ["Steam", "Google", "Xbox"],
-    text: "Resmi Discord sunucusunda Atatürk'e ve Türk oyunculara yapılan saygısızlık kabul edilemez. Haksız moderasyon, sansür ve sorumsuz yönetim nedeniyle 1 yıldız! Topluluğuna saygı duymayan firma desteklenmez. #BoycottParadox",
+    text: "Senin gibi oyunun gelmişini geçmişini, hem optimizasyon yok, hem oyun çok zor, rehber bakıyorum adamlar bile anlamıyor.",
   },
   {
     id: "template-en-global",
     title: "English (Global / Uluslararası)",
     language: "en",
     badge: "Global Etki",
-    recommendedFor: ["Steam (Global)", "Metacritic", "Trustpilot"],
-    text: "Giving 1 star due to the unacceptable conduct of Paradox Interactive's official Discord moderation team, who permitted hate speech and insults targeting the founder of the Turkish Republic, Mustafa Kemal Atatürk, and subsequently silenced/banned Turkish gamers who peacefully protested. A gaming company that enables toxic moderation and fails to respect its international player base does not deserve our support. Zero tolerance for disrespect. #BoycottParadox",
+    recommendedFor: ["Steam (Global)", "Metacritic"],
+    text: "What kind of game is this? I can't even understand how to play it. Texts are seem small even I have huge screen.",
   },
   {
     id: "template-corp-trustpilot",
