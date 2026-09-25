@@ -8,7 +8,7 @@ import { playStampSound } from "@/lib/audio";
 const SHAREHOLDER_EMAILS = "contact@statestreet.com, ir@paradoxinteractive.com, info@spiltan.se, IR@tencent.com";
 const EMAIL_SUBJECT = "Shareholder engagement request for Paradox Interactive (PDX) - Risk of Revenue Loss";
 
-const EMAIL_BODY = `Shareholder engagement request for Paradox Interactive (PDX)
+const getEmailBody = (senderName: string) => `Shareholder engagement request for Paradox Interactive (PDX)
 
 I am writing to bring your attention to an ongoing and escalating crisis regarding Paradox Interactive's community management, which poses a direct and measurable risk to 2025 revenue, algorithmic visibility on storefronts, and overall brand reputation.
 
@@ -26,15 +26,17 @@ These figures cover only lost Turkish sales. They do not account for the catastr
 As a shareholder, we request that you intervene and hold the Paradox Interactive executive board accountable. They must issue a formal public apology and immediately restructure their community moderation guidelines to ensure respect for national identities.
 
 Regards,
-[Your Name / Gamer Tag]`;
+${senderName.trim() || "[Buraya İsminizi Yazın]"}
+A Concerned Paradox Gamer`;
 
 export function ShareholderMailSection() {
   const [copied, setCopied] = useState(false);
+  const [senderName, setSenderName] = useState("");
 
   const handleCopy = async () => {
     playStampSound();
     try {
-      await navigator.clipboard.writeText(EMAIL_BODY);
+      await navigator.clipboard.writeText(getEmailBody(senderName));
       setCopied(true);
       toast.success("Mail metni kopyalandı!", {
         description: "E-posta uygulamanıza yapıştırabilirsiniz.",
@@ -49,20 +51,20 @@ export function ShareholderMailSection() {
     playStampSound();
     const mailtoUrl = `mailto:${SHAREHOLDER_EMAILS}?subject=${encodeURIComponent(
       EMAIL_SUBJECT
-    )}&body=${encodeURIComponent(EMAIL_BODY)}`;
+    )}&body=${encodeURIComponent(getEmailBody(senderName))}`;
     window.location.href = mailtoUrl;
     toast.success("E-posta uygulaması açılıyor...", {
-      description: "Lütfen gönder tuşuna basmadan önce isminizi (en altta) güncelleyin.",
+      description: "Mail taslağınız hazırlandı.",
     });
   };
 
   const handleOpenGmail = () => {
     playStampSound();
     // Gmail web compose link
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(SHAREHOLDER_EMAILS)}&su=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(SHAREHOLDER_EMAILS)}&su=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(getEmailBody(senderName))}`;
     window.open(gmailUrl, "_blank", "noopener,noreferrer");
     toast.success("Gmail açılıyor...", {
-      description: "Tarayıcınızda Gmail sayfası açıldı. İsminizi ekleyip gönderebilirsiniz.",
+      description: "Tarayıcınızda Gmail sayfası açıldı. Mail taslağınız hazırlandı.",
     });
   };
 
@@ -115,11 +117,28 @@ export function ShareholderMailSection() {
                 </div>
 
                 <div className="mt-3 font-mono text-[11px] sm:text-xs text-ink/80 leading-relaxed bg-paper p-4 border border-ink/10 h-64 overflow-y-auto red-scrollbar whitespace-pre-wrap">
-                  {EMAIL_BODY}
+                  {getEmailBody(senderName)}
                 </div>
 
-                <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                  <button
+                <div className="mt-4 pt-4 border-t border-ink/10 flex flex-col gap-3">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-paper p-3 border border-ink/20">
+                    <div className="flex-1">
+                      <label htmlFor="sender-name" className="block font-mono text-[10px] uppercase tracking-wider text-mute mb-1">
+                        Adınız veya Steam Nickiniz:
+                      </label>
+                      <input
+                        id="sender-name"
+                        type="text"
+                        placeholder="Örn: Efe veya Oyuncu_1453"
+                        value={senderName}
+                        onChange={(e) => setSenderName(e.target.value)}
+                        className="w-full bg-ink/5 border border-ink/20 px-3 py-2 font-mono text-xs text-ink placeholder:text-ink/30 focus:outline-none focus:border-seal focus:ring-1 focus:ring-seal transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <button
                     type="button"
                     onClick={handleOpenGmail}
                     className="inline-flex items-center gap-2.5 bg-seal hover:brightness-110 border-2 border-seal px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] font-bold text-paper transition-all active:translate-y-px justify-center"
@@ -155,10 +174,6 @@ export function ShareholderMailSection() {
                     )}
                   </button>
                 </div>
-                
-                <p className="mt-3 text-[10px] font-mono text-mute text-center sm:text-left">
-                  * Mail uygulamanız açıldığında metnin en altındaki [Your Name] kısmına adınızı veya Steam kullanıcı adınızı yazmayı unutmayın.
-                </p>
               </div>
             </div>
           </div>
