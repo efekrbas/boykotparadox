@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Sparkles, KeyRound, Eye, EyeOff, Loader2, Copy, Check } from "lucide-react";
+import { Sparkles, KeyRound, Eye, EyeOff, Loader2, Copy, Check, ExternalLink, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
 import { GAMES } from "@/data/boycottData";
@@ -15,6 +15,8 @@ export function AiReviewGenerator() {
   const [generatedText, setGeneratedText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isFallback, setIsFallback] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const savedKey = localStorage.getItem("gemini_api_key");
@@ -28,40 +30,52 @@ export function AiReviewGenerator() {
     localStorage.setItem("gemini_api_key", val);
   };
 
-  const handleGenerate = async () => {
-    if (!apiKey.trim()) {
-      toast.error("Lütfen önce Gemini API anahtarınızı girin.");
-      return;
+  const buildPrompt = () => {
+    let lengthDesc = "1-2 paragraflık, doyurucu ve akıcı bir Steam oyuncu incelemesi olsun.";
+    if (reviewLength === "short") {
+      lengthDesc = "2-3 cümlelik, kısa, net ve vurucu bir sitem metni olsun.";
+    } else if (reviewLength === "long") {
+      lengthDesc = "2-3 paragraflık, oyunun mekaniklerini, sorunlarını ve hissettirdiği hayal kırıklığını derinlemesine anlatan uzun ve detaylı bir Steam incelemesi olsun.";
     }
 
-    if (!focusTopic.trim()) {
-      toast.error("Lütfen oyun hakkında vurgulamak istediğiniz kusuru girin.");
-      return;
-    }
-
-    setIsLoading(true);
-    setGeneratedText("");
-
-    try {
-      let lengthDesc = "1-2 paragraflık, doyurucu ve akıcı bir Steam oyuncu incelemesi olsun.";
-      if (reviewLength === "short") {
-        lengthDesc = "2-3 cümlelik, kısa, net ve vurucu bir sitem metni olsun.";
-      } else if (reviewLength === "long") {
-        lengthDesc = "2-3 paragraflık, oyunun mekaniklerini, sorunlarını ve hissettirdiği hayal kırıklığını derinlemesine anlatan uzun ve detaylı bir Steam incelemesi olsun.";
-      }
-
-      const prompt = `Sen bir oyuncusun. Steam'de bir Paradox Interactive oyununa kötü bir inceleme (1 yıldız) yazıyorsun. 
+    return `Sen bir oyuncusun. Steam'de bir Paradox Interactive oyununa kötü bir inceleme (1 yıldız) yazıyorsun. 
 Oyunun adı: ${selectedGame}. Bu oyun hakkında inceleme yapacaksın.
 Oyunun teknik sorunları, DLC politikası, optimizasyon sıkıntıları, sıkıcı mekanikleri veya oyunun pahalılığı gibi tamamen "oyunla ilgili" konulardan şikayet etmelisin. Siyasi hiçbir şeyden, Discord'dan veya Atatürk'ten ASLA BAHSETME. Amacımız Steam'in "konu dışı" filtresine takılmamak. Tamamen normal ama oyuna kırgın/öfkeli bir oyuncunun dürüst Steam incelemesi gibi hissettirmeli.
 Özellikle şu konuya odaklan: ${focusTopic}.
 Metin boyutu: ${lengthDesc}
 Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapıştırılmaya hazır inceleme metnini ver, tırnak işareti, başlık veya ek açıklama yapma.`;
+  };
 
+  const handleGenerate = async () => {
+    if (!focusTopic.trim()) {
+      toast.error("Lütfen oyun hakkında vurgulamak istediğiniz kusuru girin.");
+      return;
+    }
+
+    const prompt = buildPrompt();
+
+    // Fallback if no API key entered
+    if (!apiKey.trim()) {
+      setIsFallback(true);
+      setErrorMessage("API anahtarı girilmediği için prompt hazırlandı.");
+      setGeneratedText(prompt);
+      toast.info("Prompt hazırlandı. Aşağıdaki butonlarla harici yapay zekaya sorabilirsiniz.");
+      playStampSound();
+      return;
+    }
+
+    setIsLoading(true);
+    setGeneratedText("");
+    setIsFallback(false);
+    setErrorMessage(null);
+
+    try {
+      const cleanKey = apiKey.trim();
       const modelsToTry = [
-        "gemini-2.5-flash",
-        "gemini-2.0-flash",
         "gemini-1.5-flash",
-        "gemini-1.5-pro",
+        "gemini-2.0-flash",
+        "gemini-1.5-flash-8b",
+        "gemini-2.5-flash",
       ];
 
       let success = false;
@@ -70,12 +84,12 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
       for (const model of modelsToTry) {
         try {
           const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(cleanKey)}`,
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                "x-goog-api-key": apiKey.trim()
+                "x-goog-api-key": cleanKey,
               },
               body: JSON.stringify({
                 contents: [{ parts: [{ text: prompt }] }],
@@ -89,7 +103,15 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
 
           if (!response.ok) {
             const errData = await response.json().catch(() => null);
-            lastErrorMsg = errData?.error?.message || "API hatası.";
+            const msg = errData?.error?.message || `HTTP ${response.status} hatası.`;
+            lastErrorMsg = msg;
+
+            // If API key itself is invalid or permission denied, don't keep looping with false model errors
+            if (response.status === 400 || response.status === 403) {
+              if (msg.toLowerCase().includes("api key") || msg.toLowerCase().includes("permission") || msg.toLowerCase().includes("location")) {
+                break;
+              }
+            }
             continue; // Try next model
           }
 
@@ -98,6 +120,8 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
 
           if (text) {
             setGeneratedText(text.trim());
+            setIsFallback(false);
+            setErrorMessage(null);
             toast.success("Özgün inceleme üretildi!");
             playStampSound();
             success = true;
@@ -109,10 +133,19 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
       }
 
       if (!success) {
-        throw new Error(lastErrorMsg || "Hiçbir model yanıt vermedi. Lütfen API anahtarınızı kontrol edin.");
+        let userFriendlyMsg = lastErrorMsg;
+        if (lastErrorMsg.includes("not found") || lastErrorMsg.includes("API key") || lastErrorMsg.includes("permission")) {
+          userFriendlyMsg = "Google API anahtarınız bu modellere erişemedi (Geçersiz anahtar, hesap veya bölge kısıtlaması). Lütfen aistudio.google.com üzerinden yeni bir anahtar alın veya aşağıdaki butonlarla harici yapay zekaya sorun.";
+        }
+        throw new Error(userFriendlyMsg);
       }
     } catch (error: any) {
-      toast.error(error.message || "Bir hata oluştu.");
+      // Fallback: put plain prompt directly into text area
+      setIsFallback(true);
+      setErrorMessage(error.message || "API hatası oluştu.");
+      setGeneratedText(prompt);
+      toast.warning("API çağrısı başarısız oldu. Prompt hazırlandı, harici bir modele sorabilirsiniz.");
+      playStampSound();
     } finally {
       setIsLoading(false);
     }
@@ -243,16 +276,20 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
             <button
               type="button"
               onClick={handleGenerate}
-              disabled={isLoading || !apiKey.trim() || !focusTopic.trim()}
+              disabled={isLoading || !focusTopic.trim()}
               className="w-full inline-flex justify-center items-center gap-2 bg-ink px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-paper transition-transform active:translate-y-px hover:bg-seal disabled:opacity-50 disabled:pointer-events-none"
             >
               {isLoading ? (
                 <>
                   <Loader2 className="size-4 animate-spin" /> Üretiliyor...
                 </>
+              ) : apiKey.trim() ? (
+                <>
+                  <Sparkles className="size-4" /> AI ile Metin Üret
+                </>
               ) : (
                 <>
-                  <Sparkles className="size-4" /> Metin Üret
+                  <Sparkles className="size-4" /> Prompt Oluştur (API'sız)
                 </>
               )}
             </button>
@@ -260,14 +297,91 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
 
           {/* Output */}
           <div className="flex flex-col h-full">
-            <label className="block font-mono text-xs font-bold uppercase text-ink mb-1.5">
-              Üretilen Özgün Metin
-            </label>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block font-mono text-xs font-bold uppercase text-ink">
+                {isFallback ? "Hazırlanan AI Promptu (Düz Metin)" : "Üretilen Özgün Metin"}
+              </label>
+              {isFallback && (
+                <span className="font-mono text-[10px] uppercase bg-seal/15 text-seal px-2 py-0.5 font-bold border border-seal/40">
+                  Fallback Modu
+                </span>
+              )}
+            </div>
+
+            {isFallback && (
+              <div className="p-3 mb-3 bg-seal/10 border-2 border-seal/30 text-xs space-y-2">
+                <div className="flex items-start gap-2 text-seal font-bold">
+                  <AlertTriangle className="size-4 shrink-0 mt-0.5" />
+                  <div>
+                    <span>{errorMessage || "API çağrısı gerçekleştirilemedi."}</span>
+                    <p className="text-[11px] font-normal text-ink/80 mt-0.5">
+                      Hazırlanan prompt aşağıya aktarıldı. Doğrudan kopyalayabilir veya aşağıdaki hızlı linklerle tek tıkla modele sorabilirsiniz:
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 pt-1 sm:grid-cols-4">
+                  <a
+                    href={`https://chatgpt.com/?q=${encodeURIComponent(generatedText)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      navigator.clipboard.writeText(generatedText);
+                      toast.success("Prompt panoya kopyalandı, ChatGPT açılıyor!");
+                    }}
+                    className="inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 bg-ink text-paper text-[11px] font-mono font-bold hover:bg-seal transition-colors"
+                  >
+                    <span>ChatGPT</span>
+                    <ExternalLink className="size-3" />
+                  </a>
+                  <a
+                    href="https://gemini.google.com/app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      navigator.clipboard.writeText(generatedText);
+                      toast.success("Prompt panoya kopyalandı! Gemini'ye yapıştırabilirsiniz.");
+                    }}
+                    className="inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 border-2 border-ink bg-paper text-ink text-[11px] font-mono font-bold hover:bg-ink hover:text-paper transition-colors"
+                  >
+                    <span>Gemini</span>
+                    <ExternalLink className="size-3" />
+                  </a>
+                  <a
+                    href="https://claude.ai/new"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      navigator.clipboard.writeText(generatedText);
+                      toast.success("Prompt panoya kopyalandı! Claude'a yapıştırabilirsiniz.");
+                    }}
+                    className="inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 border-2 border-ink bg-paper text-ink text-[11px] font-mono font-bold hover:bg-ink hover:text-paper transition-colors"
+                  >
+                    <span>Claude</span>
+                    <ExternalLink className="size-3" />
+                  </a>
+                  <a
+                    href="https://chat.deepseek.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      navigator.clipboard.writeText(generatedText);
+                      toast.success("Prompt panoya kopyalandı! DeepSeek'e yapıştırabilirsiniz.");
+                    }}
+                    className="inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 border-2 border-ink bg-paper text-ink text-[11px] font-mono font-bold hover:bg-ink hover:text-paper transition-colors"
+                  >
+                    <span>DeepSeek</span>
+                    <ExternalLink className="size-3" />
+                  </a>
+                </div>
+              </div>
+            )}
+
             <textarea
               readOnly
               value={generatedText}
-              placeholder="Yapay zeka çıktısı burada belirecek..."
-              className="w-full flex-1 min-h-[120px] resize-none border-2 border-ink/30 bg-paper p-3 font-body text-sm leading-relaxed text-ink outline-none selection:bg-seal selection:text-paper"
+              placeholder="Yapay zeka çıktısı veya hazırlanan prompt burada belirecek..."
+              className="w-full flex-1 min-h-[140px] resize-none border-2 border-ink/30 bg-paper p-3 font-body text-sm leading-relaxed text-ink outline-none selection:bg-seal selection:text-paper"
             />
             {generatedText && (
               <button
@@ -276,7 +390,7 @@ Cümleleri asla yarım bırakma. Çıktıda yalnızca Steam'e doğrudan yapışt
                 className="mt-3 inline-flex justify-center items-center gap-2 border-2 border-seal bg-seal/10 px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-seal transition-colors hover:bg-seal hover:text-paper"
               >
                 {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-                {copied ? "Kopyalandı!" : "Metni Kopyala"}
+                {copied ? "Kopyalandı!" : (isFallback ? "Promptu Kopyala" : "Metni Kopyala")}
               </button>
             )}
           </div>
