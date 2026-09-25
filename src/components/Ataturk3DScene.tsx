@@ -28,8 +28,7 @@ export function Ataturk3DScene() {
 
             <div className="mt-5 flex flex-wrap items-center gap-2.5 sm:gap-3">
               <div className="border border-paper/20 bg-paper/5 px-3 py-1.5 font-mono text-xs">
-                <span className="text-seal font-bold">1881 — ∞</span>
-                <span className="ml-2 text-paper/70">Gazi Mustafa Kemal Atatürk</span>
+                <span className="ml-2 text-paper/70">Türklerin Babası</span>
               </div>
               <div className="border border-paper/20 bg-paper/5 px-3 py-1.5 font-mono text-xs text-paper/70">
                 <span>Kurucu & Ebedi Başkomutan</span>
