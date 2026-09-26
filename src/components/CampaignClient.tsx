@@ -101,16 +101,36 @@ export function CampaignClient({
 
     const handleWheel = (e: WheelEvent) => {
       if (e.deltaY !== 0) {
-        const canScrollLeft = slider.scrollLeft > 0;
-        const canScrollRight = slider.scrollLeft < slider.scrollWidth - slider.clientWidth - 2;
+        const isScrollingUp = e.deltaY < 0;
+        const isScrollingDown = e.deltaY > 0;
+        const atFarLeft = slider.scrollLeft <= 5;
+        const atFarRight = slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 5;
 
-        if ((e.deltaY > 0 && canScrollRight) || (e.deltaY < 0 && canScrollLeft)) {
+        // En sola gelindiğinde yukarı kaydırmaya devam edilirse sayfayı yukarı kaydır
+        if (isScrollingUp && atFarLeft) {
           e.preventDefault();
-          slider.scrollBy({
-            left: e.deltaY * 1.5,
+          window.scrollBy({
+            top: e.deltaY,
             behavior: "auto",
           });
+          return;
         }
+
+        // En sağa gelindiğinde aşağı kaydırmaya devam edilirse sayfayı aşağı kaydır
+        if (isScrollingDown && atFarRight) {
+          e.preventDefault();
+          window.scrollBy({
+            top: e.deltaY,
+            behavior: "auto",
+          });
+          return;
+        }
+
+        e.preventDefault();
+        slider.scrollBy({
+          left: e.deltaY * 1.5,
+          behavior: "auto",
+        });
       }
     };
 
