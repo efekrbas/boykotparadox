@@ -837,47 +837,50 @@ export function CampaignClient({
             );
           })}
         </div>
-
-        {/* All Paradox Games Publisher Hub Banner */}
-        <div className="mt-8 border-2 border-seal/40 bg-ink text-paper p-5 sm:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-2xl">
-          <div className="max-w-[65ch]">
-            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-seal font-bold">
-              <span className="size-2 rounded-full bg-seal" />
-              Tüm Paradox Kataloğu (100+ Oyun & DLC)
-            </div>
-            <h3 className="mt-1 font-display text-xl sm:text-2xl uppercase tracking-tight text-paper">
-              Sadece Bu {GAMES.length} Oyun Değil, Şirketin Tüm Kataloğu
-            </h3>
-            <p className="mt-2 text-xs sm:text-sm text-paper/70 leading-relaxed">
-              Paradox Interactive bünyesinde <strong>Age of Wonders 4, Prison Architect, Surviving Mars, Magicka, Crusader Kings II</strong> ve yüzlerce genişleme paketi (DLC) yer alıyor. Steam ve Epic Games yayıncı merkezinden tüm oyunlara ulaşıp boykotu genişletebilirsiniz.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-            <a
-              href="https://store.steampowered.com/publisher/paradoxinteractive"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-seal/50 bg-seal/20 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition-colors hover:bg-seal"
-            >
-              <span>Steam Tüm Oyunlar (100+)</span>
-              <ExternalLink className="size-3.5" />
-            </a>
-            <a
-              href="https://store.epicgames.com/tr/browse?q=Paradox%20Interactive"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-paper/20 bg-paper/10 px-3.5 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition-colors hover:border-paper"
-            >
-              <span>Epic Games Kataloğu</span>
-              <ExternalLink className="size-3.5" />
-            </a>
-          </div>
-        </div>
       </section>
 
-      {/* 3D Atatürk Monument Scene with Full Bleed Dark Canvas */}
-      <div className="relative bg-ink -mt-10 sm:-mt-16 pt-10 sm:pt-16 pb-12 sm:pb-16 border-y-2 border-seal/30">
+      {/* Full-Bleed Dark Stage: Paradox Publisher Hub & Atatürk Memorial Directly Joined */}
+      <div className="relative bg-ink text-paper">
+        {/* All Paradox Games Publisher Hub - Integrated Seamless Dark Bar */}
+        <div className="mx-auto max-w-[1240px] px-5 pt-8 sm:pt-10 pb-2">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5 border-b border-paper/10 pb-6 sm:pb-8">
+            <div className="max-w-[68ch]">
+              <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-seal font-bold">
+                <span className="size-2 rounded-full bg-seal" />
+                Tüm Paradox Kataloğu (100+ Oyun & DLC)
+              </div>
+              <h3 className="mt-1 font-display text-xl sm:text-2xl uppercase tracking-tight text-paper">
+                Sadece Bu {GAMES.length} Oyun Değil, Şirketin Tüm Kataloğu
+              </h3>
+              <p className="mt-2 text-xs sm:text-sm text-paper/70 leading-relaxed">
+                Paradox Interactive bünyesinde <strong>Age of Wonders 4, Prison Architect, Surviving Mars, Magicka, Crusader Kings II</strong> ve yüzlerce genişleme paketi (DLC) yer alıyor. Steam ve Epic Games yayıncı merkezinden tüm oyunlara ulaşıp boykotu genişletebilirsiniz.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+              <a
+                href="https://store.steampowered.com/publisher/paradoxinteractive"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border border-seal/50 bg-seal/20 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition-colors hover:bg-seal"
+              >
+                <span>Steam Tüm Oyunlar (100+)</span>
+                <ExternalLink className="size-3.5" />
+              </a>
+              <a
+                href="https://store.epicgames.com/tr/browse?q=Paradox%20Interactive"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border border-paper/20 bg-paper/10 px-3.5 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition-colors hover:border-paper"
+              >
+                <span>Epic Games Kataloğu</span>
+                <ExternalLink className="size-3.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* 3D Atatürk Monument Scene - Seamlessly flowing in the same dark canvas */}
         <Ataturk3DScene />
       </div>
 
