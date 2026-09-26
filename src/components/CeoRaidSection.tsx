@@ -131,11 +131,11 @@ export function CeoRaidSection() {
                   {currentPreset.text}
                 </div>
 
-                <div className="mt-4 flex flex-wrap items-center gap-3">
+                <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   <button
                     type="button"
                     onClick={handleTweet}
-                    className="inline-flex items-center gap-2.5 bg-black hover:bg-neutral-900 border border-paper/40 px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] font-bold text-paper transition-all shadow-lg shadow-black/50 active:translate-y-px"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 bg-black hover:bg-neutral-900 border border-paper/40 px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] font-bold text-paper transition-all shadow-lg shadow-black/50 active:translate-y-px"
                   >
                     <XIcon className="size-4 text-paper" />
                     <span>X'te Hemen Paylaş</span>
@@ -145,7 +145,7 @@ export function CeoRaidSection() {
                   <button
                     type="button"
                     onClick={handleCopy}
-                    className="inline-flex items-center gap-2 border border-paper/30 bg-paper/10 px-4 py-3 font-mono text-xs uppercase tracking-[0.12em] text-paper hover:bg-paper/20 transition-colors"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border border-paper/30 bg-paper/10 px-5 py-3 font-mono text-xs uppercase tracking-[0.12em] text-paper hover:bg-paper/20 transition-colors"
                   >
                     {copied ? (
                       <>

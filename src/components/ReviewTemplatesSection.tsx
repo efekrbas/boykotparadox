@@ -139,11 +139,11 @@ export function ReviewTemplatesSection() {
             </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-ink/15 pt-4">
+          <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-ink/15 pt-4">
             <button
               type="button"
               onClick={() => handleCopy(activeTemplate.id, activeTemplate.text)}
-              className="inline-flex items-center gap-2.5 bg-seal px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-paper transition-transform active:translate-y-px hover:brightness-110"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 bg-seal px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-paper transition-transform active:translate-y-px hover:brightness-110 text-center"
             >
               {copiedId === activeTemplate.id ? (
                 <>
@@ -160,7 +160,7 @@ export function ReviewTemplatesSection() {
 
             <a
               href="#oyunlar"
-              className="inline-flex items-center gap-2 border border-ink bg-paper px-4 py-3 font-mono text-xs uppercase tracking-[0.12em] text-ink transition-colors hover:bg-ink hover:text-paper"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border border-ink bg-paper px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:bg-ink hover:text-paper text-center"
             >
               <span>Platform Seç & Yapıştır</span>
               <ExternalLink className="size-3.5" />
