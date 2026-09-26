@@ -4,9 +4,9 @@ export function Ataturk3DScene() {
   return (
     <section
       id="anit"
-      className="relative w-full overflow-hidden text-paper flex flex-col justify-center py-4 sm:py-8 scroll-mt-12 sm:scroll-mt-16"
+      className="relative w-full overflow-hidden bg-ink text-paper border-b-2 border-ink py-10 sm:py-16 scroll-mt-12 sm:scroll-mt-14"
     >
-      <div className="relative mx-auto max-w-[1240px] px-5 w-full my-auto">
+      <div className="relative mx-auto max-w-[1240px] px-5 w-full">
         <div className="grid items-center gap-6 sm:gap-8 lg:grid-cols-12">
           {/* Left Text / Manifesto Block */}
           <div className="lg:col-span-6 flex flex-col justify-center">
