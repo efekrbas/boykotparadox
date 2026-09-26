@@ -6,7 +6,27 @@ import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
 import { GAMES } from "@/data/boycottData";
 
+function extractSuggestedGeminiModel(errorMsg: string): string | null {
+  if (!errorMsg) return null;
+  const regex = /(?:use|to use|switch to|upgrade to)\s+(?:models\/)?(gemini-[a-zA-Z0-9._-]+)/i;
+  const match = errorMsg.match(regex);
+  if (match && match[1]) {
+    return match[1].replace(/[.,;:()'"\s]+$/, "");
+  }
+  return null;
+}
+
+function extractSuggestedOpenRouterModel(errorMsg: string): string | null {
+  if (!errorMsg) return null;
+  const match = errorMsg.match(/(?:use|instead:?)\s+[`"']?([a-zA-Z0-9._-]+(?:\/[a-zA-Z0-9._:-]+)+)[`"']?/i);
+  if (match && match[1]) {
+    return match[1].replace(/[.,;:()'"\s]+$/, "");
+  }
+  return null;
+}
+
 export function AiReviewGenerator() {
+  const [provider, setProvider] = useState<"gemini" | "openrouter">("gemini");
   const [apiKey, setApiKey] = useState("");
   const [showApiKey, setShowApiKey] = useState(false);
   const [focusTopic, setFocusTopic] = useState("");
@@ -18,6 +38,7 @@ export function AiReviewGenerator() {
   const [copied, setCopied] = useState(false);
   const [isFallback, setIsFallback] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   const currentGameObj = GAMES.find((g) => g.title === selectedGame) || GAMES[0];
   const steamPlatform = currentGameObj?.platforms.find((p) => p.type === "steam");
@@ -28,15 +49,31 @@ export function AiReviewGenerator() {
       : "https://store.steampowered.com/");
 
   useEffect(() => {
-    const savedKey = localStorage.getItem("openrouter_api_key");
-    if (savedKey) {
-      setApiKey(savedKey);
-    }
+    setIsMounted(true);
+    const savedProvider = (localStorage.getItem("ai_review_provider") as "gemini" | "openrouter" | null);
+    const initialProvider = savedProvider || (localStorage.getItem("openrouter_api_key") ? "openrouter" : "gemini");
+    setProvider(initialProvider);
+
+    const key = localStorage.getItem(initialProvider === "gemini" ? "gemini_api_key" : "openrouter_api_key") || "";
+    setApiKey(key);
   }, []);
+
+  const handleProviderChange = (newProvider: "gemini" | "openrouter") => {
+    setProvider(newProvider);
+    localStorage.setItem("ai_review_provider", newProvider);
+    const key = localStorage.getItem(newProvider === "gemini" ? "gemini_api_key" : "openrouter_api_key") || "";
+    setApiKey(key);
+    setErrorMessage(null);
+    setIsFallback(false);
+  };
 
   const handleSaveKey = (val: string) => {
     setApiKey(val);
-    localStorage.setItem("openrouter_api_key", val);
+    if (provider === "gemini") {
+      localStorage.setItem("gemini_api_key", val);
+    } else {
+      localStorage.setItem("openrouter_api_key", val);
+    }
   };
 
   const buildPrompt = () => {
@@ -99,7 +136,7 @@ Metin boyutu: ${lengthDesc}
     // Fallback if no API key entered
     if (!apiKey.trim()) {
       setIsFallback(true);
-      setErrorMessage("API anahtarı girilmediği için prompt hazırlandı.");
+      setErrorMessage(`${provider === "gemini" ? "Gemini" : "OpenRouter"} API anahtarı girilmediği için prompt hazırlandı.`);
       setGeneratedText(prompt);
       toast.info("Prompt hazırlandı. Aşağıdaki butonlarla harici yapay zekaya sorabilirsiniz.");
       playStampSound();
@@ -113,73 +150,169 @@ Metin boyutu: ${lengthDesc}
 
     try {
       const cleanKey = apiKey.trim();
-      
-      const defaultModels = [
-        "google/gemini-2.0-flash-exp:free",
-        "google/gemini-2.0-flash-lite-preview-02-05:free",
-        "google/gemini-1.5-flash",
-        "google/gemma-2-27b-it"
-      ];
 
-      const queue: string[] = [...defaultModels];
-      const triedModels = new Set<string>();
-      let success = false;
-      let lastErrorMsg = "";
+      if (provider === "gemini") {
+        // Direct Google Gemini API with smart auto-upgrade
+        const defaultGeminiModels = [
+          "gemini-2.5-flash",
+          "gemini-2.0-flash",
+          "gemini-3.5-flash-lite",
+          "gemini-2.5-pro",
+          "gemini-1.5-flash",
+          "gemini-2.0-flash-lite",
+        ];
 
-      while (queue.length > 0) {
-        const model = queue.shift()!;
-        if (triedModels.has(model)) continue;
-        triedModels.add(model);
+        const lastWorking = typeof window !== "undefined" ? localStorage.getItem("gemini_last_working_model") : null;
+        const initialList = lastWorking
+          ? [lastWorking, ...defaultGeminiModels.filter((m) => m !== lastWorking)]
+          : [...defaultGeminiModels];
 
-        try {
-          const response = await fetch(
-            "https://openrouter.ai/api/v1/chat/completions",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${cleanKey}`,
-                "HTTP-Referer": "https://boykotparadox.vercel.app/",
-                "X-Title": "Boykot Paradox"
-              },
-              body: JSON.stringify({
-                model: model,
-                messages: [{ role: "user", content: prompt }],
-                temperature: 0.75,
-                max_tokens: 1200,
-              }),
+        const queue: string[] = [...initialList];
+        const triedModels = new Set<string>();
+        let success = false;
+        let lastErrorMsg = "";
+
+        while (queue.length > 0) {
+          const rawModel = queue.shift()!;
+          const model = rawModel.replace(/^models\//, "");
+          if (triedModels.has(model)) continue;
+          triedModels.add(model);
+
+          try {
+            const response = await fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${cleanKey}`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  contents: [{ parts: [{ text: prompt }] }],
+                  generationConfig: {
+                    temperature: 0.75,
+                    maxOutputTokens: 1200,
+                  },
+                }),
+              }
+            );
+
+            if (!response.ok) {
+              const errData = await response.json().catch(() => null);
+              lastErrorMsg = errData?.error?.message || `HTTP ${response.status} hatası.`;
+
+              // Auto-upgrade detection: if API suggests a newer/supported model
+              const suggested = extractSuggestedGeminiModel(lastErrorMsg);
+              if (suggested && !triedModels.has(suggested)) {
+                toast.info(`Model otomatik yükseltiliyor: ${suggested} deneniyor...`);
+                queue.unshift(suggested);
+              }
+              continue;
             }
-          );
 
-          if (!response.ok) {
-            const errData = await response.json().catch(() => null);
-            lastErrorMsg = errData?.error?.message || `HTTP ${response.status} hatası.`;
-            continue; // Try next OpenRouter model
+            const data = await response.json();
+            const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+            if (text) {
+              setGeneratedText(text.trim());
+              setIsFallback(false);
+              setErrorMessage(null);
+              localStorage.setItem("gemini_last_working_model", model);
+              toast.success(`Gemini (${model}) ile özgün inceleme üretildi!`);
+              playStampSound();
+              success = true;
+              break;
+            }
+          } catch (err: any) {
+            lastErrorMsg = err.message;
           }
+        }
 
-          const data = await response.json();
-          const text = data.choices?.[0]?.message?.content;
-
-          if (text) {
-            setGeneratedText(text.trim());
-            setIsFallback(false);
-            setErrorMessage(null);
-            toast.success(`Özgün inceleme üretildi! (${model})`);
-            playStampSound();
-            success = true;
-            break;
+        if (!success) {
+          let userFriendlyMsg = lastErrorMsg;
+          if (lastErrorMsg.includes("API_KEY_INVALID") || lastErrorMsg.includes("API key not valid")) {
+            userFriendlyMsg = "Gemini API anahtarı geçersiz. Lütfen aistudio.google.com üzerinden aldığınız anahtarı kontrol edin.";
           }
-        } catch (err: any) {
-          lastErrorMsg = err.message;
+          throw new Error(userFriendlyMsg);
         }
-      }
+      } else {
+        // OpenRouter API
+        const defaultModels = [
+          "google/gemini-2.5-flash",
+          "google/gemini-2.0-flash",
+          "google/gemini-2.0-flash-exp:free",
+          "google/gemini-2.0-flash-lite-preview-02-05:free",
+          "google/gemini-1.5-flash",
+          "google/gemma-2-27b-it"
+        ];
 
-      if (!success) {
-        let userFriendlyMsg = lastErrorMsg;
-        if (lastErrorMsg.includes("not found") || lastErrorMsg.includes("API key") || lastErrorMsg.includes("permission") || lastErrorMsg.includes("no longer available")) {
-          userFriendlyMsg = `Modeller yanıt vermedi (${lastErrorMsg.substring(0, 100)}...). Lütfen aşağıdaki butonlarla harici yapay zekaya sorun.`;
+        const queue: string[] = [...defaultModels];
+        const triedModels = new Set<string>();
+        let success = false;
+        let lastErrorMsg = "";
+
+        while (queue.length > 0) {
+          const rawModel = queue.shift()!;
+          const model = rawModel.replace(/^models\//, "");
+          if (triedModels.has(model)) continue;
+          triedModels.add(model);
+
+          try {
+            const response = await fetch(
+              "https://openrouter.ai/api/v1/chat/completions",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${cleanKey}`,
+                  "HTTP-Referer": "https://boykotparadox.vercel.app/",
+                  "X-Title": "Boykot Paradox"
+                },
+                body: JSON.stringify({
+                  model: model,
+                  messages: [{ role: "user", content: prompt }],
+                  temperature: 0.75,
+                  max_tokens: 1200,
+                }),
+              }
+            );
+
+            if (!response.ok) {
+              const errData = await response.json().catch(() => null);
+              lastErrorMsg = errData?.error?.message || `HTTP ${response.status} hatası.`;
+
+              // Auto-upgrade detection for OpenRouter
+              const suggested = extractSuggestedOpenRouterModel(lastErrorMsg);
+              if (suggested && !triedModels.has(suggested)) {
+                toast.info(`Model otomatik yükseltiliyor: ${suggested} deneniyor...`);
+                queue.unshift(suggested);
+              }
+              continue;
+            }
+
+            const data = await response.json();
+            const text = data.choices?.[0]?.message?.content;
+
+            if (text) {
+              setGeneratedText(text.trim());
+              setIsFallback(false);
+              setErrorMessage(null);
+              toast.success(`Özgün inceleme üretildi! (${model})`);
+              playStampSound();
+              success = true;
+              break;
+            }
+          } catch (err: any) {
+            lastErrorMsg = err.message;
+          }
         }
-        throw new Error(userFriendlyMsg);
+
+        if (!success) {
+          let userFriendlyMsg = lastErrorMsg;
+          if (lastErrorMsg.includes("not found") || lastErrorMsg.includes("API key") || lastErrorMsg.includes("permission") || lastErrorMsg.includes("no longer available")) {
+            userFriendlyMsg = `Modeller yanıt vermedi (${lastErrorMsg.substring(0, 100)}...). Lütfen aşağıdaki butonlarla harici yapay zekaya sorun.`;
+          }
+          throw new Error(userFriendlyMsg);
+        }
       }
     } catch (error: any) {
       // Fallback: put plain prompt directly into text area
@@ -217,22 +350,55 @@ Metin boyutu: ${lengthDesc}
             AI ile Özgün İnceleme Üret
           </h3>
           <span className="ml-auto font-mono text-[10px] uppercase bg-ink text-paper px-2 py-1 font-bold">
-            OpenRouter Destekli
+            {provider === "gemini" ? "Google Gemini Destekli" : "OpenRouter Destekli"}
           </span>
         </div>
 
         <p className="text-sm text-ink/80 mb-6 max-w-[70ch]">
-          Steam'in otomatik spam filtresine ("Konu Dışı" uyarısı) takılmamak için kendi OpenRouter API anahtarınızı kullanarak her seferinde tamamen benzersiz ve özgün 1 yıldız inceleme metinleri üretebilirsiniz. <br />
+          Steam'in otomatik spam filtresine ("Konu Dışı" uyarısı) takılmamak için <strong>Google Gemini API</strong> veya <strong>OpenRouter API</strong> anahtarınızı kullanarak her seferinde tamamen benzersiz ve özgün 1 yıldız inceleme metinleri üretebilirsiniz. <br />
           <strong className="text-seal font-mono text-xs">Not: API anahtarınız sadece tarayıcınızda (Local Storage) tutulur, hiçbir sunucuya gönderilmez.</strong>
         </p>
 
         <div className="grid gap-6 md:grid-cols-2">
           {/* Inputs */}
           <div className="space-y-4">
+            {/* Provider Selection */}
+            <div>
+              <label className="block font-mono text-xs font-bold uppercase text-ink mb-1.5">
+                Yapay Zeka API Sağlayıcısı
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleProviderChange("gemini")}
+                  className={`border-2 py-2 px-3 font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                    provider === "gemini"
+                      ? "border-seal bg-seal text-paper shadow-sm"
+                      : "border-ink/20 bg-paper/60 text-ink/70 hover:border-ink hover:text-ink"
+                  }`}
+                >
+                  <Sparkles className="size-3.5" />
+                  <span>Google Gemini API</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleProviderChange("openrouter")}
+                  className={`border-2 py-2 px-3 font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                    provider === "openrouter"
+                      ? "border-seal bg-seal text-paper shadow-sm"
+                      : "border-ink/20 bg-paper/60 text-ink/70 hover:border-ink hover:text-ink"
+                  }`}
+                >
+                  <KeyRound className="size-3.5" />
+                  <span>OpenRouter API</span>
+                </button>
+              </div>
+            </div>
+
             <div>
               <label className="flex items-center gap-2 font-mono text-xs font-bold uppercase text-ink mb-1.5">
                 <KeyRound className="size-3.5" />
-                OpenRouter API Key
+                {provider === "gemini" ? "Google Gemini API Key" : "OpenRouter API Key"}
               </label>
               <div className="relative">
                 <input
@@ -240,7 +406,7 @@ Metin boyutu: ${lengthDesc}
                   value={apiKey}
                   onChange={(e) => handleSaveKey(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && apiKey.trim() && focusTopic.trim() && !isLoading && handleGenerate()}
-                  placeholder="sk-or-v1-..."
+                  placeholder={provider === "gemini" ? "AIzaSy..." : "sk-or-v1-..."}
                   className="w-full border-2 border-ink/30 bg-paper/50 p-2.5 pr-10 font-mono text-sm outline-none focus:border-seal transition-colors"
                 />
                 <button
@@ -252,9 +418,15 @@ Metin boyutu: ${lengthDesc}
                 </button>
               </div>
               <div className="mt-1 font-mono text-[9px] text-ink/50">
-                <a href="https://openrouter.ai/settings/keys" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                  openrouter.ai adresinden alabilirsiniz.
-                </a>
+                {provider === "gemini" ? (
+                  <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                    aistudio.google.com adresinden ücretsiz API anahtarı alabilirsiniz.
+                  </a>
+                ) : (
+                  <a href="https://openrouter.ai/settings/keys" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                    openrouter.ai adresinden alabilirsiniz.
+                  </a>
+                )}
               </div>
             </div>
 
@@ -281,6 +453,7 @@ Metin boyutu: ${lengthDesc}
               </label>
               <input
                 type="text"
+                suppressHydrationWarning
                 value={focusTopic}
                 onChange={(e) => setFocusTopic(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && apiKey.trim() && focusTopic.trim() && !isLoading && handleGenerate()}
@@ -350,17 +523,18 @@ Metin boyutu: ${lengthDesc}
 
             <button
               type="button"
+              suppressHydrationWarning
               onClick={handleGenerate}
-              disabled={isLoading || !focusTopic.trim()}
+              disabled={!isMounted || isLoading || !focusTopic.trim()}
               className="w-full inline-flex justify-center items-center gap-2 bg-ink px-4 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-paper transition-transform active:translate-y-px hover:bg-seal disabled:opacity-50 disabled:pointer-events-none"
             >
               {isLoading ? (
                 <>
                   <Loader2 className="size-4 animate-spin" /> Üretiliyor...
                 </>
-              ) : apiKey.trim() ? (
+              ) : (isMounted && apiKey.trim()) ? (
                 <>
-                  <Sparkles className="size-4" /> AI ile Metin Üret
+                  <Sparkles className="size-4" /> {provider === "gemini" ? "Gemini ile Metin Üret" : "AI ile Metin Üret"}
                 </>
               ) : (
                 <>
