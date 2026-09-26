@@ -459,14 +459,14 @@ Metin boyutu: ${lengthDesc}
               className="w-full flex-1 min-h-[140px] resize-none border-2 border-ink/30 bg-paper p-3 font-body text-sm leading-relaxed text-ink outline-none selection:bg-seal selection:text-paper"
             />
             {generatedText && (
-              <div className="mt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+              <div className="mt-3 flex flex-col sm:flex-row items-stretch gap-2.5">
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="flex-1 inline-flex justify-center items-center gap-2 border-2 border-seal bg-seal/10 px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-seal transition-colors hover:bg-seal hover:text-paper text-center"
+                  className="flex-1 min-h-[48px] inline-flex justify-center items-center gap-2 border-2 border-seal bg-seal/10 px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-seal transition-colors hover:bg-seal hover:text-paper text-center"
                 >
-                  {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-                  {copied ? "Kopyalandı!" : (isFallback ? "Promptu Kopyala" : "Metni Kopyala")}
+                  {copied ? <Check className="size-4 shrink-0" /> : <Copy className="size-4 shrink-0" />}
+                  <span>{copied ? "Kopyalandı!" : (isFallback ? "Promptu Kopyala" : "Metni Kopyala")}</span>
                 </button>
 
                 {targetGameSteamUrl && (
@@ -483,10 +483,10 @@ Metin boyutu: ${lengthDesc}
                       });
                       setTimeout(() => setCopied(false), 2500);
                     }}
-                    className="flex-1 inline-flex justify-center items-center gap-2 border-2 border-ink bg-ink px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-paper transition-all hover:bg-seal hover:border-seal text-center shadow-sm"
+                    className="flex-1 min-h-[48px] inline-flex justify-center items-center gap-2 border-2 border-ink bg-ink px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-paper transition-all hover:bg-seal hover:border-seal text-center shadow-sm"
                   >
                     <span>{currentGameObj?.title || "Oyuna"} Git & Yapıştır (Steam)</span>
-                    <ExternalLink className="size-3.5" />
+                    <ExternalLink className="size-3.5 shrink-0" />
                   </a>
                 )}
               </div>
