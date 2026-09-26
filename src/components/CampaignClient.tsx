@@ -428,7 +428,7 @@ export function CampaignClient({
           }}
         />
 
-        <div className="relative mx-auto max-w-[1240px] px-5 pt-4 pb-5 sm:pt-8 sm:pb-7">
+        <div className="relative mx-auto max-w-[1240px] px-5 pt-4 pb-3 sm:pt-8 sm:pb-4">
           <div className="rise flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-seal">
             <span className="size-2 animate-pulse rounded-full bg-seal" />
             Steam · Metacritic · Trustpilot · Google · Epic · GOG · Xbox
