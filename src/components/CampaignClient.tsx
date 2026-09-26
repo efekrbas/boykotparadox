@@ -312,20 +312,25 @@ export function CampaignClient({
   return (
     <div className="min-h-screen bg-paper font-body text-ink antialiased selection:bg-seal selection:text-paper">
       {/* Sticky Main Header - Permanent Dark Masthead */}
-      <header className="sticky top-0 z-40 border-b-2 border-seal/40 bg-ink text-paper shadow-xl shadow-black/50 backdrop-blur-md">
+      <header className="sticky -top-px z-40 border-b-2 border-seal/40 bg-ink text-paper shadow-xl shadow-black/50 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 sm:py-2.5">
-          <div className="flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            onClick={() => scrollTo("anit")}
+            className="flex items-center gap-2 sm:gap-3 text-left focus:outline-none group cursor-pointer"
+            title="Atatürk Anıtı'na Git"
+          >
             <img
               src="/favicon.png"
               alt="Atatürk Rozet Logo"
-              className="size-7 sm:size-8 object-contain drop-shadow-sm rounded-full"
+              className="size-7 sm:size-8 object-contain drop-shadow-sm rounded-full transition-transform group-hover:scale-105"
             />
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2.5">
-              <span className="font-display text-xl sm:text-2xl leading-none tracking-tight text-paper">
+              <span className="font-display text-xl sm:text-2xl leading-none tracking-tight text-paper transition-colors group-hover:text-seal">
                 BOYKOT PARADOX
               </span>
             </div>
-          </div>
+          </button>
 
           <div className="flex items-center gap-2.5 sm:gap-4 md:gap-5">
             {/* User progress counter */}

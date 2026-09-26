@@ -126,7 +126,7 @@ export default function RootLayout({
       lang="tr"
       className={`${anton.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="antialiased selection:bg-seal selection:text-paper">
+      <body className="bg-ink antialiased selection:bg-seal selection:text-paper">
         {children}
         <Analytics />
         <Toaster position="bottom-right" richColors />
