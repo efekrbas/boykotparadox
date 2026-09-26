@@ -2,7 +2,7 @@ import { Shield } from "lucide-react";
 
 export function Ataturk3DScene() {
   return (
-    <section id="anit" className="relative overflow-hidden border-b-2 border-ink bg-ink text-paper py-12 sm:py-16 scroll-mt-16 sm:scroll-mt-20">
+    <section id="anit" className="relative overflow-hidden border-b-2 border-ink bg-ink text-paper pt-16 pb-12 sm:pt-32 sm:pb-24 scroll-mt-16 sm:scroll-mt-20">
       <div className="relative mx-auto max-w-[1240px] px-5">
         <div className="grid items-start gap-8 lg:grid-cols-12 lg:items-center">
           {/* Left Text / Manifesto Block */}
