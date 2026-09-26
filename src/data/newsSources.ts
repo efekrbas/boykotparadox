@@ -116,4 +116,23 @@ export const NEWS_SOURCES: NewsSource[] = [
     date: "Eylül 2026",
     badge: "Resmi Açıklama",
   },
+  {
+    id: "reddit-community-tr",
+    outlet: "Reddit (/r/Turkey)",
+    title: "Paradox’tan Atatürk olayına dair yeni açıklama geldi ",
+    summary: "Kurallardaki belirsizliği bitirmek için yeni bir sınır getirdiler: 1 Ocak 1800’den sonra doğan siyasi/askeri figürlerin gerçek fotoğrafları yasak, resmi oyun içi portrelere izin var (Nazi liderlerinin portreleri hariç). ",
+    url: "https://www.reddit.com/r/Turkey/s/NYZ0fwBixY",
+    category: "Topluluk & Forum",
+    date: "Eylül 2026",
+  },
+  {
+    id: "steam-cinden-mektup",
+    outlet: "Steam (Tartışmalar)",
+    title: "Çinli bir oyuncudan, Türklere mektup.",
+    summary:
+      "Çinli oyuncular, Türk oyunculara oyun içi tavsiyelerde bulunuyor.",
+    url: "https://steamcommunity.com/app/394360/discussions/0/592942202593922800/",
+    category: "Topluluk & Forum",
+    date: "Eylül 2026",
+  },
 ];
