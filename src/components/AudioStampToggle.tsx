@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 import { isSoundEnabled, setSoundEnabled, initSoundPreference } from "@/lib/audio";
 
-export function AudioStampToggle() {
+export function AudioStampToggle({ dark = false }: { dark?: boolean }) {
   const [enabled, setEnabled] = useState(true);
 
   useEffect(() => {
@@ -23,7 +23,11 @@ export function AudioStampToggle() {
       onClick={toggle}
       title={enabled ? "Ses efektini kapat" : "Ses efektini aç"}
       aria-label={enabled ? "Ses efektini kapat" : "Ses efektini aç"}
-      className="inline-flex items-center gap-1.5 border border-ink/20 bg-paper/80 px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-ink transition-colors hover:border-ink hover:bg-paper"
+      className={`inline-flex items-center gap-1.5 border px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] transition-colors ${
+        dark
+          ? "border-paper/20 bg-paper/10 text-paper hover:bg-paper/20 hover:border-paper/40"
+          : "border-ink/20 bg-paper/80 text-ink hover:border-ink hover:bg-paper"
+      }`}
     >
       {enabled ? (
         <>
@@ -32,7 +36,7 @@ export function AudioStampToggle() {
         </>
       ) : (
         <>
-          <VolumeX className="size-3.5 text-mute" />
+          <VolumeX className={`size-3.5 ${dark ? "text-paper/50" : "text-mute"}`} />
           <span className="hidden sm:inline">Ses: Kapalı</span>
         </>
       )}
