@@ -347,7 +347,7 @@ export function CampaignClient({
           }}
         />
 
-        <div className="relative mx-auto max-w-[1240px] px-5 pt-8 pb-10 sm:pt-12 sm:pb-16">
+        <div className="relative mx-auto max-w-[1240px] px-5 pt-4 pb-6 sm:pt-8 sm:pb-12">
           <div className="rise flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-seal">
             <span className="size-2 animate-pulse rounded-full bg-seal" />
             Steam · Metacritic · Trustpilot · Google · Epic · GOG · Xbox
@@ -420,7 +420,7 @@ export function CampaignClient({
           </h1>
 
           <p
-            className="rise mt-6 max-w-[62ch] text-base sm:text-lg text-pretty text-paper/85 leading-relaxed"
+            className="rise mt-4 max-w-[62ch] text-sm sm:text-base text-pretty text-paper/85 leading-relaxed"
             style={{ animationDelay: "160ms" }}
           >
             Paradox'un resmi Discord'unda bir Türk oyuncunun <strong>Atatürk profil fotoğrafı</strong> sebebiyle banlanmasına ve itiraz eden yüzlerce oyuncunun <strong>topluca susturulmasına</strong> sessiz kalmıyoruz: <strong>Tüm oyunlara, mağazalara ve Google'a tek tıkla 1 yıldız veriyoruz!</strong>
@@ -428,7 +428,7 @@ export function CampaignClient({
 
           {/* Primary Action Buttons */}
           <div
-            className="rise mt-6 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3 w-full"
+            className="rise mt-5 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3 w-full"
             style={{ animationDelay: "240ms" }}
           >
             <button
