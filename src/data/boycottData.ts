@@ -520,15 +520,6 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
     importance: "Yüksek",
     actionText: "Yayıncı Profilini İncele",
   },
-  {
-    id: "corp-glassdoor",
-    name: "Glassdoor — Şirket & Yönetim Puanı",
-    platform: "Glassdoor",
-    url: "https://www.glassdoor.sg/Reviews/Paradox-Interactive-Reviews-E1008028.htm",
-    description: "Yönetimin topluluk krizlerini yönetme biçimi ve kurumsal etik sicilini kamuoyuna gösterir.",
-    importance: "Önemli",
-    actionText: "Glassdoor Puanını Gör",
-  },
 ];
 
 export const REVIEW_TEMPLATES: ReviewTemplate[] = [
