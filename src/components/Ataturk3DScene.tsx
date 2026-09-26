@@ -10,14 +10,14 @@ export function Ataturk3DScene() {
         <div className="grid items-center gap-6 sm:gap-8 lg:grid-cols-12">
           {/* Left Text / Manifesto Block */}
           <div className="lg:col-span-6 flex flex-col justify-center">
-            <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-seal font-bold">
-              <Shield className="size-4" />
-              Ebedi Değerimiz · Saygı ve Minnetle
+            <div className="inline-flex items-center gap-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.2em] text-seal font-bold mb-3 sm:mb-4">
+              <Shield className="size-4 shrink-0" />
+              <span>Ebedi Değerimiz · Saygı ve Minnetle</span>
             </div>
 
-            <h2 className="mt-1.5 font-display text-2xl sm:text-4xl lg:text-5xl uppercase tracking-tight leading-[1.02]">
+            <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl uppercase tracking-tight leading-[1.1] sm:leading-[1.08]">
               <span className="block">Atatürk</span>
-              <span className="block mt-0.5 text-seal">Tartışılamaz.</span>
+              <span className="block mt-1 sm:mt-1.5 text-seal">Tartışılamaz.</span>
             </h2>
 
             <div className="mt-2.5 border-l-2 border-seal pl-3.5 font-mono text-xs uppercase tracking-wider text-paper/70">

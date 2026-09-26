@@ -560,36 +560,6 @@ export function CampaignClient({
               <span>Hissedar Maili</span>
             </button>
           </div>
-
-          {/* Quick Metrics Bar - Compact and directly below action buttons */}
-          <div className="rise mt-5 sm:mt-6 grid grid-cols-2 gap-3.5 sm:gap-4 sm:grid-cols-4">
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-paper/50">
-                Hedef Platformlar
-              </div>
-              <div className="font-display text-2xl text-paper">7+ Platform</div>
-            </div>
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-paper/50">
-                Kapsanan Oyunlar
-              </div>
-              <div className="font-display text-2xl text-paper">{GAMES.length} Oyun & Seri</div>
-            </div>
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-paper/50">
-                Steam Canlı Olumsuz
-              </div>
-              <div className="font-display text-2xl text-seal tabular-nums">
-                {totalSteamNegatives > 0 ? tr(totalSteamNegatives) : "73.926"} İnceleme
-              </div>
-            </div>
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-paper/50">
-                Topluluk Tepkisi
-              </div>
-              <div className="font-display text-2xl text-paper">Canlı & Büyüyor</div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -1037,13 +1007,24 @@ export function CampaignClient({
       {/* FAQ & AEO / GEO Bilgi Merkezi */}
       <FaqSection />
 
-      {/* Social Share Bar */}
-      <div className="mx-auto max-w-[1240px] px-5 py-8">
-        <ShareBar />
-      </div>
-
       {/* News & Media Sources */}
       <NewsSourcesSection />
+
+      {/* Footer / Sesini Duyur & Kampanyayı Yay */}
+      <footer className="mt-14 border-t-2 border-ink bg-paper pt-12 pb-16">
+        <div className="mx-auto max-w-[1240px] px-5">
+          <ShareBar />
+          
+          <div className="mt-10 pt-6 border-t border-ink/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-mute">
+            <div className="text-center sm:text-left">
+              © 2026 Bağımsız Türk Oyuncu Topluluğu İnisiyatifi · <span className="text-seal font-bold">#BoycottParadox</span>
+            </div>
+            <div className="text-center sm:text-right text-ink/70">
+              Gazi Mustafa Kemal Atatürk'ün aziz hatırasına saygıyla. 🇹🇷
+            </div>
+          </div>
+        </div>
+      </footer>
 
       {/* Bulk Launcher Modal */}
       <BulkLauncherModal

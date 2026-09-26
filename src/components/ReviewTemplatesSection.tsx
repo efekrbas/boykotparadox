@@ -1,20 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Copy, Check, MessageSquareText, Sparkles, ExternalLink, Globe } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Copy, Check, MessageSquareText, Sparkles, ExternalLink, Globe, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { REVIEW_TEMPLATES } from "@/data/boycottData";
 import { playStampSound } from "@/lib/audio";
 import { AiReviewGenerator } from "./AiReviewGenerator";
-
-const LANGUAGE_FILTERS = [
-  { id: "all", label: "Tümü" },
-  { id: "tr", label: "🇹🇷 Türkçe" },
-  { id: "en", label: "🇬🇧 English" },
-  { id: "de", label: "🇩🇪 Deutsch" },
-  { id: "ru", label: "🇷🇺 Русский" },
-  { id: "fr", label: "🇫🇷 Français" },
-];
 
 const LANG_DISPLAY_NAMES: Record<string, string> = {
   tr: "Türkçe",
@@ -25,18 +16,46 @@ const LANG_DISPLAY_NAMES: Record<string, string> = {
   es: "Español",
 };
 
+const LANG_FLAGS: Record<string, string> = {
+  tr: "🇹🇷",
+  en: "🇬🇧",
+  de: "🇩🇪",
+  ru: "🇷🇺",
+  fr: "🇫🇷",
+  es: "🇪🇸",
+};
+
 export function ReviewTemplatesSection() {
-  const [selectedLang, setSelectedLang] = useState<string>("all");
   const [selectedId, setSelectedId] = useState(REVIEW_TEMPLATES[0]?.id ?? "");
   const [copiedId, setCopiedId] = useState<string | null>(null);
-
-  const filteredTemplates = useMemo(() => {
-    if (selectedLang === "all") return REVIEW_TEMPLATES;
-    return REVIEW_TEMPLATES.filter((t) => t.language === selectedLang);
-  }, [selectedLang]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const activeTemplate =
-    filteredTemplates.find((t) => t.id === selectedId) || filteredTemplates[0] || REVIEW_TEMPLATES[0]!;
+    REVIEW_TEMPLATES.find((t) => t.id === selectedId) || REVIEW_TEMPLATES[0]!;
+
+  // Close dropdown on outside click or Escape
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isDropdownOpen]);
 
   const handleCopy = (id: string, text: string) => {
     playStampSound();
@@ -93,152 +112,142 @@ export function ReviewTemplatesSection() {
         </div>
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-12 items-start">
-        {/* Template Selector List */}
-        <div className="flex flex-col gap-3 lg:col-span-5">
-          {/* Language Filter Pills */}
-          <div className="flex flex-wrap items-center gap-1.5 pb-1">
-            {LANGUAGE_FILTERS.map((lf) => {
-              const count = lf.id === "all"
-                ? REVIEW_TEMPLATES.length
-                : REVIEW_TEMPLATES.filter((t) => t.language === lf.id).length;
-              if (count === 0) return null;
-
-              return (
-                <button
-                  key={lf.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedLang(lf.id);
-                    const firstMatch = lf.id === "all"
-                      ? REVIEW_TEMPLATES[0]
-                      : REVIEW_TEMPLATES.find((t) => t.language === lf.id);
-                    if (firstMatch) setSelectedId(firstMatch.id);
-                  }}
-                  className={`px-2.5 py-1 font-mono text-[11px] uppercase tracking-wider transition-colors ${
-                    selectedLang === lf.id
-                      ? "bg-ink text-paper font-bold shadow-sm"
-                      : "border border-ink/20 bg-paper text-ink hover:border-ink hover:bg-paper/70"
-                  }`}
-                >
-                  {lf.label} ({count})
-                </button>
-              );
-            })}
+      {/* Main Template Selection & Action Box */}
+      <div className="mt-8 border-2 border-ink bg-paper p-5 sm:p-7 shadow-[4px_4px_0_0_#181816]">
+        {/* Custom Dropdown Menu Component */}
+        <div className="custom-dropdown-container" ref={dropdownRef}>
+          <div className="flex items-center justify-between gap-2 mb-2 font-mono text-xs uppercase tracking-wider text-mute">
+            <span className="font-bold text-ink flex items-center gap-1.5">
+              <MessageSquareText className="size-3.5 text-seal" />
+              İnceleme Şablonu Seç
+            </span>
+            <span className="text-[11px] font-semibold text-ink/60">
+              {REVIEW_TEMPLATES.length} Hazır Şablon
+            </span>
           </div>
 
-          <div className="flex flex-col gap-2.5">
-            {filteredTemplates.map((tmpl) => {
-              const isSelected = tmpl.id === selectedId;
-              return (
-                <button
-                  key={tmpl.id}
-                  type="button"
-                  onClick={() => setSelectedId(tmpl.id)}
-                  className={`group relative flex flex-col items-start border-2 p-4 text-left transition-all ${
-                    isSelected
-                      ? "border-ink bg-ink text-paper shadow-[4px_4px_0_0_oklch(0.556_0.216_27.5)]"
-                      : "border-ink/20 bg-paper hover:border-ink hover:bg-paper/70"
-                  }`}
-                >
-                  <div className="flex w-full items-center justify-between gap-2">
-                    <span
-                      className={`font-mono text-xs uppercase tracking-wider ${
-                        isSelected ? "text-seal" : "text-seal font-bold"
-                      }`}
-                    >
-                      {tmpl.badge}
-                    </span>
-                    <span
-                      className={`font-mono text-[10px] font-bold uppercase px-1.5 py-0.5 border ${
-                        isSelected
-                          ? "border-paper/30 text-paper/85 bg-paper/10"
-                          : "border-ink/20 text-mute bg-ink/5"
-                      }`}
-                    >
-                      {tmpl.language.toUpperCase()}
-                    </span>
-                  </div>
-                  <div className="mt-1 font-display text-xl uppercase tracking-tight">
-                    {tmpl.title}
-                  </div>
-                  <div
-                    className={`mt-2 line-clamp-2 text-xs ${
-                      isSelected ? "text-paper/75" : "text-mute"
-                    }`}
-                  >
-                    {tmpl.text}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Active Template Preview & Action Box */}
-        <div className="border-2 border-ink bg-paper p-5 sm:p-6 shadow-[4px_4px_0_0_#181816] lg:col-span-7 lg:sticky lg:top-24">
-          <div className="flex items-center justify-between gap-4 border-b border-ink/15 pb-3">
-            <div className="flex items-center gap-2 min-w-0">
-              <MessageSquareText className="size-4 shrink-0 text-seal" />
-              <span className="truncate font-display text-lg uppercase tracking-tight text-ink">
+          <button
+            type="button"
+            onClick={() => setIsDropdownOpen((prev) => !prev)}
+            aria-haspopup="listbox"
+            aria-expanded={isDropdownOpen}
+            className={`custom-dropdown-trigger ${isDropdownOpen ? "open" : ""}`}
+          >
+            <div className="flex flex-col min-w-0 pr-2">
+              <div className="flex items-center gap-2">
+                <span className="custom-dropdown-badge">{activeTemplate.badge}</span>
+                <span className="font-mono text-[10px] font-bold uppercase px-1.5 py-0.5 border border-ink/20 bg-ink/5 text-ink/70">
+                  {LANG_FLAGS[activeTemplate.language] || ""} {activeTemplate.language.toUpperCase()}
+                </span>
+              </div>
+              <span className="custom-dropdown-title truncate mt-0.5">
                 {activeTemplate.title}
               </span>
             </div>
-            <div className="flex shrink-0 flex-wrap items-center gap-1.5 font-mono text-[10px] text-mute">
-              <span>Önerilen yerler:</span>
+            <div className="custom-dropdown-arrow">
+              <ChevronDown className="size-4" />
+            </div>
+          </button>
+
+          {isDropdownOpen && (
+            <div className="custom-dropdown-menu red-scrollbar" role="listbox">
+              {REVIEW_TEMPLATES.map((tmpl) => {
+                const isSelected = tmpl.id === selectedId;
+                return (
+                  <button
+                    key={tmpl.id}
+                    type="button"
+                    role="option"
+                    aria-selected={isSelected}
+                    onClick={() => {
+                      playStampSound();
+                      setSelectedId(tmpl.id);
+                      setIsDropdownOpen(false);
+                    }}
+                    className={`custom-dropdown-item ${isSelected ? "active" : ""}`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="custom-dropdown-badge">{tmpl.badge}</span>
+                      <span className={`font-mono text-[10px] font-bold uppercase px-1.5 py-0.5 border ${
+                        isSelected ? "border-paper/30 text-paper/85 bg-paper/10" : "border-ink/20 text-mute bg-ink/5"
+                      }`}>
+                        {LANG_FLAGS[tmpl.language] || ""} {tmpl.language.toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="custom-dropdown-title">
+                      {tmpl.title}
+                    </div>
+                    <div className="custom-dropdown-preview">
+                      {tmpl.text}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Recommended Locations & Template Details */}
+        <div className="mt-5 pt-4 border-t border-ink/15 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-mute">
+            <span className="font-bold text-ink">Önerilen Platformlar:</span>
+            <div className="flex flex-wrap items-center gap-1.5">
               {activeTemplate.recommendedFor.map((rec) => (
                 <span
                   key={rec}
-                  className="border border-ink/15 bg-ink/5 px-1.5 py-0.5 font-semibold text-ink"
+                  className="border border-ink/15 bg-ink/5 px-2 py-0.5 font-semibold text-ink text-[11px]"
                 >
                   {rec}
                 </span>
               ))}
             </div>
           </div>
-
-          <div className="relative mt-4">
-            <textarea
-              readOnly
-              value={activeTemplate.text}
-              rows={6}
-              className="w-full resize-none border border-ink/15 bg-paper p-3.5 font-body text-sm leading-relaxed text-ink outline-none selection:bg-seal selection:text-paper"
-            />
-            <div className="mt-1.5 flex justify-between font-mono text-[10px] text-mute">
-              <span>Karakter sayısı: {activeTemplate.text.length}</span>
-              <span className="font-bold uppercase text-ink/70">
-                {LANG_DISPLAY_NAMES[activeTemplate.language] || activeTemplate.language.toUpperCase()}
-              </span>
-            </div>
+          <div className="font-mono text-[11px] text-mute">
+            Dil: <strong className="text-ink">{LANG_DISPLAY_NAMES[activeTemplate.language] || activeTemplate.language.toUpperCase()}</strong>
           </div>
+        </div>
 
-          <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-ink/15 pt-4">
-            <button
-              type="button"
-              onClick={() => handleCopy(activeTemplate.id, activeTemplate.text)}
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 bg-seal px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-paper transition-transform active:translate-y-px hover:brightness-110 text-center"
-            >
-              {copiedId === activeTemplate.id ? (
-                <>
-                  <Check className="size-4" />
-                  Metin Kopyalandı!
-                </>
-              ) : (
-                <>
-                  <Copy className="size-4" />
-                  Metni Kopyala (1 Tıkla)
-                </>
-              )}
-            </button>
-
-            <a
-              href="#oyunlar"
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border border-ink bg-paper px-5 py-3 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:bg-ink hover:text-paper text-center"
-            >
-              <span>Platform Seç & Yapıştır</span>
-              <ExternalLink className="size-3.5" />
-            </a>
+        {/* Textarea */}
+        <div className="relative mt-4">
+          <textarea
+            readOnly
+            value={activeTemplate.text}
+            rows={5}
+            className="w-full resize-none border-2 border-ink/20 bg-paper/70 p-4 font-body text-sm leading-relaxed text-ink outline-none focus:border-seal selection:bg-seal selection:text-paper"
+          />
+          <div className="mt-1.5 flex justify-between font-mono text-[10px] text-mute">
+            <span>Karakter sayısı: {activeTemplate.text.length}</span>
+            <span className="text-seal font-bold">1★ Olumsuz İnceleme Metni</span>
           </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-ink/15 pt-5">
+          <button
+            type="button"
+            onClick={() => handleCopy(activeTemplate.id, activeTemplate.text)}
+            className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 bg-seal px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.14em] text-paper transition-transform active:translate-y-px hover:brightness-110 text-center shadow-sm"
+          >
+            {copiedId === activeTemplate.id ? (
+              <>
+                <Check className="size-4" />
+                Metin Kopyalandı!
+              </>
+            ) : (
+              <>
+                <Copy className="size-4" />
+                Metni Kopyala (1 Tıkla)
+              </>
+            )}
+          </button>
+
+          <a
+            href="#oyunlar"
+            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-ink bg-paper px-6 py-3.5 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:bg-ink hover:text-paper text-center font-bold"
+          >
+            <span>Platform Seç & Yapıştır</span>
+            <ExternalLink className="size-3.5" />
+          </a>
         </div>
       </div>
 
