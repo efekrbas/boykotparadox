@@ -24,7 +24,7 @@ import {
 import { toast } from "sonner";
 
 import { XIcon } from "@/components/icons/XIcon";
-import { GAMES, CORPORATE_TARGETS, DEMANDS, type Game } from "@/data/boycottData";
+import { GAMES, CORPORATE_TARGETS, PHYSICAL_STUDIOS, DEMANDS, type Game } from "@/data/boycottData";
 import { SteamRatingDisplay } from "@/components/SteamRatingDisplay";
 import {
   DEFAULT_STEAM_REVIEWS,
@@ -252,9 +252,10 @@ export function CampaignClient({
   // Calculate total votes (Base + Real Steam API Negatives + User's local votes)
   const totalVotes = BASE_TOTAL_VOTES + totalSteamNegatives + votedGames.length;
 
-  // Total possible stamp count (games platforms + corporate targets)
+  // Total possible stamp count (games platforms + corporate targets + physical studios)
   const totalTargetsCount =
     CORPORATE_TARGETS.length +
+    PHYSICAL_STUDIOS.length +
     GAMES.reduce((acc, g) => acc + g.platforms.length, 0);
 
   // Filter & sort games

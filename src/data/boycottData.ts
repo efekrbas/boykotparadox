@@ -41,6 +41,19 @@ export type CorporateTarget = {
   actionText: string;
 };
 
+export type PhysicalStudio = {
+  id: string;
+  name: string;
+  studioName: string;
+  city: string;
+  country: string;
+  countryFlag: string;
+  address: string;
+  description: string;
+  keyProjects: string;
+  googleMapsUrl: string;
+};
+
 export type ReviewTemplate = {
   id: string;
   title: string;
@@ -1332,7 +1345,98 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
   },
 ];
 
+export const PHYSICAL_STUDIOS: PhysicalStudio[] = [
+  {
+    id: "studio-stockholm-hq",
+    name: "Paradox Interactive Ana Merkez (HQ)",
+    studioName: "Paradox Development Studio",
+    city: "Stockholm",
+    country: "İsveç",
+    countryFlag: "🇸🇪",
+    address: "Magnus Ladulåsgatan 4, 118 66 Stockholm, Sweden",
+    description: "Şirketin küresel yönetim merkezi ve Paradox Development Studio ana yerleşkesi.",
+    keyProjects: "Hearts of Iron IV, Crusader Kings III, Victoria 3, Stellaris",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Paradox+Interactive+Magnus+Ladul%C3%A5sgatan+4+Stockholm",
+  },
+  {
+    id: "studio-sitges-tinto",
+    name: "Paradox Tinto — Europa Universalis",
+    studioName: "Paradox Tinto",
+    city: "Sitges / Barselona",
+    country: "İspanya",
+    countryFlag: "🇪🇸",
+    address: "Sitges, Barcelona, Spain",
+    description: "Europa Universalis serisinin ve Project Caesar'ın geliştirildiği resmi Paradox stüdyosu.",
+    keyProjects: "Europa Universalis IV, Project Caesar",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Paradox+Tinto+Sitges",
+  },
+  {
+    id: "studio-sofia-haemimont",
+    name: "Haemimont Games — Surviving Mars",
+    studioName: "Haemimont Games",
+    city: "Sofya",
+    country: "Bulgaristan",
+    countryFlag: "🇧🇬",
+    address: "Sofia, Bulgaria",
+    description: "Surviving Mars ve Stranded: Alien Dawn oyunlarını geliştiren Paradox bünyesindeki stüdyo.",
+    keyProjects: "Surviving Mars, Stranded: Alien Dawn, Tropico",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Haemimont+Games+Sofia+Bulgaria",
+  },
+  {
+    id: "studio-delft-triumph",
+    name: "Triumph Studios — Age of Wonders",
+    studioName: "Triumph Studios",
+    city: "Delft",
+    country: "Hollanda",
+    countryFlag: "🇳🇱",
+    address: "Delft, Netherlands",
+    description: "Age of Wonders ve Overlord serilerini geliştiren köklü Paradox stüdyosu.",
+    keyProjects: "Age of Wonders 4, Age of Wonders: Planetfall",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Triumph+Studios+Delft+Netherlands",
+  },
+  {
+    id: "studio-tampere-iceflake",
+    name: "Iceflake Studios — Cities: Skylines II",
+    studioName: "Iceflake Studios",
+    city: "Tampere",
+    country: "Finlandiya",
+    countryFlag: "🇫🇮",
+    address: "Tampere, Finland",
+    description: "Cities: Skylines II ve Surviving the Aftermath geliştirme süreçlerinde yer alan stüdyo.",
+    keyProjects: "Cities: Skylines II, Surviving the Aftermath",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Iceflake+Studios+Tampere+Finland",
+  },
+  {
+    id: "studio-paris-playrion",
+    name: "Playrion Game Studio — Mobil Strateji",
+    studioName: "Playrion Game Studio",
+    city: "Paris",
+    country: "Fransa",
+    countryFlag: "🇫🇷",
+    address: "Paris, France",
+    description: "Airlines Manager ve Paradox mobil strateji operasyonlarını yürüten geliştirici stüdyosu.",
+    keyProjects: "Airlines Manager, Paradox Mobile",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Playrion+Game+Studio+Paris+France",
+  },
+];
+
 export const REVIEW_TEMPLATES: ReviewTemplate[] = [
+  {
+    id: "template-google-maps-tr",
+    title: "Google Haritalar (Kurumsal & Moderasyon Odaklı)",
+    language: "tr",
+    badge: "Google Maps Özel",
+    recommendedFor: ["Google Reviews", "Trustpilot"],
+    text: "Müşterilerine ve oyuncu kitlesine karşı taraflı, ayrımcı ve saygısız bir kurumsal yönetim anlayışına sahipler. Resmi Discord kanallarında haksız yere banlanan ve iftiralara maruz kalan yüzlerce oyuncuya rağmen yönetim hiçbir sorumluluk almıyor. Kurumsal etik ve tüketici memnuniyeti sıfır.",
+  },
+  {
+    id: "template-google-maps-en",
+    title: "Google Maps (Corporate Ethics & Toxic Management)",
+    language: "en",
+    badge: "Google Maps EN",
+    recommendedFor: ["Google Reviews", "Trustpilot"],
+    text: "Unacceptable corporate culture and customer relations. The management allows toxic, discriminatory moderation on official community channels while silencing paying customers who respectfully object. Zero accountability and poor consumer treatment across their studios.",
+  },
   {
     id: "template-tr-detailed",
     title: "Türkçe (Detaylı)",
