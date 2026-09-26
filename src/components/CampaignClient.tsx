@@ -428,7 +428,7 @@ export function CampaignClient({
           }}
         />
 
-        <div className="relative mx-auto max-w-[1240px] px-5 pt-4 pb-6 sm:pt-8 sm:pb-12">
+        <div className="relative mx-auto max-w-[1240px] px-5 pt-4 pb-5 sm:pt-8 sm:pb-7">
           <div className="rise flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-seal">
             <span className="size-2 animate-pulse rounded-full bg-seal" />
             Steam · Metacritic · Trustpilot · Google · Epic · GOG · Xbox
@@ -560,8 +560,8 @@ export function CampaignClient({
             </button>
           </div>
 
-          {/* Quick Metrics Bar */}
-          <div className="rise mt-12 grid grid-cols-2 gap-4 border-t border-paper/15 pt-8 sm:grid-cols-4">
+          {/* Quick Metrics Bar - Compact and directly below action buttons */}
+          <div className="rise mt-5 sm:mt-6 grid grid-cols-2 gap-3.5 sm:gap-4 sm:grid-cols-4">
             <div>
               <div className="font-mono text-[10px] uppercase tracking-wider text-paper/50">
                 Hedef Platformlar
