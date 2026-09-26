@@ -5,7 +5,7 @@ import { Mail, Copy, Check, ExternalLink, TrendingDown, Briefcase } from "lucide
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
 
-const SHAREHOLDER_EMAILS = "contact@statestreet.com, ir@paradoxinteractive.com, IR@tencent.com";
+const SHAREHOLDER_EMAILS = "IR@statestreet.com, ir@paradoxinteractive.com, IR@tencent.com";
 const EMAIL_SUBJECT = "Shareholder engagement request for Paradox Interactive (PDX) - Risk of Revenue Loss";
 
 const getEmailBody = (senderName: string) => `Shareholder engagement request for Paradox Interactive (PDX)
