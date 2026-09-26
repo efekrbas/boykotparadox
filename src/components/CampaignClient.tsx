@@ -538,14 +538,14 @@ export function CampaignClient({
       </section>
 
       {/* Games Catalog Section */}
-      <section id="oyunlar" className="mx-auto max-w-[1240px] px-5 py-14 scroll-mt-16 sm:scroll-mt-20">
-        <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-ink pb-4">
+      <section id="oyunlar" className="mx-auto max-w-[1240px] px-5 pt-8 sm:pt-10 pb-12 scroll-mt-16 sm:scroll-mt-20">
+        <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-ink pb-3">
           <div>
             <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-seal">
               <Layers className="size-3.5" />
               Tüm Platformlarda Puanlama
             </div>
-            <h2 className="mt-1 font-display text-3xl sm:text-4xl tracking-tight uppercase">
+            <h2 className="mt-1 font-display text-2xl sm:text-3xl lg:text-4xl tracking-tight uppercase">
               Tüm Oyunlara 1 Yıldız Ver
             </h2>
           </div>
@@ -556,7 +556,7 @@ export function CampaignClient({
               onClick={() => refreshSteamReviews(true)}
               disabled={isRefreshingSteam}
               title="Steam API canlı verilerini hemen güncelle"
-              className="inline-flex items-center gap-1.5 border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 font-mono text-xs uppercase text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+              className="inline-flex items-center gap-1.5 border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 font-mono text-xs uppercase text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 transition-colors"
             >
               <RefreshCw className={`size-3.5 ${isRefreshingSteam ? "animate-spin" : ""}`} />
               <span>Steam Canlı ({Object.keys(steamReviews).length} Oyun)</span>
@@ -564,7 +564,7 @@ export function CampaignClient({
             <button
               type="button"
               onClick={() => setIsBulkModalOpen(true)}
-              className="inline-flex items-center gap-2 bg-ink px-4 py-2 font-mono text-xs uppercase tracking-wider text-paper hover:bg-seal transition-colors"
+              className="inline-flex items-center gap-2 bg-ink px-3.5 py-1.5 font-mono text-xs uppercase tracking-wider text-paper hover:bg-seal transition-colors"
             >
               <Flame className="size-3.5 text-seal" />
               <span>Hepsini Birden Aç (Baskın Modu)</span>
@@ -573,10 +573,10 @@ export function CampaignClient({
         </div>
 
         {/* Dedicated Filtering & Sorting Controls Bar */}
-        <div className="mt-6 flex flex-col gap-3.5 bg-paper/60 p-4 border border-ink/15 shadow-sm">
+        <div className="mt-4 flex flex-col gap-2.5 bg-paper/60 p-3 sm:p-3.5 border border-ink/15 shadow-sm">
           {/* Top row: Category Filters & Search */}
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2.5">
+            <div className="flex flex-wrap items-center gap-1.5">
               <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-mute font-bold mr-1">
                 <Filter className="size-3.5 text-seal" />
                 Filtrele:
@@ -584,7 +584,7 @@ export function CampaignClient({
               <button
                 type="button"
                 onClick={() => setSelectedCategory("all")}
-                className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "all"
+                className={`px-2.5 py-1 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "all"
                     ? "bg-ink text-paper font-bold shadow-sm"
                     : "border border-ink/20 bg-paper text-ink hover:border-ink"
                   }`}
@@ -594,7 +594,7 @@ export function CampaignClient({
               <button
                 type="button"
                 onClick={() => setSelectedCategory("strategy")}
-                className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "strategy"
+                className={`px-2.5 py-1 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "strategy"
                     ? "bg-ink text-paper font-bold shadow-sm"
                     : "border border-ink/20 bg-paper text-ink hover:border-ink"
                   }`}
@@ -604,7 +604,7 @@ export function CampaignClient({
               <button
                 type="button"
                 onClick={() => setSelectedCategory("epic")}
-                className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "epic"
+                className={`px-2.5 py-1 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "epic"
                     ? "bg-ink text-paper font-bold shadow-sm"
                     : "border border-ink/20 bg-paper text-ink hover:border-ink"
                   }`}
@@ -614,7 +614,7 @@ export function CampaignClient({
               <button
                 type="button"
                 onClick={() => setSelectedCategory("gog")}
-                className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "gog"
+                className={`px-2.5 py-1 font-mono text-xs uppercase tracking-wider transition-all ${selectedCategory === "gog"
                     ? "bg-ink text-paper font-bold shadow-sm"
                     : "border border-ink/20 bg-paper text-ink hover:border-ink"
                   }`}
@@ -623,21 +623,21 @@ export function CampaignClient({
               </button>
             </div>
 
-            <div className="relative w-full sm:w-64">
+            <div className="relative w-full sm:w-60">
               <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-mute" />
               <input
                 type="text"
                 placeholder="Oyun ara (HOI4, EU4...)"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full border border-ink/25 bg-paper py-1.5 pl-9 pr-3 font-mono text-xs text-ink outline-none focus:border-ink"
+                className="w-full border border-ink/25 bg-paper py-1 pl-9 pr-3 font-mono text-xs text-ink outline-none focus:border-ink"
               />
             </div>
           </div>
 
           {/* Bottom row: Sort Options & Slide indicator */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-3">
-            <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2.5 border-t border-ink/10 pt-2.5">
+            <div className="flex flex-wrap items-center gap-1.5">
               <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-mute font-bold mr-1">
                 <ArrowUpDown className="size-3.5 text-seal" />
                 Sırala:
@@ -645,7 +645,7 @@ export function CampaignClient({
               <button
                 type="button"
                 onClick={() => setSortBy("default")}
-                className={`px-3 py-1 font-mono text-xs uppercase tracking-wider transition-all ${sortBy === "default"
+                className={`px-2.5 py-0.5 font-mono text-xs uppercase tracking-wider transition-all ${sortBy === "default"
                     ? "bg-ink text-paper font-bold shadow-sm"
                     : "border border-ink/20 bg-paper text-ink hover:border-ink"
                   }`}
@@ -655,7 +655,7 @@ export function CampaignClient({
               <button
                 type="button"
                 onClick={() => setSortBy("negative")}
-                className={`px-3 py-1 font-mono text-xs uppercase tracking-wider transition-all ${sortBy === "negative"
+                className={`px-2.5 py-0.5 font-mono text-xs uppercase tracking-wider transition-all ${sortBy === "negative"
                     ? "bg-seal text-paper font-bold shadow-sm shadow-seal/20"
                     : "border border-ink/20 bg-paper text-ink hover:border-seal hover:text-seal"
                   }`}
@@ -665,7 +665,7 @@ export function CampaignClient({
               <button
                 type="button"
                 onClick={() => setSortBy("rating")}
-                className={`px-3 py-1 font-mono text-xs uppercase tracking-wider transition-all ${sortBy === "rating"
+                className={`px-2.5 py-0.5 font-mono text-xs uppercase tracking-wider transition-all ${sortBy === "rating"
                     ? "bg-amber-600 text-paper font-bold shadow-sm shadow-amber-600/20"
                     : "border border-ink/20 bg-paper text-ink hover:border-amber-600 hover:text-amber-600"
                   }`}
@@ -682,20 +682,20 @@ export function CampaignClient({
                 <button
                   type="button"
                   onClick={() => scrollGamesSlider("left")}
-                  className="flex size-8 items-center justify-center border-2 border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper transition-colors shadow-sm"
+                  className="flex size-7 items-center justify-center border-2 border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper transition-colors shadow-sm"
                   title="Sola Kaydır"
                   aria-label="Sola Kaydır"
                 >
-                  <ChevronLeft className="size-4" />
+                  <ChevronLeft className="size-3.5" />
                 </button>
                 <button
                   type="button"
                   onClick={() => scrollGamesSlider("right")}
-                  className="flex size-8 items-center justify-center border-2 border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper transition-colors shadow-sm"
+                  className="flex size-7 items-center justify-center border-2 border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper transition-colors shadow-sm"
                   title="Sağa Kaydır"
                   aria-label="Sağa Kaydır"
                 >
-                  <ChevronRight className="size-4" />
+                  <ChevronRight className="size-3.5" />
                 </button>
               </div>
             </div>
@@ -706,7 +706,7 @@ export function CampaignClient({
         <div
           ref={gamesSliderRef}
           tabIndex={0}
-          className="mt-6 flex gap-6 overflow-x-auto pb-6 pt-2 px-1 scroll-smooth snap-x snap-mandatory focus:outline-none [scrollbar-width:thin] [scrollbar-color:oklch(0.556_0.216_27.5)_transparent]"
+          className="mt-4 flex gap-5 overflow-x-auto pb-4 pt-1 px-1 scroll-smooth snap-x snap-mandatory focus:outline-none [scrollbar-width:thin] [scrollbar-color:oklch(0.556_0.216_27.5)_transparent]"
         >
           {filteredGames.map((game) => {
             const isVoted = votedGames.includes(game.id);
@@ -716,19 +716,19 @@ export function CampaignClient({
             return (
               <article
                 key={game.id}
-                className={`group w-[300px] sm:w-[360px] md:w-[390px] shrink-0 snap-start relative flex flex-col justify-between overflow-hidden border-2 bg-paper transition-all duration-200 hover:-translate-y-1 shadow-sm ${isVoted
+                className={`group w-[280px] sm:w-[330px] md:w-[350px] shrink-0 snap-start relative flex flex-col justify-between overflow-hidden border-2 bg-paper transition-all duration-200 hover:-translate-y-1 shadow-sm ${isVoted
                   ? "border-seal shadow-[4px_4px_0_0_oklch(0.556_0.216_27.5)]"
                   : "border-ink/20 hover:border-ink"
                   }`}
               >
                 {isVoted && (
-                  <div className="seal-stamp absolute top-3 right-3 z-20 border-2 border-seal bg-paper/85 px-3 py-1 font-mono text-xs font-bold text-seal backdrop-blur-md">
+                  <div className="seal-stamp absolute top-2.5 right-2.5 z-20 border-2 border-seal bg-paper/90 px-2.5 py-0.5 font-mono text-[11px] font-bold text-seal backdrop-blur-md">
                     1 ★ VERİLDİ
                   </div>
                 )}
 
                 <div>
-                  <div className="relative aspect-[16/9] w-full overflow-hidden bg-ink/10">
+                  <div className="relative h-[135px] sm:h-[150px] w-full overflow-hidden bg-ink/10">
                     <img
                       src={imageSrc}
                       alt={`${game.title} afiş görseli`}
@@ -737,57 +737,57 @@ export function CampaignClient({
                       height={608}
                       className="size-full object-cover transition-all duration-300 group-hover:grayscale"
                     />
-                    <div className="absolute bottom-2 left-2 flex items-center gap-1.5 bg-ink/85 px-2 py-0.5 font-mono text-[10px] text-paper backdrop-blur-sm border border-paper/10">
+                    <div className="absolute bottom-1.5 left-2 flex items-center gap-1.5 bg-ink/85 px-1.5 py-0.5 font-mono text-[9px] text-paper backdrop-blur-sm border border-paper/10">
                       <span className="opacity-60">AppID:</span>
                       <span className="font-bold">{game.appId}</span>
                     </div>
                   </div>
 
-                  <div className="p-4 sm:p-5 pb-2 sm:pb-3">
+                  <div className="p-3 sm:p-3.5 pb-1 sm:pb-1.5">
                     <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-mute">
+                      <div className="min-w-0 pr-1">
+                        <span className="font-mono text-[9px] uppercase tracking-wider text-mute truncate block">
                           {game.genre}
                         </span>
-                        <h3 className="font-display text-xl uppercase tracking-tight text-ink">
+                        <h3 className="font-display text-base sm:text-lg uppercase tracking-tight text-ink leading-tight line-clamp-1">
                           {game.title}
                         </h3>
                       </div>
-                      <div className="text-right leading-none">
-                        <div className="flex items-center justify-end gap-1.5">
+                      <div className="text-right leading-none shrink-0">
+                        <div className="flex items-center justify-end gap-1">
                           <span
-                            className="relative flex size-2"
+                            className="relative flex size-1.5"
                             title="Steam Resmi API Canlı Değeri"
                           >
                             <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                            <span className="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
+                            <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500"></span>
                           </span>
-                          <div className="font-mono text-2xl font-bold tabular-nums text-seal">
+                          <div className="font-mono text-lg sm:text-xl font-bold tabular-nums text-seal">
                             {steamData ? `${steamData.star_rating} ★` : "1.0 ★"}
                           </div>
                         </div>
-                        <div className="font-mono text-[10px] uppercase text-seal font-semibold mt-1">
+                        <div className="font-mono text-[9px] uppercase text-seal font-semibold mt-0.5">
                           {steamData ? `${tr(steamData.total_negative)} olumsuz` : "Canlı Steam"}
                         </div>
                       </div>
                     </div>
 
                     {/* Steam Rating Breakdown */}
-                    <div className="mt-3">
+                    <div className="mt-1.5">
                       <SteamRatingDisplay steam={steamData} />
                     </div>
 
-                    <div className="mt-4 border-t border-ink/15 pt-3">
+                    <div className="mt-2 border-t border-ink/15 pt-1.5">
                       <div className="flex items-center justify-between">
-                        <span className="font-mono text-[10px] uppercase tracking-wider font-semibold text-mute">
+                        <span className="font-mono text-[9px] uppercase tracking-wider font-semibold text-mute">
                           İnceleme Platformları:
                         </span>
-                        <span className="font-mono text-[10px] text-mute">
+                        <span className="font-mono text-[9px] text-mute">
                           {game.platforms.length} Platform
                         </span>
                       </div>
 
-                      <div className="mt-2 flex flex-wrap gap-1.5">
+                      <div className="mt-1 flex flex-wrap gap-1">
                         {game.platforms.map((p) => {
                           const stampKey = `${game.id}-${p.id}`;
                           const isStamped = stampedPlatforms.includes(stampKey);
@@ -802,14 +802,14 @@ export function CampaignClient({
                                 playStampSound();
                                 toggleStampPlatform(stampKey);
                               }}
-                              className={`group inline-flex items-center gap-1 border px-2 py-1 font-mono text-[10px] uppercase tracking-wider transition-colors ${isStamped
+                              className={`group inline-flex items-center gap-1 border px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider transition-colors ${isStamped
                                 ? "border-seal bg-seal/10 text-seal font-bold"
                                 : "border-ink/20 bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper"
                                 }`}
                               title={`${p.name} - ${p.actionHint}`}
                             >
                               <span>{p.shortName}</span>
-                              <ExternalLink className="size-2.5 opacity-60 group-hover:opacity-100" />
+                              <ExternalLink className="size-2 opacity-60 group-hover:opacity-100" />
                             </a>
                           );
                         })}
@@ -818,11 +818,11 @@ export function CampaignClient({
                   </div>
                 </div>
 
-                <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-1">
+                <div className="px-3 pb-3 sm:px-3.5 sm:pb-3.5 pt-1">
                   <button
                     type="button"
                     onClick={() => handleOpenGamePlatforms(game)}
-                    className="inline-flex w-full items-center justify-center gap-2 bg-seal px-4 py-2.5 font-mono text-xs uppercase tracking-wider font-bold text-paper transition-all shadow-md active:translate-y-px hover:brightness-110"
+                    className="inline-flex w-full items-center justify-center gap-2 bg-seal px-3 py-2 font-mono text-xs uppercase tracking-wider font-bold text-paper transition-all shadow-md active:translate-y-px hover:brightness-110"
                   >
                     <Flame className="size-3.5 animate-bounce" />
                     <span>Tüm Platformlarda 1★ Ver ({game.platforms.length})</span>

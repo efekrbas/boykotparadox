@@ -2,11 +2,11 @@ import { Shield } from "lucide-react";
 
 export function Ataturk3DScene() {
   return (
-    <section id="anit" className="relative overflow-hidden border-b-2 border-ink bg-ink text-paper pt-12 pb-12 sm:pt-20 sm:pb-24 scroll-mt-16 sm:scroll-mt-20">
+    <section id="anit" className="relative overflow-hidden border-b-2 border-ink bg-ink text-paper pt-16 pb-16 sm:pt-24 sm:pb-24 scroll-mt-20 sm:scroll-mt-24">
       <div className="relative mx-auto max-w-[1240px] px-5">
         <div className="grid items-start gap-8 lg:grid-cols-12 lg:items-center">
           {/* Left Text / Manifesto Block */}
-          <div className="lg:col-span-6 flex flex-col justify-start">
+          <div className="lg:col-span-6 flex flex-col justify-start pt-2">
             <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-seal">
               <Shield className="size-4" />
               Ebedi Değerimiz · Saygı ve Minnetle
@@ -42,14 +42,14 @@ export function Ataturk3DScene() {
           </div>
 
           {/* Right Monument Display (Clean, Dignified, No Distracting Effects) */}
-          <div className="lg:col-span-6 flex flex-col items-center justify-center">
+          <div className="lg:col-span-6 flex flex-col items-center justify-center pt-4 sm:pt-6">
             <div className="relative w-full max-w-[420px] flex flex-col items-center">
               {/* Leader Visual - Standing Proud & Pure Cutout */}
               <div className="relative z-10 w-full flex justify-center">
                 <img
                   src="/ataturk-transparent.png"
                   alt="Gazi Mustafa Kemal Atatürk"
-                  className="w-full max-h-[380px] sm:max-h-[460px] object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)]"
+                  className="w-full max-h-[340px] sm:max-h-[410px] object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)]"
                   loading="eager"
                 />
               </div>

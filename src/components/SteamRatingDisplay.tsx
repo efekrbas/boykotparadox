@@ -41,9 +41,9 @@ export function SteamRatingDisplay({ steam, className = "" }: SteamRatingDisplay
   const rating = steam.star_rating;
 
   return (
-    <div className={`space-y-2.5 ${className}`}>
+    <div className={`space-y-1.5 ${className}`}>
       {/* Top row: Star rating + Score description pill */}
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-1.5">
         {/* Partial stars */}
         <div className="flex items-center gap-0.5" title={`Steam Puanı: ${rating} / 5.0`}>
           {[1, 2, 3, 4, 5].map((starIdx) => {
@@ -51,9 +51,9 @@ export function SteamRatingDisplay({ steam, className = "" }: SteamRatingDisplay
             const fillPercent = Math.round(fillRatio * 100);
 
             return (
-              <div key={starIdx} className="relative size-4 flex-shrink-0">
+              <div key={starIdx} className="relative size-3.5 flex-shrink-0">
                 {/* Empty base star */}
-                <Star className="size-4 text-ink/20" />
+                <Star className="size-3.5 text-ink/20" />
                 {/* Filled overlay star */}
                 {fillPercent > 0 && (
                   <div
@@ -61,7 +61,7 @@ export function SteamRatingDisplay({ steam, className = "" }: SteamRatingDisplay
                     style={{ width: `${fillPercent}%` }}
                   >
                     <Star
-                      className={`size-4 ${
+                      className={`size-3.5 ${
                         steam.review_score <= 4
                           ? "fill-seal text-seal"
                           : steam.review_score === 5
@@ -74,15 +74,15 @@ export function SteamRatingDisplay({ steam, className = "" }: SteamRatingDisplay
               </div>
             );
           })}
-          <span className="ml-1.5 font-mono text-xs font-bold text-ink tabular-nums">
+          <span className="ml-1 font-mono text-xs font-bold text-ink tabular-nums">
             {rating.toFixed(1)}
           </span>
-          <span className="font-mono text-[10px] text-mute">/ 5.0</span>
+          <span className="font-mono text-[9px] text-mute">/ 5.0</span>
         </div>
 
         {/* Review description badge */}
         <span
-          className={`inline-flex items-center gap-1 border px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider ${badgeStyle}`}
+          className={`inline-flex items-center gap-1 border px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider ${badgeStyle}`}
           title={`Steam Skoru: ${steam.review_score} (${steam.review_score_desc})`}
         >
           {steam.review_score_desc_tr}
@@ -90,8 +90,8 @@ export function SteamRatingDisplay({ steam, className = "" }: SteamRatingDisplay
       </div>
 
       {/* Negative vs Positive Breakdown Bar */}
-      <div className="space-y-1">
-        <div className="flex items-center justify-between font-mono text-[10px]">
+      <div className="space-y-0.5">
+        <div className="flex items-center justify-between font-mono text-[9px]">
           <span className="text-seal font-semibold">
             {tr(steam.total_negative)} olumsuz (%{steam.negative_percent})
           </span>
@@ -102,7 +102,7 @@ export function SteamRatingDisplay({ steam, className = "" }: SteamRatingDisplay
 
         {/* Dual visual bar */}
         <div
-          className="h-1.5 w-full overflow-hidden bg-ink/10 flex"
+          className="h-1 w-full overflow-hidden bg-ink/10 flex"
           title={`Olumlu: %${steam.positive_percent} | Olumsuz: %${steam.negative_percent}`}
         >
           <div
