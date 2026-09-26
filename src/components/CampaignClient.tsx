@@ -327,7 +327,7 @@ export function CampaignClient({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-4 md:gap-5">
             {/* User progress counter */}
             <div className="hidden text-right leading-none md:block">
               <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-mute">
@@ -337,8 +337,6 @@ export function CampaignClient({
                 <span className="text-seal">{stampedPlatforms.length}</span> / {totalTargetsCount} Platform
               </div>
             </div>
-
-            <div className="h-7 w-px bg-ink/15 hidden md:block" />
 
             {/* Total 1 star counter */}
             <div className="text-right leading-none">
