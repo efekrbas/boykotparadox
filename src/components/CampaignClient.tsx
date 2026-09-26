@@ -841,7 +841,7 @@ export function CampaignClient({
               Tüm Paradox Kataloğu (100+ Oyun & DLC)
             </div>
             <h3 className="mt-1 font-display text-xl sm:text-2xl uppercase tracking-tight">
-              Sadece Bu 6 Oyun Değil, Şirketin Tüm Kataloğu
+              Sadece Bu {GAMES.length} Oyun Değil, Şirketin Tüm Kataloğu
             </h3>
             <p className="mt-2 text-xs sm:text-sm text-mute leading-relaxed">
               Paradox Interactive bünyesinde <strong>Age of Wonders 4, Prison Architect, Surviving Mars, Magicka, Crusader Kings II</strong> ve yüzlerce genişleme paketi (DLC) yer alıyor. Steam ve Epic Games yayıncı merkezinden tüm oyunlara ulaşıp boykotu genişletebilirsiniz.
