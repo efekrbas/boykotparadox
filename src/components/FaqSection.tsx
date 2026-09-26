@@ -81,7 +81,7 @@ export const FAQ_ITEMS: FaqItem[] = [
 ];
 
 export function FaqSection() {
-  const [openIds, setOpenIds] = useState<string[]>(["neden-boykot", "discord-olayi", "trustpilot-google"]);
+  const [openIds, setOpenIds] = useState<string[]>([]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const toggleItem = (id: string) => {

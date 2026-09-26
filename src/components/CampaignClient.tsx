@@ -371,10 +371,10 @@ export function CampaignClient({
       {/* Hero Section */}
       <section id="hero" className="relative overflow-hidden bg-ink text-paper">
         <div
-          className="pointer-events-none absolute inset-0 opacity-25"
+          className="pointer-events-none absolute inset-0 opacity-20"
           style={{
             background:
-              "radial-gradient(130% 90% at 50% 120%, oklch(0.556 0.216 27.5) 0%, transparent 55%)",
+              "radial-gradient(110% 70% at 50% 30%, oklch(0.556 0.216 27.5) 0%, transparent 75%)",
           }}
         />
 
