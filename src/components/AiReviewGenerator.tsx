@@ -19,6 +19,14 @@ export function AiReviewGenerator() {
   const [isFallback, setIsFallback] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const currentGameObj = GAMES.find((g) => g.title === selectedGame) || GAMES[0];
+  const steamPlatform = currentGameObj?.platforms.find((p) => p.type === "steam");
+  const targetGameSteamUrl =
+    steamPlatform?.url ||
+    (currentGameObj?.appId
+      ? `https://store.steampowered.com/app/${currentGameObj.appId}`
+      : "https://store.steampowered.com/");
+
   useEffect(() => {
     const savedKey = localStorage.getItem("openrouter_api_key");
     if (savedKey) {
@@ -451,14 +459,37 @@ Metin boyutu: ${lengthDesc}
               className="w-full flex-1 min-h-[140px] resize-none border-2 border-ink/30 bg-paper p-3 font-body text-sm leading-relaxed text-ink outline-none selection:bg-seal selection:text-paper"
             />
             {generatedText && (
-              <button
-                type="button"
-                onClick={handleCopy}
-                className="mt-3 inline-flex justify-center items-center gap-2 border-2 border-seal bg-seal/10 px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-seal transition-colors hover:bg-seal hover:text-paper"
-              >
-                {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-                {copied ? "Kopyalandı!" : (isFallback ? "Promptu Kopyala" : "Metni Kopyala")}
-              </button>
+              <div className="mt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  className="flex-1 inline-flex justify-center items-center gap-2 border-2 border-seal bg-seal/10 px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-seal transition-colors hover:bg-seal hover:text-paper text-center"
+                >
+                  {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
+                  {copied ? "Kopyalandı!" : (isFallback ? "Promptu Kopyala" : "Metni Kopyala")}
+                </button>
+
+                {targetGameSteamUrl && (
+                  <a
+                    href={targetGameSteamUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      playStampSound();
+                      navigator.clipboard.writeText(generatedText);
+                      setCopied(true);
+                      toast.success(`${currentGameObj?.title || "Oyun"} Steam sayfası açılıyor!`, {
+                        description: "Metin panoya kopyalandı, açılan sayfaya yapıştırıp 1 yıldız verebilirsiniz.",
+                      });
+                      setTimeout(() => setCopied(false), 2500);
+                    }}
+                    className="flex-1 inline-flex justify-center items-center gap-2 border-2 border-ink bg-ink px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-paper transition-all hover:bg-seal hover:border-seal text-center shadow-sm"
+                  >
+                    <span>{currentGameObj?.title || "Oyuna"} Git & Yapıştır (Steam)</span>
+                    <ExternalLink className="size-3.5" />
+                  </a>
+                )}
+              </div>
             )}
           </div>
         </div>
