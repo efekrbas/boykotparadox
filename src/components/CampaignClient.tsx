@@ -725,7 +725,7 @@ export function CampaignClient({
                     </div>
                   </div>
 
-                  <div className="p-4 sm:p-5">
+                  <div className="p-4 sm:p-5 pb-2 sm:pb-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <span className="font-mono text-[10px] uppercase tracking-wider text-mute">
@@ -800,11 +800,11 @@ export function CampaignClient({
                   </div>
                 </div>
 
-                <div className="border-t border-ink/15 p-4 sm:p-5 pt-3 bg-paper/50">
+                <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-1">
                   <button
                     type="button"
                     onClick={() => handleOpenGamePlatforms(game)}
-                    className="inline-flex w-full items-center justify-center gap-2 bg-seal px-4 py-3 font-mono text-xs uppercase tracking-wider font-bold text-paper transition-all shadow-md active:translate-y-px hover:brightness-110"
+                    className="inline-flex w-full items-center justify-center gap-2 bg-seal px-4 py-2.5 font-mono text-xs uppercase tracking-wider font-bold text-paper transition-all shadow-md active:translate-y-px hover:brightness-110"
                   >
                     <Flame className="size-3.5 animate-bounce" />
                     <span>Tüm Platformlarda 1★ Ver ({game.platforms.length})</span>
