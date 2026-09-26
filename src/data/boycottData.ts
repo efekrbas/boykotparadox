@@ -44,7 +44,7 @@ export type CorporateTarget = {
 export type ReviewTemplate = {
   id: string;
   title: string;
-  language: "tr" | "en";
+  language: "tr" | "en" | "de" | "ru" | "fr" | "es";
   badge: string;
   text: string;
   recommendedFor: string[];
@@ -540,12 +540,44 @@ export const REVIEW_TEMPLATES: ReviewTemplate[] = [
     text: "Senin gibi oyunun gelmişini geçmişini, hem optimizasyon yok, hem oyun çok zor, rehber bakıyorum adamlar bile anlamıyor.",
   },
   {
-    id: "template-en-global",
-    title: "English (Global / Uluslararası)",
+    id: "template-en-detailed",
+    title: "English (Community & Moderation)",
     language: "en",
     badge: "Global Etki",
     recommendedFor: ["Steam (Global)", "Metacritic"],
-    text: "What kind of game is this? I can't even understand how to play it. Texts are seem small even I have huge screen.",
+    text: "Terrible optimization, broken late-game AI, and an endless barrage of overpriced DLCs that should have been in the base game. On top of that, official Discord moderators abuse their power, silence loyal customers, and tolerate hate speech. Disgraceful community management.",
+  },
+  {
+    id: "template-en-short",
+    title: "English (Short & Direct)",
+    language: "en",
+    badge: "Fast 1★",
+    recommendedFor: ["Steam", "Metacritic", "Xbox"],
+    text: "Predatory DLC monetization, unplayable late-game lag, and utterly toxic moderation in official communities. Save your money and do not support Paradox.",
+  },
+  {
+    id: "template-de-community",
+    title: "Deutsch (Almanca - Topluluk & Kalite)",
+    language: "de",
+    badge: "Avrupa Etkisi",
+    recommendedFor: ["Steam (Global)", "Metacritic"],
+    text: "Völlig überteuerte DLC-Politik und unverschämte Community-Moderation. Im Late-Game unspielbar wegen ständiger Ruckler. Wenn man im offiziellen Discord berechtigte Kritik äußert, wird man grundlos gebannt. Absolut keine Empfehlung mehr für Paradox-Titel.",
+  },
+  {
+    id: "template-ru-player",
+    title: "Русский (Rusça - Оптимизация и модерация)",
+    language: "ru",
+    badge: "Geniş Topluluk",
+    recommendedFor: ["Steam (Global)"],
+    text: "Отвратительная оптимизация на поздних этапах игры и бесконечные платные DLC, без которых игра пустая. Вдобавок ко всему — наглая и предвзятая модерация в официальном Discord, которая банит преданных фанатов. Полное разочарование в руководстве Paradox.",
+  },
+  {
+    id: "template-fr-community",
+    title: "Français (Fransızca - Gestion & Prix)",
+    language: "fr",
+    badge: "Avrupa Etkisi",
+    recommendedFor: ["Steam (Global)", "Metacritic"],
+    text: "Politique de DLC prédatrice et inadmissible. Le jeu rame complètement en fin de partie et l'IA est aux fraises. La gestion de la communauté par les modérateurs est insultante et partiale. Évitez ce studio.",
   },
   {
     id: "template-corp-trustpilot",

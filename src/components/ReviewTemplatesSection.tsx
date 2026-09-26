@@ -1,18 +1,42 @@
 "use client";
 
-import { useState } from "react";
-import { Copy, Check, MessageSquareText, Sparkles, ExternalLink } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Copy, Check, MessageSquareText, Sparkles, ExternalLink, Globe } from "lucide-react";
 import { toast } from "sonner";
 import { REVIEW_TEMPLATES } from "@/data/boycottData";
 import { playStampSound } from "@/lib/audio";
 import { AiReviewGenerator } from "./AiReviewGenerator";
 
+const LANGUAGE_FILTERS = [
+  { id: "all", label: "Tümü" },
+  { id: "tr", label: "🇹🇷 Türkçe" },
+  { id: "en", label: "🇬🇧 English" },
+  { id: "de", label: "🇩🇪 Deutsch" },
+  { id: "ru", label: "🇷🇺 Русский" },
+  { id: "fr", label: "🇫🇷 Français" },
+];
+
+const LANG_DISPLAY_NAMES: Record<string, string> = {
+  tr: "Türkçe",
+  en: "English",
+  de: "Deutsch",
+  ru: "Русский",
+  fr: "Français",
+  es: "Español",
+};
+
 export function ReviewTemplatesSection() {
+  const [selectedLang, setSelectedLang] = useState<string>("all");
   const [selectedId, setSelectedId] = useState(REVIEW_TEMPLATES[0]?.id ?? "");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  const filteredTemplates = useMemo(() => {
+    if (selectedLang === "all") return REVIEW_TEMPLATES;
+    return REVIEW_TEMPLATES.filter((t) => t.language === selectedLang);
+  }, [selectedLang]);
+
   const activeTemplate =
-    REVIEW_TEMPLATES.find((t) => t.id === selectedId) || REVIEW_TEMPLATES[0]!;
+    filteredTemplates.find((t) => t.id === selectedId) || filteredTemplates[0] || REVIEW_TEMPLATES[0]!;
 
   const handleCopy = (id: string, text: string) => {
     playStampSound();
@@ -44,62 +68,111 @@ export function ReviewTemplatesSection() {
         </div>
       </div>
 
-      {/* Tek ve Net Steam 'Konu Dışı' Uyarısı Banner'ı */}
-      <div className="mt-6 flex items-start gap-3 border-2 border-seal bg-seal/10 p-4 shadow-sm">
-        <span className="text-lg leading-none shrink-0 mt-0.5">⚠️</span>
-        <div className="text-xs sm:text-sm font-mono leading-relaxed text-ink">
-          <strong className="text-seal font-bold uppercase tracking-wider block sm:inline mr-2">
-            Steam 'Konu Dışı' Uyarısı:
-          </strong>
-          <span>
-            Steam, sadece "Atatürk" yazıp geçilen birebir kopyala-yapıştır yorumları otomatik algılayıp "Off-Topic" (Konu Dışı) sayarak puanlamadan düşebilir. İncelemenizin <strong>kalıcı olması ve silinmemesi için</strong> metne oyun deneyiminiz, Paradox'un topluluk yönetimi veya moderatör çifte standardı hakkında <strong>kendi cümlenizden de 1-2 kelime ekleyin!</strong>
-          </span>
+      {/* Steam 'Konu Dışı' Uyarısı & Global Dil Stratejisi Banner'ları */}
+      <div className="mt-6 flex flex-col gap-3">
+        <div className="flex items-start gap-3 border-2 border-seal bg-seal/10 p-4 shadow-sm">
+          <span className="text-lg leading-none shrink-0 mt-0.5">⚠️</span>
+          <div className="text-xs sm:text-sm font-mono leading-relaxed text-ink">
+            <strong className="text-seal font-bold uppercase tracking-wider block sm:inline mr-2">
+              Steam 'Konu Dışı' Uyarısı:
+            </strong>
+            <span>
+              Steam, sadece "Atatürk" yazıp geçilen birebir kopyala-yapıştır yorumları otomatik algılayıp "Off-Topic" (Konu Dışı) sayarak puanlamadan düşebilir. İncelemenizin <strong>kalıcı olması ve silinmemesi için</strong> metne oyun deneyiminiz, Paradox'un topluluk yönetimi veya moderatör çifte standardı hakkında <strong>kendi cümlenizden de 1-2 kelime ekleyin!</strong>
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-3 border border-ink/20 bg-paper p-3.5 shadow-sm text-xs font-mono text-ink/80 leading-relaxed">
+          <Globe className="size-4 text-seal shrink-0 mt-0.5" />
+          <div>
+            <strong className="text-ink font-bold uppercase tracking-wider block sm:inline mr-1.5">
+              Topluluk Stratejisi (Global Puan Etkisi):
+            </strong>
+            Steam varsayılan olarak Türkçe yorumları sadece Türkiye'deki oyunculara gösterir. <strong>İngilizce, Almanca veya Rusça</strong> inceleme bırakmak, oyunun dünya çapındaki genel skorunu (All Languages) doğrudan aşağı çeker ve boykotun küresel basında yankı bulmasını sağlar.
+          </div>
         </div>
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-12">
         {/* Template Selector List */}
-        <div className="flex flex-col gap-2.5 lg:col-span-5">
-          {REVIEW_TEMPLATES.map((tmpl) => {
-            const isSelected = tmpl.id === selectedId;
-            return (
-              <button
-                key={tmpl.id}
-                type="button"
-                onClick={() => setSelectedId(tmpl.id)}
-                className={`group relative flex flex-col items-start border-2 p-4 text-left transition-all ${isSelected
-                    ? "border-ink bg-ink text-paper shadow-[4px_4px_0_0_oklch(0.556_0.216_27.5)]"
-                    : "border-ink/20 bg-paper hover:border-ink hover:bg-paper/70"
+        <div className="flex flex-col gap-3 lg:col-span-5">
+          {/* Language Filter Pills */}
+          <div className="flex flex-wrap items-center gap-1.5 pb-1">
+            {LANGUAGE_FILTERS.map((lf) => {
+              const count = lf.id === "all"
+                ? REVIEW_TEMPLATES.length
+                : REVIEW_TEMPLATES.filter((t) => t.language === lf.id).length;
+              if (count === 0) return null;
+
+              return (
+                <button
+                  key={lf.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedLang(lf.id);
+                    const firstMatch = lf.id === "all"
+                      ? REVIEW_TEMPLATES[0]
+                      : REVIEW_TEMPLATES.find((t) => t.language === lf.id);
+                    if (firstMatch) setSelectedId(firstMatch.id);
+                  }}
+                  className={`px-2.5 py-1 font-mono text-[11px] uppercase tracking-wider transition-colors ${
+                    selectedLang === lf.id
+                      ? "bg-ink text-paper font-bold shadow-sm"
+                      : "border border-ink/20 bg-paper text-ink hover:border-ink hover:bg-paper/70"
                   }`}
-              >
-                <div className="flex w-full items-center justify-between gap-2">
-                  <span
-                    className={`font-mono text-xs uppercase tracking-wider ${isSelected ? "text-seal" : "text-seal font-bold"
-                      }`}
-                  >
-                    {tmpl.badge}
-                  </span>
-                  <span
-                    className={`font-mono text-[10px] uppercase px-1.5 py-0.5 border ${isSelected
-                        ? "border-paper/30 text-paper/70"
-                        : "border-ink/20 text-mute"
-                      }`}
-                  >
-                    {tmpl.language === "tr" ? "TR" : "EN"}
-                  </span>
-                </div>
-                <div className="mt-1 font-display text-xl uppercase tracking-tight">
-                  {tmpl.title}
-                </div>
-                <div
-                  className={`mt-2 line-clamp-2 text-xs ${isSelected ? "text-paper/75" : "text-mute"
-                    }`}
                 >
-                  {tmpl.text}
-                </div>
-              </button>
-            );
-          })}
+                  {lf.label} ({count})
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col gap-2.5">
+            {filteredTemplates.map((tmpl) => {
+              const isSelected = tmpl.id === selectedId;
+              return (
+                <button
+                  key={tmpl.id}
+                  type="button"
+                  onClick={() => setSelectedId(tmpl.id)}
+                  className={`group relative flex flex-col items-start border-2 p-4 text-left transition-all ${
+                    isSelected
+                      ? "border-ink bg-ink text-paper shadow-[4px_4px_0_0_oklch(0.556_0.216_27.5)]"
+                      : "border-ink/20 bg-paper hover:border-ink hover:bg-paper/70"
+                  }`}
+                >
+                  <div className="flex w-full items-center justify-between gap-2">
+                    <span
+                      className={`font-mono text-xs uppercase tracking-wider ${
+                        isSelected ? "text-seal" : "text-seal font-bold"
+                      }`}
+                    >
+                      {tmpl.badge}
+                    </span>
+                    <span
+                      className={`font-mono text-[10px] font-bold uppercase px-1.5 py-0.5 border ${
+                        isSelected
+                          ? "border-paper/30 text-paper/85 bg-paper/10"
+                          : "border-ink/20 text-mute bg-ink/5"
+                      }`}
+                    >
+                      {tmpl.language.toUpperCase()}
+                    </span>
+                  </div>
+                  <div className="mt-1 font-display text-xl uppercase tracking-tight">
+                    {tmpl.title}
+                  </div>
+                  <div
+                    className={`mt-2 line-clamp-2 text-xs ${
+                      isSelected ? "text-paper/75" : "text-mute"
+                    }`}
+                  >
+                    {tmpl.text}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Active Template Preview & Action Box */}
@@ -108,7 +181,7 @@ export function ReviewTemplatesSection() {
             <div className="flex items-center justify-between gap-4 border-b border-ink/15 pb-3">
               <div className="flex items-center gap-2">
                 <MessageSquareText className="size-4 text-seal" />
-                <span className="font-mono text-xs font-bold uppercase tracking-wider text-ink">
+                <span className="font-display text-lg uppercase tracking-tight text-ink">
                   {activeTemplate.title}
                 </span>
               </div>
@@ -134,7 +207,9 @@ export function ReviewTemplatesSection() {
               />
               <div className="mt-1 flex justify-between font-mono text-[10px] text-mute">
                 <span>Karakter sayısı: {activeTemplate.text.length}</span>
-                <span>{activeTemplate.language === "tr" ? "Türkçe" : "English"}</span>
+                <span className="font-bold uppercase text-ink/70">
+                  {LANG_DISPLAY_NAMES[activeTemplate.language] || activeTemplate.language.toUpperCase()}
+                </span>
               </div>
             </div>
           </div>

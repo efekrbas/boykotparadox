@@ -11,6 +11,7 @@ export function AiReviewGenerator() {
   const [showApiKey, setShowApiKey] = useState(false);
   const [focusTopic, setFocusTopic] = useState("");
   const [selectedGame, setSelectedGame] = useState(GAMES[0]?.title || "");
+  const [language, setLanguage] = useState<"tr" | "en" | "de" | "ru">("tr");
   const [reviewLength, setReviewLength] = useState<"micro" | "short" | "medium" | "long">("medium");
   const [generatedText, setGeneratedText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -33,24 +34,49 @@ export function AiReviewGenerator() {
   const buildPrompt = () => {
     let lengthDesc = "1-2 paragraflık, doyurucu ve akıcı bir Steam oyuncu incelemesi olsun.";
     if (reviewLength === "micro") {
-      lengthDesc = "SADECE TEK BİR KELİME (örn: çöp) VEYA EN FAZLA KISA TEK BİR CÜMLE (örn: paranıza yazık almayın) OLSUN. Asla uzun yazma, anında lafı yapıştır.";
+      lengthDesc = "SADECE TEK BİR KELİME VEYA EN FAZLA KISA TEK BİR CÜMLE OLSUN. Asla uzun yazma, anında lafı yapıştır.";
     } else if (reviewLength === "short") {
       lengthDesc = "2-3 cümlelik, kısa, net ve vurucu bir sitem metni olsun.";
     } else if (reviewLength === "long") {
       lengthDesc = "2-3 paragraflık, oyunun mekaniklerini, sorunlarını ve hissettirdiği hayal kırıklığını derinlemesine anlatan uzun ve detaylı bir Steam incelemesi olsun.";
     }
 
-    return `Sen çok sinirli, hızlı ve klavyede rastgele yazan bir Türk oyuncusun. Steam'de bir Paradox oyununa kötü inceleme (1 yıldız) yazıyorsun.
+    const langConfigs = {
+      tr: {
+        role: "Sen çok sinirli, hızlı ve klavyede rastgele yazan bir Türk oyuncusun.",
+        langInstruction: "Türkçe olarak yaz.",
+        slang: 'Argolu oyuncu jargonu kullan (çöp, leş, bomboş, para tuzağı, kazık vb.). BİLEREK yazım yanlışları yap ("de/da" ekini bitişik yaz, "herşey", "yapıyo", "geliyo" gibi kelimeler kullan).',
+      },
+      en: {
+        role: "You are a very frustrated, blunt, and disappointed gamer writing a negative Steam review in English.",
+        langInstruction: "Write in English like a native gamer.",
+        slang: 'Use authentic gamer slang (trash, unplayable, scam, cashgrab, bloated, money pit, dead game). Do NOT sound like an AI or an essay. Write casually with minor grammar imperfections.',
+      },
+      de: {
+        role: "Du bist ein extrem frustrierter und verärgerter Gamer, der eine negative Steam-Rezension auf Deutsch schreibt.",
+        langInstruction: "Schreibe auf Deutsch.",
+        slang: 'Verwende echte Gamer-Sprache (Müll, Abzocke, unspielbar, Geldmacherei). Schreibe umgangssprachlich und direkt.',
+      },
+      ru: {
+        role: "Ты крайне недовольный и разочарованный геймер, который пишет отрицательный отзыв в Steam на русском языке.",
+        langInstruction: "Пиши на русском языке.",
+        slang: 'Используй геймерский сленг (мусор, доильня, неиграбельно, лагает, скам, баги). Пиши эмоционально и неформально.',
+      },
+    };
+
+    const config = langConfigs[language] || langConfigs.tr;
+
+    return `${config.role} Steam'de bir Paradox oyununa kötü inceleme (1 yıldız) yazıyorsun.
 Oyunun adı: ${selectedGame}.
+Dil: ${config.langInstruction}
 Siyasi şeylerden, Discord'dan veya Atatürk'ten ASLA BAHSETME. Sadece "oyunla ilgili" konulardan (optimizasyon, DLC para tuzağı, hatalar vb.) şikayet et.
 Özellikle şu konuya odaklan: ${focusTopic}.
 Metin boyutu: ${lengthDesc}
 ÇOK ÖNEMLİ (Steam AI Filtresi Atlatma): Bu metnin yapay zeka tarafından yazıldığı kesinlikle anlaşılamamalı! Steam moderatörlerini kandırmalıyız.
-- Yapay zeka kelimelerini ASLA kullanma: "Öncelikle", "Sonuç olarak", "Açıkçası", "Genel olarak", "Özetle" gibi kelimeleri ASLA YAZMA.
+- Yapay zeka kelimelerini ASLA kullanma: "Öncelikle", "Sonuç olarak", "Açıkçası", "Genel olarak", "Özetle", "Clearly", "Overall", "In conclusion" gibi kelimeleri ASLA YAZMA.
 - Cümlelerin düzensiz, devrik ve aceleyle yazılmış gibi olsun. Bazen büyük harf kuralına bile uyma (cümleye küçük harfle başla vs).
 - Noktalama işaretlerini tamamen salla, virgül ve nokta kullanımını en aza indir.
-- BİLEREK yazım yanlışları yap (örneğin "de/da" ekini bitişik yaz, "herşey", "yapıyo", "geliyo" gibi kelimeler kullan).
-- Argolu oyuncu jargonu kullan (çöp, leş, bomboş, para tuzağı, kazık vb.).
+- ${config.slang}
 - Metni tırnak işareti içine alma, sadece kopyalanacak saf yazıyı ver.`;
   };
 
@@ -272,6 +298,38 @@ Metin boyutu: ${lengthDesc}
                     onClick={() => setReviewLength(item.id as "micro" | "short" | "medium" | "long")}
                     className={`border-2 py-1.5 px-2 font-mono text-xs font-bold transition-all text-center ${
                       reviewLength === item.id
+                        ? "border-seal bg-seal text-paper shadow-sm"
+                        : "border-ink/20 bg-paper/60 text-ink/70 hover:border-ink hover:text-ink"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block font-mono text-xs font-bold uppercase text-ink">
+                  İnceleme Dili (Global Etki)
+                </label>
+                <span className="font-mono text-[10px] text-mute">
+                  Steam algoritmasını delmek için
+                </span>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {[
+                  { id: "tr", label: "🇹🇷 Türkçe" },
+                  { id: "en", label: "🇬🇧 English" },
+                  { id: "de", label: "🇩🇪 Deutsch" },
+                  { id: "ru", label: "🇷🇺 Русский" },
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => setLanguage(item.id as "tr" | "en" | "de" | "ru")}
+                    className={`border-2 py-1.5 px-2 font-mono text-xs font-bold transition-all text-center ${
+                      language === item.id
                         ? "border-seal bg-seal text-paper shadow-sm"
                         : "border-ink/20 bg-paper/60 text-ink/70 hover:border-ink hover:text-ink"
                     }`}
