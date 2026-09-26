@@ -86,6 +86,13 @@ export function CampaignClient({
     }
   };
 
+  // Reset scroll position when filters/sort change
+  useEffect(() => {
+    if (gamesSliderRef.current) {
+      gamesSliderRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+  }, [sortBy, selectedCategory, searchTerm]);
+
   // Horizontal mouse wheel scrolling
   useEffect(() => {
     const slider = gamesSliderRef.current;
