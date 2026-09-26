@@ -309,10 +309,38 @@ export function CampaignClient({
     });
   };
 
+  const [isDarkHeader, setIsDarkHeader] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const anitEl = document.getElementById("anit");
+      if (!anitEl) {
+        const heroEl = document.getElementById("hero");
+        if (heroEl) {
+          setIsDarkHeader(heroEl.getBoundingClientRect().bottom > 55);
+        }
+        return;
+      }
+      const rect = anitEl.getBoundingClientRect();
+      // Stay dark while within hero or Ataturk monument. Switch to paper theme once scrolled into games.
+      setIsDarkHeader(rect.bottom > 55);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen bg-paper font-body text-ink antialiased selection:bg-seal selection:text-paper">
-      {/* Sticky Main Header - Permanent Dark Masthead */}
-      <header className="sticky -top-px z-40 border-b-2 border-seal/40 bg-ink text-paper shadow-xl shadow-black/50 backdrop-blur-md">
+      {/* Sticky Main Header - Adaptive Navbar (Dark in Hero/Monument, Paper in Catalog/Sections) */}
+      <header
+        className={`sticky -top-px z-40 border-b-2 backdrop-blur-md transition-all duration-300 ${
+          isDarkHeader
+            ? "border-seal/40 bg-ink/95 text-paper shadow-xl shadow-black/50"
+            : "border-ink bg-paper/90 text-ink shadow-md shadow-ink/5"
+        }`}
+      >
         <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 sm:py-2.5">
           <button
             type="button"
@@ -326,7 +354,11 @@ export function CampaignClient({
               className="size-7 sm:size-8 object-contain drop-shadow-sm rounded-full transition-transform group-hover:scale-105"
             />
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2.5">
-              <span className="font-display text-xl sm:text-2xl leading-none tracking-tight text-paper transition-colors group-hover:text-seal">
+              <span
+                className={`font-display text-xl sm:text-2xl leading-none tracking-tight transition-colors group-hover:text-seal ${
+                  isDarkHeader ? "text-paper" : "text-ink"
+                }`}
+              >
                 BOYKOT PARADOX
               </span>
             </div>
@@ -335,22 +367,40 @@ export function CampaignClient({
           <div className="flex items-center gap-2.5 sm:gap-4 md:gap-5">
             {/* User progress counter */}
             <div className="hidden text-right leading-none md:block">
-              <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-paper/50">
+              <div
+                className={`font-mono text-[9px] uppercase tracking-[0.16em] transition-colors ${
+                  isDarkHeader ? "text-paper/50" : "text-mute"
+                }`}
+              >
                 Senin Katkın
               </div>
-              <div className="font-mono text-sm font-bold text-paper">
+              <div
+                className={`font-mono text-sm font-bold transition-colors ${
+                  isDarkHeader ? "text-paper" : "text-ink"
+                }`}
+              >
                 <span className="text-seal">{stampedPlatforms.length}</span> / {totalTargetsCount} Platform
               </div>
             </div>
 
             {/* Total 1 star counter */}
             <div className="text-right leading-none">
-              <div className="flex items-center justify-end gap-1 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-paper/50">
+              <div
+                className={`flex items-center justify-end gap-1 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] transition-colors ${
+                  isDarkHeader ? "text-paper/50" : "text-mute"
+                }`}
+              >
                 <span className="relative flex size-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500"></span>
                 </span>
-                <span className="font-bold text-emerald-400">Canlı</span>
+                <span
+                  className={`font-bold transition-colors ${
+                    isDarkHeader ? "text-emerald-400" : "text-emerald-600"
+                  }`}
+                >
+                  Canlı
+                </span>
                 <span className="hidden xs:inline">Toplam 1★</span>
               </div>
               <div className="flex items-center justify-end gap-1 mt-0.5">
@@ -363,7 +413,7 @@ export function CampaignClient({
               </div>
             </div>
 
-            <AudioStampToggle dark={true} />
+            <AudioStampToggle dark={isDarkHeader} />
           </div>
         </div>
       </header>
