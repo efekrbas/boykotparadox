@@ -4,7 +4,7 @@ export function Ataturk3DScene() {
   return (
     <section
       id="anit"
-      className="relative w-full overflow-hidden bg-ink text-paper border-b-2 border-ink py-10 sm:py-16 scroll-mt-12 sm:scroll-mt-14"
+      className="relative w-full overflow-hidden bg-ink text-paper border-b-2 border-ink pt-3 sm:pt-4 pb-8 sm:pb-12 scroll-mt-14 sm:scroll-mt-16"
     >
       <div className="relative mx-auto max-w-[1240px] px-5 w-full">
         <div className="grid items-center gap-6 sm:gap-8 lg:grid-cols-12">
@@ -45,14 +45,14 @@ export function Ataturk3DScene() {
           </div>
 
           {/* Right Monument Display (Clean, Dignified, No Distracting Effects) */}
-          <div className="lg:col-span-6 flex flex-col items-center justify-center">
+          <div className="lg:col-span-6 flex flex-col items-center justify-center -mt-2 sm:-mt-4">
             <div className="relative w-full max-w-[420px] flex flex-col items-center">
               {/* Leader Visual - Standing Proud & Pure Cutout */}
               <div className="relative z-10 w-full flex justify-center">
                 <img
                   src="/ataturk-transparent.png"
                   alt="Gazi Mustafa Kemal Atatürk"
-                  className="w-full max-h-[260px] sm:max-h-[340px] lg:max-h-[400px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)]"
+                  className="w-full max-h-[250px] sm:max-h-[320px] lg:max-h-[370px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)]"
                   loading="eager"
                 />
               </div>

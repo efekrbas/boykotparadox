@@ -341,7 +341,7 @@ export function CampaignClient({
             : "border-ink bg-paper/90 text-ink shadow-md shadow-ink/5"
         }`}
       >
-        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 sm:py-2.5">
+        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-3 sm:py-3.5">
           <button
             type="button"
             onClick={() => scrollTo("anit")}
@@ -351,7 +351,7 @@ export function CampaignClient({
             <img
               src="/favicon.png"
               alt="Atatürk Rozet Logo"
-              className="size-7 sm:size-8 object-contain drop-shadow-sm rounded-full transition-transform group-hover:scale-105"
+              className="size-8 sm:size-9 object-contain drop-shadow-sm rounded-full transition-transform group-hover:scale-105"
             />
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2.5">
               <span
