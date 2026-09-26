@@ -309,49 +309,11 @@ export function CampaignClient({
     });
   };
 
-  const [isDarkHeader, setIsDarkHeader] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const anitEl = document.getElementById("anit");
-      const heroEl = document.getElementById("hero");
-
-      let dark = false;
-
-      if (heroEl) {
-        const rect = heroEl.getBoundingClientRect();
-        if (rect.top <= 150 && rect.bottom >= 60) {
-          dark = true;
-        }
-      }
-
-      if (anitEl) {
-        const rect = anitEl.getBoundingClientRect();
-        // Reliably trigger dark header whenever anit is at or approaching top of viewport
-        if (rect.top <= 220 && rect.bottom >= 60) {
-          dark = true;
-        }
-      }
-
-      setIsDarkHeader(dark);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <div className="min-h-screen bg-paper font-body text-ink antialiased selection:bg-seal selection:text-paper">
-      {/* Sticky Main Header */}
-      <header
-        className={`sticky top-0 z-40 border-b-2 backdrop-blur-md transition-colors duration-300 ${
-          isDarkHeader
-            ? "border-seal/40 bg-ink/95 text-paper shadow-lg shadow-black/40"
-            : "border-ink bg-paper/85 text-ink"
-        }`}
-      >
-        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 sm:py-3">
+      {/* Sticky Main Header - Permanent Dark Masthead */}
+      <header className="sticky top-0 z-40 border-b-2 border-seal/40 bg-ink text-paper shadow-xl shadow-black/50 backdrop-blur-md">
+        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-2 sm:gap-4 px-3 sm:px-5 py-2 sm:py-2.5">
           <div className="flex items-center gap-2 sm:gap-3">
             <img
               src="/favicon.png"
@@ -359,7 +321,7 @@ export function CampaignClient({
               className="size-7 sm:size-8 object-contain drop-shadow-sm rounded-full"
             />
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2.5">
-              <span className="font-display text-xl sm:text-2xl leading-none tracking-tight">
+              <span className="font-display text-xl sm:text-2xl leading-none tracking-tight text-paper">
                 BOYKOT PARADOX
               </span>
             </div>
@@ -368,34 +330,22 @@ export function CampaignClient({
           <div className="flex items-center gap-2.5 sm:gap-4 md:gap-5">
             {/* User progress counter */}
             <div className="hidden text-right leading-none md:block">
-              <div
-                className={`font-mono text-[9px] uppercase tracking-[0.16em] ${
-                  isDarkHeader ? "text-paper/50" : "text-mute"
-                }`}
-              >
+              <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-paper/50">
                 Senin Katkın
               </div>
-              <div
-                className={`font-mono text-sm font-bold ${
-                  isDarkHeader ? "text-paper" : "text-ink"
-                }`}
-              >
+              <div className="font-mono text-sm font-bold text-paper">
                 <span className="text-seal">{stampedPlatforms.length}</span> / {totalTargetsCount} Platform
               </div>
             </div>
 
             {/* Total 1 star counter */}
             <div className="text-right leading-none">
-              <div
-                className={`flex items-center justify-end gap-1 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] ${
-                  isDarkHeader ? "text-paper/50" : "text-mute"
-                }`}
-              >
+              <div className="flex items-center justify-end gap-1 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-paper/50">
                 <span className="relative flex size-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500"></span>
                 </span>
-                <span className="font-bold text-emerald-500">Canlı</span>
+                <span className="font-bold text-emerald-400">Canlı</span>
                 <span className="hidden xs:inline">Toplam 1★</span>
               </div>
               <div className="flex items-center justify-end gap-1 mt-0.5">
@@ -408,7 +358,7 @@ export function CampaignClient({
               </div>
             </div>
 
-            <AudioStampToggle dark={isDarkHeader} />
+            <AudioStampToggle dark={true} />
           </div>
         </div>
       </header>
