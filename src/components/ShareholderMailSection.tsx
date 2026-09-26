@@ -5,7 +5,7 @@ import { Mail, Copy, Check, ExternalLink, TrendingDown, Briefcase } from "lucide
 import { toast } from "sonner";
 import { playStampSound } from "@/lib/audio";
 
-const SHAREHOLDER_EMAILS = "contact@statestreet.com, ir@paradoxinteractive.com, info@spiltan.se, IR@tencent.com";
+const SHAREHOLDER_EMAILS = "contact@statestreet.com, ir@paradoxinteractive.com, IR@tencent.com";
 const EMAIL_SUBJECT = "Shareholder engagement request for Paradox Interactive (PDX) - Risk of Revenue Loss";
 
 const getEmailBody = (senderName: string) => `Shareholder engagement request for Paradox Interactive (PDX)
@@ -80,7 +80,7 @@ export function ShareholderMailSection() {
               Finansal Baskı Merkezi
             </div>
             <div className="font-mono text-xs text-mute hidden sm:block">
-              Hedef: <strong>State Street, Spiltan Fonder, Tencent, PDX IR</strong>
+              Hedef: <strong>State Street, Tencent, PDX IR</strong>
             </div>
           </div>
 
@@ -101,7 +101,7 @@ export function ShareholderMailSection() {
                 </div>
                 <div className="flex items-start gap-2 text-xs font-mono text-ink">
                   <TrendingDown className="size-4 text-seal shrink-0 mt-0.5" />
-                  <p>State Street ve Spiltan Fonder gibi en büyük Paradox yatırımcıları doğrudan hedeflenir.</p>
+                  <p>State Street ve Tencent gibi en büyük Paradox yatırımcıları doğrudan hedeflenir.</p>
                 </div>
               </div>
             </div>
