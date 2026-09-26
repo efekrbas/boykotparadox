@@ -347,7 +347,7 @@ export function CampaignClient({
           }}
         />
 
-        <div className="relative mx-auto max-w-[1240px] px-5 pt-14 pb-16 sm:pt-20 sm:pb-24">
+        <div className="relative mx-auto max-w-[1240px] px-5 pt-8 pb-10 sm:pt-12 sm:pb-16">
           <div className="rise flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-seal">
             <span className="size-2 animate-pulse rounded-full bg-seal" />
             Steam · Metacritic · Trustpilot · Google · Epic · GOG · Xbox
@@ -428,13 +428,13 @@ export function CampaignClient({
 
           {/* Primary Action Buttons */}
           <div
-            className="rise mt-8 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-4"
+            className="rise mt-6 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3"
             style={{ animationDelay: "240ms" }}
           >
             <button
               type="button"
               onClick={() => setIsBulkModalOpen(true)}
-              className="group inline-flex w-full sm:w-auto items-center justify-center gap-2.5 bg-seal px-5 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:brightness-110 shadow-lg shadow-seal/25 active:translate-y-px"
+              className="group inline-flex w-full sm:w-auto items-center justify-center gap-2.5 bg-seal px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:brightness-110 shadow-lg shadow-seal/25 active:translate-y-px"
             >
               <Flame className="size-4 animate-bounce" />
               <span>Tek Tıkla 1★ Baskını Başlat</span>
@@ -444,7 +444,7 @@ export function CampaignClient({
               href={PETITION_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-seal bg-seal/20 px-5 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:bg-seal hover:text-paper shadow-md shadow-seal/10"
+              className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-seal bg-seal/20 px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:bg-seal hover:text-paper shadow-md shadow-seal/10"
             >
               <PenLine className="size-4 text-seal group-hover:text-paper transition-colors" />
               <span>İmza Kampanyasına Katıl</span>
@@ -454,7 +454,7 @@ export function CampaignClient({
             <button
               type="button"
               onClick={() => scrollTo("sablonlar")}
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-paper/40 bg-paper/10 px-5 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:border-paper hover:bg-paper/20"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-paper/40 bg-paper/10 px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:border-paper hover:bg-paper/20"
             >
               <FileText className="size-4" />
               <span>Hazır 1★ Metinleri</span>
@@ -463,7 +463,7 @@ export function CampaignClient({
             <button
               type="button"
               onClick={() => scrollTo("tweet-baskini")}
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 border-2 border-paper/40 bg-black px-5 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:border-paper hover:bg-neutral-900 shadow-lg shadow-black/50 active:translate-y-px"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 border-2 border-paper/40 bg-black px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-paper transition-all hover:border-paper hover:bg-neutral-900 shadow-lg shadow-black/50 active:translate-y-px"
             >
               <XIcon className="size-4 text-paper" />
               <span>X / CEO Baskını</span>
@@ -472,7 +472,7 @@ export function CampaignClient({
             <button
               type="button"
               onClick={() => scrollTo("hissedar-baskisi")}
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-seal/50 bg-paper/5 px-5 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-seal transition-all hover:border-seal hover:bg-seal/10 active:translate-y-px"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-seal/50 bg-paper/5 px-5 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-[0.12em] text-seal transition-all hover:border-seal hover:bg-seal/10 active:translate-y-px"
             >
               <TrendingDown className="size-4" />
               <span>Hissedar Maili</span>
