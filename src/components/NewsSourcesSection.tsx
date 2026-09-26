@@ -18,7 +18,7 @@ interface LiveReviewItem {
 function getRelativeTime(timestamp: number): string {
   const rtf = new Intl.RelativeTimeFormat("tr", { numeric: "auto" });
   const diffInSeconds = Math.floor((timestamp * 1000 - Date.now()) / 1000);
-  
+
   const minutes = Math.floor(diffInSeconds / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
@@ -173,7 +173,7 @@ export function NewsSourcesSection() {
         </div>
 
         <blockquote className="mt-4 font-display text-xl sm:text-2xl uppercase tracking-tight text-ink leading-snug">
-          "6 bin saatten fazla oynadığım oyunu kütüphanemden siliyorum. Atatürk'e yönelik bu tavır açık bir düşmanlık ve tarihi çarpıtmadır."
+          "Özür dilemezlerse oynamam."
         </blockquote>
 
         <p className="mt-3 text-xs sm:text-sm text-mute leading-relaxed">
@@ -181,9 +181,9 @@ export function NewsSourcesSection() {
         </p>
 
         <div className="mt-4 flex items-center justify-between pt-3 border-t border-ink/10 font-mono text-xs">
-          <span className="text-mute">Kaynak: Sözcü Gazetesi & Sosyal Medya Açıklaması</span>
+          <span className="text-mute">Kaynak: Halk TV</span>
           <a
-            href="https://www.sozcu.com.tr"
+            href="https://halktv.com.tr/turkiye/unlu-strateji-oyunu-hearts-of-irona-ataturk-boykotu-tarihci-emrah-safa-gurkan-da-katildi-1057071h"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-seal font-bold hover:underline"
@@ -203,7 +203,7 @@ export function NewsSourcesSection() {
               <span className="relative inline-flex size-2.5 rounded-full bg-red-500"></span>
             </span>
             <span className="font-mono text-xs font-bold uppercase tracking-wider text-red-400">
-              Canlı Steam Boykot Akışı
+              Steam Kötü Yorumlar (Canlı)
             </span>
           </div>
 
@@ -239,15 +239,15 @@ export function NewsSourcesSection() {
                       <span className="text-red-400 font-bold uppercase">{gameName} Oyuncusu</span>
                       <span>{item.date}</span>
                     </div>
-                  <h4 className="mt-1.5 font-mono text-xs leading-relaxed text-paper group-hover:text-seal transition-colors line-clamp-3">
-                    "{item.review}"
-                  </h4>
+                    <h4 className="mt-1.5 font-mono text-xs leading-relaxed text-paper group-hover:text-seal transition-colors line-clamp-3">
+                      "{item.review}"
+                    </h4>
+                  </div>
+                  <div className="mt-2.5 pt-2.5 border-t border-paper/10 flex items-center justify-between font-mono text-[10px] uppercase text-paper/50">
+                    <span>{item.author}</span>
+                    <span className="text-red-400 font-bold">★ {item.playtime} Saat Oynama</span>
+                  </div>
                 </div>
-                <div className="mt-2.5 pt-2.5 border-t border-paper/10 flex items-center justify-between font-mono text-[10px] uppercase text-paper/50">
-                  <span>{item.author}</span>
-                  <span className="text-red-400 font-bold">★ {item.playtime} Saat Oynama</span>
-                </div>
-              </div>
               );
             })}
           </div>
@@ -269,11 +269,10 @@ export function NewsSourcesSection() {
               key={cat.id}
               type="button"
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
-                activeCategory === cat.id
-                  ? "bg-ink text-paper"
-                  : "border border-ink/20 bg-paper text-ink hover:border-ink"
-              }`}
+              className={`px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${activeCategory === cat.id
+                ? "bg-ink text-paper"
+                : "border border-ink/20 bg-paper text-ink hover:border-ink"
+                }`}
             >
               {cat.label}
             </button>
