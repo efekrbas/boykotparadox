@@ -839,16 +839,16 @@ export function CampaignClient({
         </div>
 
         {/* All Paradox Games Publisher Hub Banner */}
-        <div className="mt-8 border-2 border-dashed border-ink/30 bg-paper p-5 sm:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div className="mt-8 border-2 border-seal/40 bg-ink text-paper p-5 sm:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-2xl">
           <div className="max-w-[65ch]">
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-seal font-bold">
               <span className="size-2 rounded-full bg-seal" />
               Tüm Paradox Kataloğu (100+ Oyun & DLC)
             </div>
-            <h3 className="mt-1 font-display text-xl sm:text-2xl uppercase tracking-tight">
+            <h3 className="mt-1 font-display text-xl sm:text-2xl uppercase tracking-tight text-paper">
               Sadece Bu {GAMES.length} Oyun Değil, Şirketin Tüm Kataloğu
             </h3>
-            <p className="mt-2 text-xs sm:text-sm text-mute leading-relaxed">
+            <p className="mt-2 text-xs sm:text-sm text-paper/70 leading-relaxed">
               Paradox Interactive bünyesinde <strong>Age of Wonders 4, Prison Architect, Surviving Mars, Magicka, Crusader Kings II</strong> ve yüzlerce genişleme paketi (DLC) yer alıyor. Steam ve Epic Games yayıncı merkezinden tüm oyunlara ulaşıp boykotu genişletebilirsiniz.
             </p>
           </div>
@@ -858,7 +858,7 @@ export function CampaignClient({
               href="https://store.steampowered.com/publisher/paradoxinteractive"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-ink bg-ink px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition-colors hover:bg-seal hover:border-seal"
+              className="inline-flex items-center gap-2 border border-seal/50 bg-seal/20 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition-colors hover:bg-seal"
             >
               <span>Steam Tüm Oyunlar (100+)</span>
               <ExternalLink className="size-3.5" />
@@ -867,7 +867,7 @@ export function CampaignClient({
               href="https://store.epicgames.com/tr/browse?q=Paradox%20Interactive"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-ink/30 bg-paper px-3.5 py-2.5 font-mono text-xs uppercase tracking-wider text-ink transition-colors hover:border-ink"
+              className="inline-flex items-center gap-2 border border-paper/20 bg-paper/10 px-3.5 py-2.5 font-mono text-xs uppercase tracking-wider text-paper transition-colors hover:border-paper"
             >
               <span>Epic Games Kataloğu</span>
               <ExternalLink className="size-3.5" />
@@ -876,8 +876,10 @@ export function CampaignClient({
         </div>
       </section>
 
-      {/* 3D Atatürk Monument Scene */}
-      <Ataturk3DScene />
+      {/* 3D Atatürk Monument Scene with Full Bleed Dark Canvas */}
+      <div className="relative bg-ink -mt-10 sm:-mt-16 pt-10 sm:pt-16 pb-12 sm:pb-16 border-y-2 border-seal/30">
+        <Ataturk3DScene />
+      </div>
 
       {/* Incident Summary & Demands */}
       <section className="mx-auto max-w-[1240px] px-5 py-14">
