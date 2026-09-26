@@ -313,7 +313,6 @@ export function CampaignClient({
 
   useEffect(() => {
     const handleScroll = () => {
-      const headerHeight = 60;
       const anitEl = document.getElementById("anit");
       const heroEl = document.getElementById("hero");
 
@@ -321,14 +320,15 @@ export function CampaignClient({
 
       if (heroEl) {
         const rect = heroEl.getBoundingClientRect();
-        if (rect.top <= headerHeight && rect.bottom >= headerHeight / 2) {
+        if (rect.top <= 150 && rect.bottom >= 60) {
           dark = true;
         }
       }
 
       if (anitEl) {
         const rect = anitEl.getBoundingClientRect();
-        if (rect.top <= headerHeight && rect.bottom >= headerHeight / 2) {
+        // Reliably trigger dark header whenever anit is at or approaching top of viewport
+        if (rect.top <= 220 && rect.bottom >= 60) {
           dark = true;
         }
       }
