@@ -93,7 +93,7 @@ export function ReviewTemplatesSection() {
         </div>
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-12">
+      <div className="mt-8 grid gap-6 lg:grid-cols-12 items-start">
         {/* Template Selector List */}
         <div className="flex flex-col gap-3 lg:col-span-5">
           {/* Language Filter Pills */}
@@ -176,45 +176,43 @@ export function ReviewTemplatesSection() {
         </div>
 
         {/* Active Template Preview & Action Box */}
-        <div className="flex flex-col justify-between border-2 border-ink bg-paper p-6 lg:col-span-7">
-          <div>
-            <div className="flex items-center justify-between gap-4 border-b border-ink/15 pb-3">
-              <div className="flex items-center gap-2">
-                <MessageSquareText className="size-4 text-seal" />
-                <span className="font-display text-lg uppercase tracking-tight text-ink">
-                  {activeTemplate.title}
-                </span>
-              </div>
-              <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px] text-mute">
-                <span>Önerilen yerler:</span>
-                {activeTemplate.recommendedFor.map((rec) => (
-                  <span
-                    key={rec}
-                    className="border border-ink/15 bg-ink/5 px-1.5 py-0.5 font-semibold text-ink"
-                  >
-                    {rec}
-                  </span>
-                ))}
-              </div>
+        <div className="border-2 border-ink bg-paper p-5 sm:p-6 shadow-[4px_4px_0_0_#181816] lg:col-span-7 lg:sticky lg:top-24">
+          <div className="flex items-center justify-between gap-4 border-b border-ink/15 pb-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <MessageSquareText className="size-4 shrink-0 text-seal" />
+              <span className="truncate font-display text-lg uppercase tracking-tight text-ink">
+                {activeTemplate.title}
+              </span>
             </div>
-
-            <div className="relative mt-4">
-              <textarea
-                readOnly
-                value={activeTemplate.text}
-                rows={7}
-                className="w-full resize-none border border-ink/15 bg-paper p-3.5 font-body text-sm leading-relaxed text-ink outline-none selection:bg-seal selection:text-paper"
-              />
-              <div className="mt-1 flex justify-between font-mono text-[10px] text-mute">
-                <span>Karakter sayısı: {activeTemplate.text.length}</span>
-                <span className="font-bold uppercase text-ink/70">
-                  {LANG_DISPLAY_NAMES[activeTemplate.language] || activeTemplate.language.toUpperCase()}
+            <div className="flex shrink-0 flex-wrap items-center gap-1.5 font-mono text-[10px] text-mute">
+              <span>Önerilen yerler:</span>
+              {activeTemplate.recommendedFor.map((rec) => (
+                <span
+                  key={rec}
+                  className="border border-ink/15 bg-ink/5 px-1.5 py-0.5 font-semibold text-ink"
+                >
+                  {rec}
                 </span>
-              </div>
+              ))}
             </div>
           </div>
 
-          <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-ink/15 pt-4">
+          <div className="relative mt-4">
+            <textarea
+              readOnly
+              value={activeTemplate.text}
+              rows={6}
+              className="w-full resize-none border border-ink/15 bg-paper p-3.5 font-body text-sm leading-relaxed text-ink outline-none selection:bg-seal selection:text-paper"
+            />
+            <div className="mt-1.5 flex justify-between font-mono text-[10px] text-mute">
+              <span>Karakter sayısı: {activeTemplate.text.length}</span>
+              <span className="font-bold uppercase text-ink/70">
+                {LANG_DISPLAY_NAMES[activeTemplate.language] || activeTemplate.language.toUpperCase()}
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-ink/15 pt-4">
             <button
               type="button"
               onClick={() => handleCopy(activeTemplate.id, activeTemplate.text)}
