@@ -1416,7 +1416,7 @@ export const PHYSICAL_STUDIOS: PhysicalStudio[] = [
     address: "Paris, France",
     description: "Airlines Manager ve Paradox mobil strateji operasyonlarını yürüten geliştirici stüdyosu.",
     keyProjects: "Airlines Manager, Paradox Mobile",
-    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Playrion+Game+Studio+Paris+France",
+    googleMapsUrl: "https://maps.app.goo.gl/3R92E49MXRJS2Tr58",
   },
 ];
 
