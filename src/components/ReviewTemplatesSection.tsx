@@ -87,17 +87,38 @@ export function ReviewTemplatesSection() {
         </div>
       </div>
 
-      {/* Steam 'Konu Dışı' Uyarısı & Global Dil Stratejisi Banner'ları */}
+      {/* Neden Türkçe İncelemeler Kaldırıldı? Karşı-Taktik & Global Dil Stratejisi */}
       <div className="mt-6 flex flex-col gap-3">
-        <div className="flex items-start gap-3 border-2 border-seal bg-seal/10 p-4 shadow-sm">
-          <span className="text-lg leading-none shrink-0 mt-0.5">⚠️</span>
-          <div className="text-xs sm:text-sm font-mono leading-relaxed text-ink">
-            <strong className="text-seal font-bold uppercase tracking-wider block sm:inline mr-2">
-              Steam 'Konu Dışı' Uyarısı:
-            </strong>
-            <span>
-              Steam, sadece "Atatürk" yazıp geçilen birebir kopyala-yapıştır yorumları otomatik algılayıp "Off-Topic" (Konu Dışı) sayarak puanlamadan düşebilir. İncelemenizin <strong>kalıcı olması ve silinmemesi için</strong> metne oyun deneyiminiz, Paradox'un topluluk yönetimi veya moderatör çifte standardı hakkında <strong>kendi cümlenizden de 1-2 kelime ekleyin!</strong>
-            </span>
+        <div className="border-2 border-seal bg-seal/[0.08] p-4 sm:p-5 shadow-sm">
+          <div className="flex items-start gap-3.5">
+            <span className="text-2xl shrink-0 mt-0.5">🛡️</span>
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="bg-seal text-paper font-mono text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">
+                  Önemli Taktik Değişikliği
+                </span>
+                <span className="font-mono text-xs font-bold uppercase text-seal tracking-wider">
+                  Neden Türkçe İncelemeler Kaldırıldı?
+                </span>
+              </div>
+              <h3 className="font-display text-lg sm:text-xl uppercase tracking-tight text-ink">
+                Paradox ve Steam Moderatörlerini Şaşırtıyoruz: Yabancı Dil Stratejisi!
+              </h3>
+              <p className="text-xs sm:text-sm font-mono text-ink/90 leading-relaxed">
+                Steam ve Paradox moderasyonunun, Türkiye'den gelen toplu Türkçe incelemeleri tespit edip <strong>"Off-Topic Review Bombing" (Konu Dışı Puanlama)</strong> bahanesiyle sildiği ve oyun skorlarından düşürdüğü görülmüştür. 
+                Onları <strong>şaşırtmak, yerel filtreleri boşa çıkarmak ve boykotu kalıcı kılmak</strong> amacıyla sitedeki tüm hazır Türkçe şablonlar kaldırılmıştır. Artık tüm gücümüzle <strong>İngilizce, Almanca, Rusça, Fransızca ve İspanyolca</strong> incelemeler bırakıyoruz!
+              </p>
+              <div className="grid gap-2 sm:grid-cols-2 pt-2 border-t border-seal/20 text-xs font-mono text-ink/80">
+                <div className="flex items-start gap-2">
+                  <span className="text-seal font-bold">1.</span>
+                  <span><strong>Filtreleri Delin:</strong> Yabancı dilde yazılan incelemeler otomatik "Türk boykotu" filtresine takılmaz, Paradox ekibi bunları kolayca silemez.</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-seal font-bold">2.</span>
+                  <span><strong>Global Skoru Vurun:</strong> Türkçe yorumlar sadece Türkiye'deki kullanıcılara gösterilirken; İngilizce ve Avrupa dillerindeki incelemeler <strong>dünya çapındaki tüm mağazalarda</strong> doğrudan ana vitrinde listelenir ve oyunun genel skorunu kalıcı olarak düşürür.</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -105,9 +126,9 @@ export function ReviewTemplatesSection() {
           <Globe className="size-4 text-seal shrink-0 mt-0.5" />
           <div>
             <strong className="text-ink font-bold uppercase tracking-wider block sm:inline mr-1.5">
-              Topluluk Stratejisi (Global Puan Etkisi):
+              İncelemenin Silinmemesi İçin İpucu:
             </strong>
-            Steam varsayılan olarak Türkçe yorumları sadece Türkiye'deki oyunculara gösterir. <strong>İngilizce, Almanca veya Rusça</strong> inceleme bırakmak, oyunun dünya çapındaki genel skorunu (All Languages) doğrudan aşağı çeker ve boykotun küresel basında yankı bulmasını sağlar.
+            Kopyaladığınız yabancı dildeki şablonun sonuna kendi kelimelerinizle 1-2 kelime ekleyin (Örn: <em>"Uninstalled."</em>, <em>"Waste of money."</em>). Hesabınızda oyunun en az 5-10 dakika açık kalmış olması incelemenizin kalıcılığını garanti eder.
           </div>
         </div>
       </div>

@@ -31,7 +31,7 @@ export function AiReviewGenerator() {
   const [showApiKey, setShowApiKey] = useState(false);
   const [focusTopic, setFocusTopic] = useState("");
   const [selectedGame, setSelectedGame] = useState(GAMES[0]?.title || "");
-  const [language, setLanguage] = useState<"tr" | "en" | "de" | "ru">("tr");
+  const [language, setLanguage] = useState<"en" | "de" | "ru" | "fr">("en");
   const [reviewLength, setReviewLength] = useState<"micro" | "short" | "medium" | "long">("medium");
   const [generatedText, setGeneratedText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -87,11 +87,6 @@ export function AiReviewGenerator() {
     }
 
     const langConfigs = {
-      tr: {
-        role: "Sen çok sinirli, hızlı ve klavyede rastgele yazan bir Türk oyuncusun.",
-        langInstruction: "Türkçe olarak yaz.",
-        slang: 'Argolu oyuncu jargonu kullan (çöp, leş, bomboş, para tuzağı, kazık vb.). BİLEREK yazım yanlışları yap ("de/da" ekini bitişik yaz, "herşey", "yapıyo", "geliyo" gibi kelimeler kullan).',
-      },
       en: {
         role: "You are a very frustrated, blunt, and disappointed gamer writing a negative Steam review in English.",
         langInstruction: "Write in English like a native gamer.",
@@ -107,9 +102,14 @@ export function AiReviewGenerator() {
         langInstruction: "Пиши на русском языке.",
         slang: 'Используй геймерский сленг (мусор, доильня, неиграбельно, лагает, скам, баги). Пиши эмоционально и неформально.',
       },
+      fr: {
+        role: "Tu es un joueur très déçu et furieux qui rédige une évaluation négative sur Steam en français.",
+        langInstruction: "Écris en français comme un joueur aguerri.",
+        slang: "Utilise le jargon gamer authentique (arnaque, injouable, honteux, usine à fric). N'écris pas comme une IA.",
+      },
     };
 
-    const config = langConfigs[language] || langConfigs.tr;
+    const config = langConfigs[language] || langConfigs.en;
 
     return `${config.role} Steam'de bir Paradox oyununa kötü inceleme (1 yıldız) yazıyorsun.
 Oyunun adı: ${selectedGame}.
@@ -355,7 +355,7 @@ Metin boyutu: ${lengthDesc}
         </div>
 
         <p className="text-sm text-ink/80 mb-6 max-w-[70ch]">
-          Steam'in otomatik spam filtresine ("Konu Dışı" uyarısı) takılmamak için <strong>Google Gemini API</strong> veya <strong>OpenRouter API</strong> anahtarınızı kullanarak her seferinde tamamen benzersiz ve özgün 1 yıldız inceleme metinleri üretebilirsiniz. <br />
+          Steam'in otomatik spam filtresine ("Konu Dışı" uyarısı) takılmamak ve Türkçe inceleme silme filtrelerini ters köşeye yatırmak için <strong>Google Gemini API</strong> veya <strong>OpenRouter API</strong> anahtarınızı kullanarak her seferinde tamamen benzersiz ve özgün yabancı dilde 1 yıldız inceleme metinleri üretebilirsiniz. <br />
           <strong className="text-seal font-mono text-xs">Not: API anahtarınız sadece tarayıcınızda (Local Storage) tutulur, hiçbir sunucuya gönderilmez.</strong>
         </p>
 
@@ -494,21 +494,21 @@ Metin boyutu: ${lengthDesc}
                 <label className="block font-mono text-xs font-bold uppercase text-ink">
                   İnceleme Dili (Global Etki)
                 </label>
-                <span className="font-mono text-[10px] text-mute">
-                  Steam algoritmasını delmek için
+                <span className="font-mono text-[10px] text-seal font-bold">
+                  🛡️ Yabancı Dille Filtreleri Aşın
                 </span>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {[
-                  { id: "tr", label: "🇹🇷 Türkçe" },
                   { id: "en", label: "🇬🇧 English" },
                   { id: "de", label: "🇩🇪 Deutsch" },
                   { id: "ru", label: "🇷🇺 Русский" },
+                  { id: "fr", label: "🇫🇷 Français" },
                 ].map((item) => (
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => setLanguage(item.id as "tr" | "en" | "de" | "ru")}
+                    onClick={() => setLanguage(item.id as "en" | "de" | "ru" | "fr")}
                     className={`border-2 py-1.5 px-2 font-mono text-xs font-bold transition-all text-center ${
                       language === item.id
                         ? "border-seal bg-seal text-paper shadow-sm"
@@ -518,6 +518,12 @@ Metin boyutu: ${lengthDesc}
                     {item.label}
                   </button>
                 ))}
+              </div>
+              <div className="mt-2 flex items-start gap-1.5 p-2 bg-seal/10 border border-seal/30 text-[11px] font-mono text-ink/90">
+                <span className="text-seal font-bold shrink-0">⚠️</span>
+                <span>
+                  <strong>Türkçe Seçeneği Kaldırıldı:</strong> Paradox ve Steam moderasyonunun toplu Türkçe incelemeleri "Off-Topic" diye silmesini engellemek ve onları şaşırtmak için yapay zeka sadece yabancı dillerde inceleme üretmektedir.
+                </span>
               </div>
             </div>
 
