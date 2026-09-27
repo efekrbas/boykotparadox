@@ -1331,10 +1331,10 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
     id: "corp-google",
     name: "Google Şirket İncelemeleri (Stockholm HQ)",
     platform: "Google Reviews",
-    url: "https://www.google.com/search?q=Paradox+Interactive+AB+Stockholm+reviews",
-    description: "Google Haritalar ve Arama sonuçlarında Paradox'un ana merkezine doğrudan 1 yıldız ve kamuoyu yorumu bırakın.",
+    url: "https://maps.app.goo.gl/VqBTRCTjEvi9pnoV9",
+    description: "Google Haritalar'da Paradox'un aktif ana merkezine doğrudan 1 yıldız ve kamuoyu yorumu bırakın.",
     importance: "Kritik",
-    actionText: "Google'da Değerlendir",
+    actionText: "Google Haritalar'da 1★ Ver",
   },
   {
     id: "corp-metacritic-publisher",
@@ -1358,7 +1358,7 @@ export const PHYSICAL_STUDIOS: PhysicalStudio[] = [
     address: "Magnus Ladulåsgatan 4, 118 66 Stockholm, Sweden",
     description: "Şirketin küresel yönetim merkezi ve Paradox Development Studio ana yerleşkesi.",
     keyProjects: "Hearts of Iron IV, Crusader Kings III, Victoria 3, Stellaris",
-    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Paradox+Interactive+Magnus+Ladul%C3%A5sgatan+4+Stockholm",
+    googleMapsUrl: "https://maps.app.goo.gl/VqBTRCTjEvi9pnoV9",
   },
   {
     id: "studio-sitges-tinto",
