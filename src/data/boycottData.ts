@@ -52,6 +52,8 @@ export type PhysicalStudio = {
   description: string;
   keyProjects: string;
   googleMapsUrl: string;
+  secondaryGoogleMapsUrl?: string;
+  secondaryName?: string;
 };
 
 export type ReviewTemplate = {
@@ -1377,10 +1379,12 @@ export const PHYSICAL_STUDIOS: PhysicalStudio[] = [
     city: "Sofya",
     country: "Bulgaristan",
     countryFlag: "🇧🇬",
-    address: "Sofia, Bulgaria",
-    description: "Surviving Mars ve Stranded: Alien Dawn oyunlarını geliştiren Paradox bünyesindeki stüdyo.",
+    address: "Tsarigradsko Chaussee No 133, BIC IZOT, Sofya",
+    description: "Surviving Mars ve Stranded: Alien Dawn stüdyosu. Aynı binada hem stüdyo ofisi (4.7★) hem de kurumsal tescil kaydı (3.0★) bulunmaktadır.",
     keyProjects: "Surviving Mars, Stranded: Alien Dawn, Tropico",
-    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Haemimont+Games+Sofia+Bulgaria",
+    googleMapsUrl: "https://maps.app.goo.gl/Z1thsFiqS92jDSru5",
+    secondaryGoogleMapsUrl: "https://maps.app.goo.gl/NwBPxXCEcm2HJAtz7",
+    secondaryName: "Haemimont AD (Kurumsal Kayıt - 3.0★)",
   },
   {
     id: "studio-delft-triumph",

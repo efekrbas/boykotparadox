@@ -61,18 +61,26 @@ export function CorporateTargetsSection({
   const handleOpenAllStudios = () => {
     playStampSound();
     setOpeningAllStudios(true);
-    PHYSICAL_STUDIOS.forEach((studio, index) => {
+    let delay = 0;
+    PHYSICAL_STUDIOS.forEach((studio) => {
       setTimeout(() => {
         window.open(studio.googleMapsUrl, "_blank", "noopener,noreferrer");
         onToggleStamp(studio.id);
-      }, index * 250);
+      }, delay);
+      delay += 250;
+      if (studio.secondaryGoogleMapsUrl) {
+        setTimeout(() => {
+          window.open(studio.secondaryGoogleMapsUrl!, "_blank", "noopener,noreferrer");
+        }, delay);
+        delay += 250;
+      }
     });
 
-    toast.success("6 Fiziksel Stüdyonun Harita Sayfaları Açılıyor!", {
+    toast.success("Tüm Stüdyolar ve Ofisler Haritada Açılıyor!", {
       description:
         "Tarayıcınız açılır pencereleri (pop-up) engellediyse lütfen izin verin.",
     });
-    setTimeout(() => setOpeningAllStudios(false), 1800);
+    setTimeout(() => setOpeningAllStudios(false), delay + 300);
   };
 
   const handleCopyReview = () => {
@@ -259,15 +267,45 @@ export function CorporateTargetsSection({
 
                 {/* Actions */}
                 <div className="mt-5 flex flex-col gap-2 pt-3 border-t border-ink/15">
-                  <button
-                    type="button"
-                    onClick={() => handleOpenTarget(studio.id, studio.googleMapsUrl)}
-                    className="inline-flex h-10 w-full items-center justify-center gap-2 bg-ink px-3 font-mono text-xs uppercase tracking-wider text-paper font-bold transition-all shadow-sm hover:bg-seal active:translate-y-px text-center"
-                  >
-                    <MapPin className="size-3.5 shrink-0 text-seal" />
-                    <span className="leading-tight">Haritada 1★ Ver</span>
-                    <ExternalLink className="size-3 shrink-0 opacity-70" />
-                  </button>
+                  {studio.secondaryGoogleMapsUrl ? (
+                    <div className="flex flex-col gap-1.5">
+                      <div className="font-mono text-[10px] font-bold text-seal uppercase tracking-wider">
+                        🎯 Çifte Hedef (İkisine de 1★ Verin):
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleOpenTarget(studio.id, studio.googleMapsUrl)}
+                        className="inline-flex h-9 w-full items-center justify-between bg-ink px-3 font-mono text-[11px] uppercase tracking-wider text-paper font-bold transition-all shadow-sm hover:bg-seal active:translate-y-px"
+                      >
+                        <span className="flex items-center gap-1.5 truncate">
+                          <MapPin className="size-3.5 shrink-0 text-seal" />
+                          <span>1. Stüdyo Ofisi (4.7★)</span>
+                        </span>
+                        <ExternalLink className="size-3 shrink-0 opacity-70" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleOpenTarget(`${studio.id}-sec`, studio.secondaryGoogleMapsUrl!)}
+                        className="inline-flex h-9 w-full items-center justify-between border-2 border-seal bg-seal/10 px-3 font-mono text-[11px] uppercase tracking-wider text-seal font-bold transition-all shadow-sm hover:bg-seal hover:text-paper active:translate-y-px"
+                      >
+                        <span className="flex items-center gap-1.5 truncate">
+                          <MapPin className="size-3.5 shrink-0" />
+                          <span>2. Kurumsal Profil (3.0★)</span>
+                        </span>
+                        <ExternalLink className="size-3 shrink-0 opacity-70" />
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => handleOpenTarget(studio.id, studio.googleMapsUrl)}
+                      className="inline-flex h-10 w-full items-center justify-center gap-2 bg-ink px-3 font-mono text-xs uppercase tracking-wider text-paper font-bold transition-all shadow-sm hover:bg-seal active:translate-y-px text-center"
+                    >
+                      <MapPin className="size-3.5 shrink-0 text-seal" />
+                      <span className="leading-tight">Haritada 1★ Ver</span>
+                      <ExternalLink className="size-3 shrink-0 opacity-70" />
+                    </button>
+                  )}
 
                   <button
                     type="button"
