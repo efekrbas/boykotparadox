@@ -39,6 +39,14 @@ export const FAQ_ITEMS: FaqItem[] = [
     highlight: "Metninizde topluluk yönetimi, şirket politikası ve tüketici memnuniyetsizliğinden bahsedin.",
   },
   {
+    id: "metacritic-spam-filtresi",
+    category: "ETKİLİ PUANLAMA",
+    question: "Metacritic'te neden herkes 0 vermemeli? 0-3 puan taktiği nedir?",
+    answer:
+      "Metacritic'in otomatik bot ve 'review-bombing' algoritmaları, bir oyuna kısa sürede yığılan tek tip 0/10 puanları 'organik olmayan spam saldırısı' olarak algılayıp toplu olarak (batch wipe) silebilmektedir. Puanınızın silinmeyip kalıcı olarak oyunun skorunu dibe çekmesi için: 1) Puanınızı çeşitlendirin (sadece 0 değil; 1, 2 veya 3 gibi farklı düşük puanlar verin). 2) Sadece boş puan bırakmak yerine 1-2 cümle de olsa şirket politikası, topluluk saygısızlığı veya müşteri memnuniyetsizliği hakkında gerekçe yazın. Böylece sistem değerlendirmenizi 'meşru tüketici incelemesi' kabul eder ve puanınız kalıcı kalır.",
+    highlight: "Metacritic spam filtresini aşmak için 0 yerine 1-3 arası puan verin ve kısa bir gerekçe ekleyin.",
+  },
+  {
     id: "trustpilot-google",
     category: "STRATEJİK HEDEF",
     question: "Neden sadece Steam değil, Trustpilot ve Google da puanlanmalı?",

@@ -94,6 +94,15 @@ const jsonLd = {
         },
         {
           "@type": "Question",
+          "name": "Metacritic'te neden herkes 0 vermemeli? 0-3 puan taktiği nedir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text":
+              "Metacritic algoritmaları ani 0/10 yığılmalarını spam sayıp silebilmektedir. Puanların kalıcı olması için oyuncuların 0 yerine 1, 2 veya 3 gibi çeşitli puanlar vermesi ve kısa bir eleştiri gerekçesi yazması önerilir.",
+          },
+        },
+        {
+          "@type": "Question",
           "name": "Neden sadece Steam değil, Trustpilot ve Google da puanlanmalı?",
           "acceptedAnswer": {
             "@type": "Answer",

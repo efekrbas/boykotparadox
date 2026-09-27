@@ -143,6 +143,12 @@ export function BulkLauncherModal({
           </div>
         </div>
 
+        {/* Metacritic & Steam Anti-Spam Tip */}
+        <div className="flex items-center gap-2 border-b border-ink/15 bg-amber-500/10 px-4 py-2 text-[11px] text-ink font-mono">
+          <span className="shrink-0 font-bold text-amber-600 dark:text-amber-400">💡 STRATEJİK İPUCU:</span>
+          <span>Metacritic'te spam filtresine takılmamak için sadece 0 değil, <strong>0-3 arası (1, 2 veya 3) puan</strong> verip kısa bir eleştiri yazın.</span>
+        </div>
+
         {/* Tab Filters & Main Actions */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-ink/15 p-4 bg-paper/60">
           <div className="flex gap-1">

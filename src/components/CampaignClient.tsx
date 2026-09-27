@@ -601,6 +601,24 @@ export function CampaignClient({
           </div>
         </div>
 
+        {/* Anti-Spam Strategy Banner */}
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2.5 border border-amber-500/30 bg-amber-500/10 px-3.5 py-2 text-xs text-ink">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center justify-center bg-amber-500/20 text-amber-800 dark:text-amber-200 px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider">
+              💡 Önemli Taktik
+            </span>
+            <span className="font-mono text-[11px] text-ink/90">
+              <strong>Metacritic Spam Önlemi:</strong> Toplu silinmeleri engellemek için herkesin 0 vermesi yerine <strong>0-3 arası (1, 2 veya 3) puan</strong> verin ve kısa bir eleştiri yazın.
+            </span>
+          </div>
+          <a
+            href="#rehber"
+            className="font-mono text-[10px] uppercase tracking-wider text-seal font-bold underline hover:opacity-80 shrink-0"
+          >
+            Taktik Rehberi →
+          </a>
+        </div>
+
         {/* Dedicated Filtering & Sorting Controls Bar */}
         <div className="mt-4 flex flex-col gap-2.5 bg-paper/60 p-3 sm:p-3.5 border border-ink/15 shadow-sm">
           {/* Top row: Category Filters & Search */}
