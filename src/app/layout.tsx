@@ -152,7 +152,7 @@ export default function RootLayout({
       <body className="bg-ink antialiased selection:bg-seal selection:text-paper">
         {children}
         <Analytics />
-        <Toaster position="bottom-right" richColors />
+        <Toaster position="bottom-right" richColors closeButton visibleToasts={2} duration={2500} />
       </body>
     </html>
   );

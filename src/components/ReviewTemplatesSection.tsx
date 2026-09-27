@@ -63,12 +63,16 @@ export function ReviewTemplatesSection() {
       () => {
         setCopiedId(id);
         toast.success("1 Yıldız Metni Panoya Kopyalandı!", {
+          id: "review-action-toast",
           description: "Şimdi açılan inceleme sayfasına yapıştırın ve 1 yıldızı verin.",
+          duration: 2500,
         });
         setTimeout(() => setCopiedId(null), 2500);
       },
       () => {
-        toast.error("Metin kopyalanamadı, lütfen metni seçip manuel kopyalayın.");
+        toast.error("Metin kopyalanamadı, lütfen metni seçip manuel kopyalayın.", {
+          id: "review-action-toast",
+        });
       },
     );
   };
@@ -80,7 +84,9 @@ export function ReviewTemplatesSection() {
     const random = otherTemplates[Math.floor(Math.random() * otherTemplates.length)];
     setSelectedId(random.id);
     toast.info("Rastgele Şablon Seçildi! 🎲", {
+      id: "review-action-toast",
       description: `${random.badge} — ${random.title}`,
+      duration: 2500,
     });
   };
 
