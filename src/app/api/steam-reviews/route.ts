@@ -13,10 +13,11 @@ export async function GET(request: NextRequest) {
 
   try {
     if (appIdParam) {
+      // Sıkı girdi doğrulaması (Input Sanitization & Validation)
       const appId = parseInt(appIdParam, 10);
-      if (isNaN(appId)) {
+      if (isNaN(appId) || appId <= 0 || appId > 10000000) {
         return NextResponse.json(
-          { error: "Geçersiz App ID formatı" },
+          { success: false, error: "Geçersiz veya yetkisiz App ID parametresi" },
           { status: 400 }
         );
       }
@@ -38,7 +39,7 @@ export async function GET(request: NextRequest) {
           return NextResponse.json({ success: true, review: fallback, isFallback: true });
         }
         return NextResponse.json(
-          { error: "Steam API'den veri alınamadı" },
+          { success: false, error: "Steam API'den veri alınamadı" },
           { status: 502 }
         );
       }
@@ -59,7 +60,7 @@ export async function GET(request: NextRequest) {
       }
     );
   } catch (error: any) {
-    console.error("Steam Reviews API error:", error);
+    console.error("Steam Reviews API error:", error?.message || error);
     return NextResponse.json(
       {
         success: true,

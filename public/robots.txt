@@ -1,6 +1,7 @@
 # robots.txt for Boykot Paradox (https://boykotparadox.vercel.app)
 User-agent: *
 Allow: /
+Disallow: /api/
 
 # Explicit rules for AI & Generative Search Engines (AEO / GEO)
 User-agent: Googlebot

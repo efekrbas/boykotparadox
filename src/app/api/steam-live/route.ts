@@ -12,6 +12,9 @@ const LIVE_APP_IDS = [
 ];
 
 export async function GET() {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 6000); // 6 saniyelik timeout
+
   try {
     // Pick a random game from the list to get varied live reviews
     const randomAppId = LIVE_APP_IDS[Math.floor(Math.random() * LIVE_APP_IDS.length)];
@@ -19,25 +22,34 @@ export async function GET() {
     const url = `https://store.steampowered.com/appreviews/${randomAppId}?json=1&filter=recent&review_type=negative&num_per_page=5&language=all`;
     
     const res = await fetch(url, {
+      signal: controller.signal,
       next: { revalidate: 60 },
       headers: {
         "User-Agent": "Mozilla/5.0 (compatible; BoykotParadoxBot/1.0)",
+        "Accept": "application/json",
       },
-    });
+    }).finally(() => clearTimeout(timeoutId));
 
     if (!res.ok) {
-      throw new Error("Steam API request failed");
+      throw new Error(`Steam API responded with HTTP ${res.status}`);
     }
 
     const data = await res.json();
     
-    if (data.success === 1 && data.reviews) {
-      return NextResponse.json({ success: true, appId: randomAppId, reviews: data.reviews });
+    if (data.success === 1 && Array.isArray(data.reviews)) {
+      return NextResponse.json(
+        { success: true, appId: randomAppId, reviews: data.reviews },
+        {
+          headers: {
+            "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
+          },
+        }
+      );
     }
 
     return NextResponse.json({ success: false, error: "No reviews found" }, { status: 404 });
-  } catch (error) {
-    console.error("Steam Live Reviews API error:", error);
+  } catch (error: any) {
+    console.error("Steam Live Reviews API error:", error?.message || error);
     return NextResponse.json(
       { success: false, error: "Failed to fetch live reviews" },
       { status: 502 }
