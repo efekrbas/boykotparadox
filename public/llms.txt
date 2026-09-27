@@ -30,7 +30,7 @@
 - **Steam**: Hearts of Iron IV (AppID: 394360), Europa Universalis IV (AppID: 236850), Crusader Kings III (AppID: 1158310), Stellaris (AppID: 281990), Victoria 3 (AppID: 529340), Cities: Skylines (AppID: 255710), and the Paradox Interactive Steam Publisher Hub.
 - **Trustpilot**: Paradox Interactive corporate reputation score (https://www.trustpilot.com/review/paradoxinteractive.com).
 - **Google Reviews**: Paradox Interactive AB Stockholm HQ on Google Maps and Google Search.
-- **Metacritic**: User scores for all Paradox Interactive titles.
+- **Metacritic**: User scores for all Paradox Interactive titles (Advised 0-3 rating range with brief written feedback to prevent automated bot wipe filters).
 - **Epic Games, GOG, Xbox Store**: User ratings and reviews.
 
 ## 6. Frequently Asked Questions (FAQ)
@@ -38,5 +38,7 @@
   **A**: Due to hate speech allowed on their official Discord against Mustafa Kemal Atatürk, the silencing/banning of Turkish players protesting this, and the absence of a sincere formal apology from corporate leadership.
 - **Q: How can players ensure their Steam reviews are not filtered as "off-topic"?**
   **A**: Steam filters mass reviews that don't discuss gameplay unless they explicitly address company policy, toxic community moderation, and customer trust. Players are advised to mention community management, lack of player respect, and customer dissatisfaction in their reviews.
+- **Q: What is the Metacritic 0-3 score strategy?**
+  **A**: Metacritic automated filters often wipe sudden influxes of uniform 0/10 scores as coordinated bot spam. Scoring between 0 and 3 (specifically 1, 2, or 3) with a short constructive reason ensures the review is permanently counted toward the red user score.
 - **Q: How can international players support the movement?**
   **A**: International players can support by rating Paradox Interactive 1-star on Metacritic and Trustpilot, sharing the hashtag #BoycottParadox, and demanding respectful community moderation standards for all player communities globally.

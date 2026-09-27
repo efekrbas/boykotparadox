@@ -124,11 +124,11 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Aşağıdaki yollar dışındaki tüm rotaları denetle:
-     * - _next/static (statik derleme dosyaları)
-     * - _next/image (görsel optimizasyon)
-     * - favicon.ico, sitemap.xml
+     * Statik dosyaları ve arama/AI dosyalarını doğrudan CDN'den sun (SEO/AEO/GEO hız optimizasyonu):
+     * - _next/static, _next/image
+     * - favicon.ico, sitemap.xml, robots.txt, llms.txt
+     * - Statik medya ve dosya uzantıları
      */
-    "/((?!_next/static|_next/image|favicon\\.ico|sitemap\\.xml).*)",
+    "/((?!_next/static|_next/image|favicon\\.ico|sitemap\\.xml|robots\\.txt|llms\\.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|webmanifest)$).*)",
   ],
 };
