@@ -328,18 +328,6 @@ export const DEFAULT_STEAM_REVIEWS: Record<number, SteamReviewSummary> = {
     negative_percent: 45,
     star_rating: 2.8,
   },
-  1257610: {
-    appId: 1257610,
-    review_score: 0,
-    review_score_desc: "No user reviews",
-    review_score_desc_tr: "Henüz İnceleme Yok",
-    total_positive: 0,
-    total_negative: 0,
-    total_reviews: 0,
-    positive_percent: 0,
-    negative_percent: 0,
-    star_rating: 0,
-  },
   1622900: {
     appId: 1622900,
     review_score: 4,
@@ -441,7 +429,7 @@ export const DEFAULT_STEAM_REVIEWS: Record<number, SteamReviewSummary> = {
 export const TARGET_APP_IDS = [
   394360, 236850, 1158310, 281990, 529340, 255710, 949230, 1669000, 859580, 233450, 1268590,
   464920, 238370, 362960, 637090, 604540, 1385380, 291650, 809230, 684450, 1167750,
-  42910, 532790, 1257610, 1622900, 572410, 983870, 231740, 310060, 211420, 24400, 42120,
+  42910, 532790, 1622900, 572410, 983870, 231740, 310060, 211420, 24400, 42120,
 ];
 
 export async function fetchSingleSteamReview(appId: number): Promise<SteamReviewSummary> {
