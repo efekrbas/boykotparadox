@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Copy, Check, MessageSquareText, Sparkles, ExternalLink, Globe, ChevronDown } from "lucide-react";
+import { Copy, Check, MessageSquareText, Sparkles, ExternalLink, Globe, ChevronDown, Shuffle } from "lucide-react";
 import { toast } from "sonner";
 import { REVIEW_TEMPLATES } from "@/data/boycottData";
 import { playStampSound } from "@/lib/audio";
@@ -73,6 +73,17 @@ export function ReviewTemplatesSection() {
     );
   };
 
+  const handleRandomize = () => {
+    playStampSound();
+    const otherTemplates = REVIEW_TEMPLATES.filter((t) => t.id !== selectedId);
+    if (otherTemplates.length === 0) return;
+    const random = otherTemplates[Math.floor(Math.random() * otherTemplates.length)];
+    setSelectedId(random.id);
+    toast.info("Rastgele Şablon Seçildi! 🎲", {
+      description: `${random.badge} — ${random.title}`,
+    });
+  };
+
   return (
     <section id="sablonlar" className="mx-auto max-w-[1240px] px-5 pt-6 sm:pt-7 pb-12 scroll-mt-16 sm:scroll-mt-20">
       <div className="flex flex-wrap items-baseline justify-between gap-4 border-b-2 border-ink pb-4">
@@ -142,9 +153,20 @@ export function ReviewTemplatesSection() {
               <MessageSquareText className="size-3.5 text-seal" />
               İnceleme Şablonu Seç
             </span>
-            <span className="text-[11px] font-semibold text-ink/60">
-              {REVIEW_TEMPLATES.length} Hazır Şablon
-            </span>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleRandomize}
+                className="inline-flex items-center gap-1 px-2.5 py-1 border border-seal/40 bg-seal/10 text-seal font-bold text-[11px] hover:bg-seal hover:text-paper transition-all active:scale-95 shadow-xs"
+                title="Farklı bir rastgele inceleme şablonu getir"
+              >
+                <Shuffle className="size-3" />
+                <span>🎲 Rastgele</span>
+              </button>
+              <span className="text-[11px] font-semibold text-ink/60">
+                {REVIEW_TEMPLATES.length} Hazır Şablon
+              </span>
+            </div>
           </div>
 
           <button
@@ -244,23 +266,34 @@ export function ReviewTemplatesSection() {
 
         {/* Action Buttons */}
         <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-ink/15 pt-5">
-          <button
-            type="button"
-            onClick={() => handleCopy(activeTemplate.id, activeTemplate.text)}
-            className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 bg-seal px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.14em] text-paper transition-transform active:translate-y-px hover:brightness-110 text-center shadow-sm"
-          >
-            {copiedId === activeTemplate.id ? (
-              <>
-                <Check className="size-4" />
-                Metin Kopyalandı!
-              </>
-            ) : (
-              <>
-                <Copy className="size-4" />
-                Metni Kopyala (1 Tıkla)
-              </>
-            )}
-          </button>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => handleCopy(activeTemplate.id, activeTemplate.text)}
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 bg-seal px-6 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.14em] text-paper transition-transform active:translate-y-px hover:brightness-110 text-center shadow-sm"
+            >
+              {copiedId === activeTemplate.id ? (
+                <>
+                  <Check className="size-4" />
+                  Metin Kopyalandı!
+                </>
+              ) : (
+                <>
+                  <Copy className="size-4" />
+                  Metni Kopyala (1 Tıkla)
+                </>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleRandomize}
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-seal/50 bg-seal/10 px-5 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-seal hover:bg-seal hover:text-paper transition-all active:translate-y-px text-center shadow-sm"
+            >
+              <Shuffle className="size-3.5" />
+              <span>🎲 Rastgele Şablon Getir</span>
+            </button>
+          </div>
 
           <a
             href="#oyunlar"
