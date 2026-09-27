@@ -16,7 +16,7 @@ export type PlatformLink = {
   id: string;
   name: string;
   url: string;
-  type: "steam" | "metacritic" | "epic" | "gog" | "xbox" | "playstation" | "trustpilot" | "google" | "other";
+  type: "steam" | "metacritic" | "epic" | "gog" | "xbox" | "playstation" | "trustpilot" | "google" | "backloggd" | "other";
   shortName: string;
   actionHint: string;
 };
@@ -114,6 +114,14 @@ export const GAMES: Game[] = [
         type: "other",
         actionHint: "Geri Bildirim / İnceleme",
       },
+      {
+        id: "hoi4-backloggd",
+        name: "Backloggd Oyuncu Puanı",
+        shortName: "Backloggd",
+        url: "https://www.backloggd.com/games/hearts-of-iron-iv/",
+        type: "backloggd",
+        actionHint: "0.5★ Ver (Metinsiz)",
+      },
     ],
   },
   {
@@ -155,6 +163,14 @@ export const GAMES: Game[] = [
         url: "https://www.xbox.com/tr-tr/games/store/europa-universalis-iv/9mtk6m04zfcq",
         type: "xbox",
         actionHint: "1 Yıldız Ver",
+      },
+      {
+        id: "eu4-backloggd",
+        name: "Backloggd Oyuncu Puanı",
+        shortName: "Backloggd",
+        url: "https://www.backloggd.com/games/europa-universalis-iv/",
+        type: "backloggd",
+        actionHint: "0.5★ Ver (Metinsiz)",
       },
     ],
   },
@@ -198,6 +214,14 @@ export const GAMES: Game[] = [
         type: "playstation",
         actionHint: "Puanla",
       },
+      {
+        id: "ck3-backloggd",
+        name: "Backloggd Oyuncu Puanı",
+        shortName: "Backloggd",
+        url: "https://www.backloggd.com/games/crusader-kings-iii/",
+        type: "backloggd",
+        actionHint: "0.5★ Ver (Metinsiz)",
+      },
     ],
   },
   {
@@ -240,6 +264,14 @@ export const GAMES: Game[] = [
         type: "xbox",
         actionHint: "1 Yıldız Ver",
       },
+      {
+        id: "stellaris-backloggd",
+        name: "Backloggd Oyuncu Puanı",
+        shortName: "Backloggd",
+        url: "https://www.backloggd.com/games/stellaris/",
+        type: "backloggd",
+        actionHint: "0.5★ Ver (Metinsiz)",
+      },
     ],
   },
   {
@@ -273,6 +305,14 @@ export const GAMES: Game[] = [
         url: "https://play.paradoxinteractive.com/games/victoria-3",
         type: "other",
         actionHint: "Değerlendir",
+      },
+      {
+        id: "victoria3-backloggd",
+        name: "Backloggd Oyuncu Puanı",
+        shortName: "Backloggd",
+        url: "https://www.backloggd.com/games/victoria-3/",
+        type: "backloggd",
+        actionHint: "0.5★ Ver (Metinsiz)",
       },
     ],
   },
@@ -316,6 +356,14 @@ export const GAMES: Game[] = [
         type: "xbox",
         actionHint: "1 Yıldız Ver",
       },
+      {
+        id: "cities-backloggd",
+        name: "Backloggd Oyuncu Puanı",
+        shortName: "Backloggd",
+        url: "https://www.backloggd.com/games/cities-skylines/",
+        type: "backloggd",
+        actionHint: "0.5★ Ver (Metinsiz)",
+      },
     ],
   },
   {
@@ -349,6 +397,14 @@ export const GAMES: Game[] = [
         url: "https://www.xbox.com/tr-tr/games/store/cities-skylines-ii-pc-edition/9nhg4898z7j8",
         type: "xbox",
         actionHint: "1 Yıldız Ver",
+      },
+      {
+        id: "cities2-backloggd",
+        name: "Backloggd Oyuncu Puanı",
+        shortName: "Backloggd",
+        url: "https://www.backloggd.com/games/cities-skylines-ii/",
+        type: "backloggd",
+        actionHint: "0.5★ Ver (Metinsiz)",
       },
     ],
   },
@@ -1337,6 +1393,15 @@ export const CORPORATE_TARGETS: CorporateTarget[] = [
     actionText: "Google Haritalar'da 1★ Ver",
   },
   {
+    id: "corp-backloggd",
+    name: "Backloggd — Paradox Development Studio Kataloğu",
+    platform: "Backloggd",
+    url: "https://www.backloggd.com/developer/paradox-development-studio/",
+    description: "Oyuncuların Letterboxd'ı olan Backloggd'da inceleme yazma zorunluluğu yoktur. Tek tıkla doğrudan 0.5★ (Yarım Yıldız) vererek tüm Paradox oyunlarının küresel puanını düşürün.",
+    importance: "Kritik",
+    actionText: "Tüm Kataloğa 0.5★ Ver (Backloggd)",
+  },
+  {
     id: "corp-metacritic-publisher",
     name: "Metacritic — Paradox Interactive Yayıncı Sayfası",
     platform: "Metacritic",
@@ -1666,5 +1731,9 @@ export const ANTI_SPAM_TIPS = [
   {
     platform: "Trustpilot & Google",
     tip: "Şirketi eleştirirken 'Tüketiciye saygıları yok', 'Müşteri hizmetleri berbat', 'Para tuzağı DLC üretiyorlar' ekseninde yorum yapın. Siyasi ifadeler Google ve Trustpilot spam algoritmalarınca otomatik filtrelenir.",
+  },
+  {
+    platform: "Backloggd (Hızlı 0.5★)",
+    tip: "YORUM YAZMA ZORUNLULUĞU YOKTUR: Backloggd'da inceleme metni yazmanıza gerek yok. Hesabınızla giriş yapıp Paradox oyunlarına doğrudan yarım yıldız (0.5★) verip geçin. Az sayıda kullanıcı oyu olduğu için puanlar anında çakılır!",
   },
 ];

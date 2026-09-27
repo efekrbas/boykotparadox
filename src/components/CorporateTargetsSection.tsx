@@ -122,8 +122,8 @@ export function CorporateTargetsSection({
         Steam incelemeleri dönemsel olarak "off-topic" filtresine takılabilir. Ancak <strong className="text-ink">Trustpilot</strong> ve <strong className="text-ink">Google Haritalar</strong> doğrudan Paradox Interactive şirketinin kurumsal itibarını ve Google arama sonuçlarındaki puanını etkiler!
       </p>
 
-      {/* 4 Corporate Targets Grid */}
-      <div className="mt-8 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      {/* 5 Corporate Targets Grid */}
+      <div className="mt-8 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
         {CORPORATE_TARGETS.map((target) => {
           const isStamped = stampedIds.includes(target.id);
           return (
