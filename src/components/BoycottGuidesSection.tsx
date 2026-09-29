@@ -104,6 +104,14 @@ export function BoycottGuidesSection() {
           <Download className="size-3.5 text-seal" />
           <span>Boykot Profil & Avatar Kiti</span>
         </button>
+
+        <a
+          href="#icerik-ureticileri-rehberi"
+          className="inline-flex items-center gap-2 px-4 py-2.5 font-mono text-xs uppercase tracking-wider transition-colors border border-seal/50 bg-seal/10 text-seal font-bold hover:bg-seal hover:text-paper ml-auto"
+        >
+          <FileText className="size-3.5" />
+          <span>İçerik Üreticileri Hak Arama Rehberi (PDF) →</span>
+        </a>
       </div>
 
       {/* Tab Content */}

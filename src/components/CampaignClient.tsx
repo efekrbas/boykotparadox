@@ -20,6 +20,8 @@ import {
   Filter,
   ArrowUpDown,
   TrendingDown,
+  Users,
+  FileSpreadsheet,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -40,6 +42,8 @@ import { CeoRaidSection } from "@/components/CeoRaidSection";
 import { ShareholderMailSection } from "@/components/ShareholderMailSection";
 import { DirectMailSection } from "@/components/DirectMailSection";
 import { BoycottGuidesSection } from "@/components/BoycottGuidesSection";
+import { CommunityGuideSection } from "@/components/CommunityGuideSection";
+import { ParadoxCheckerSection } from "@/components/ParadoxCheckerSection";
 import { BulkLauncherModal } from "@/components/BulkLauncherModal";
 import { ShareBar } from "@/components/ShareBar";
 import { Ataturk3DScene } from "@/components/Ataturk3DScene";
@@ -544,6 +548,24 @@ export function CampaignClient({
 
             <button
               type="button"
+              onClick={() => scrollTo("icerik-ureticileri-rehberi")}
+              className="grow group inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-seal bg-seal/20 px-4 py-3 font-mono text-xs sm:text-xs font-bold uppercase tracking-[0.12em] text-paper transition-all hover:bg-seal hover:text-paper shadow-md shadow-seal/10 active:translate-y-px"
+            >
+              <Users className="size-4 text-seal group-hover:text-paper transition-colors" />
+              <span>Hak Arama Rehberi (PDF)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollTo("paradox-oyun-sorgula")}
+              className="grow inline-flex w-full sm:w-auto items-center justify-center gap-2 border-2 border-emerald-500/40 bg-emerald-500/10 px-4 py-3 font-mono text-xs sm:text-xs font-bold uppercase tracking-[0.12em] text-paper transition-all hover:bg-emerald-500/20 active:translate-y-px"
+            >
+              <FileSpreadsheet className="size-4 text-emerald-400" />
+              <span>Oyun Sorgula (49 Oyun)</span>
+            </button>
+
+            <button
+              type="button"
               onClick={() => scrollTo("tweet-baskini")}
               className="grow inline-flex w-full sm:w-auto items-center justify-center gap-2.5 border-2 border-paper/40 bg-black px-4 py-3 font-mono text-xs sm:text-xs font-bold uppercase tracking-[0.12em] text-paper transition-all hover:border-paper hover:bg-neutral-900 shadow-lg shadow-black/50 active:translate-y-px"
             >
@@ -611,12 +633,20 @@ export function CampaignClient({
               <strong>Metacritic Spam Önlemi:</strong> Toplu silinmeleri engellemek için herkesin 0 vermesi yerine <strong>0-3 arası (1, 2 veya 3) puan</strong> verin ve kısa bir eleştiri yazın.
             </span>
           </div>
-          <a
-            href="#rehber"
-            className="font-mono text-[10px] uppercase tracking-wider text-seal font-bold underline hover:opacity-80 shrink-0"
-          >
-            Taktik Rehberi →
-          </a>
+          <div className="flex items-center gap-3 shrink-0">
+            <a
+              href="#paradox-oyun-sorgula"
+              className="font-mono text-[10px] uppercase tracking-wider text-emerald-800 dark:text-emerald-400 font-bold underline hover:opacity-80"
+            >
+              Oyun Sorgula (49 Oyun) →
+            </a>
+            <a
+              href="#rehber"
+              className="font-mono text-[10px] uppercase tracking-wider text-seal font-bold underline hover:opacity-80"
+            >
+              Taktik Rehberi →
+            </a>
+          </div>
         </div>
 
         {/* Dedicated Filtering & Sorting Controls Bar */}
@@ -918,6 +948,9 @@ export function CampaignClient({
         </div>
       </section>
 
+      {/* 49-Game Complete Paradox Database & Instant Search (Google Spreadsheet Archive) */}
+      <ParadoxCheckerSection />
+
       {/* Incident Summary & Demands */}
       <section className="mx-auto max-w-[1240px] px-5 py-14">
         <div className="flex flex-wrap items-baseline justify-between gap-4 border-b-2 border-ink pb-4">
@@ -1018,6 +1051,9 @@ export function CampaignClient({
 
       {/* Anti-Spam / Anti-Review Bombing Guidelines */}
       <AntiSpamGuideSection />
+
+      {/* Turkish Strategy Content Creators Community Statement & Formal Rights/Complaint Guide */}
+      <CommunityGuideSection />
 
       {/* Action Guides: Steam Refund, Discord Report & Avatar Protest Kit */}
       <BoycottGuidesSection />
